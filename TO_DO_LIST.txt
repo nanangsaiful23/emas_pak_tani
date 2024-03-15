@@ -1,0 +1,21 @@
+-LOADING
+	1. edit loading
+	2. recreate loading
+	3. count item loading
+
+-TRANSACTION
+	1. retur barang
+	2. resume transaksi
+
+- AKUN KASIR MASIH KOSONG
+
+-GOOD
+	1. catalog barang
+	2. riwayat perubahan harga
+	3. barang exp
+
+- NERACA & LABA RUGI menunya belum aktif
+
+- resume all
+
+- print bracode barang
