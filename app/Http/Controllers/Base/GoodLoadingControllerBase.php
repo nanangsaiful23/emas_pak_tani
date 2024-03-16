@@ -109,7 +109,6 @@ trait GoodLoadingControllerBase
     public function storeGoodLoadingBase($role, $role_id, Request $request)
     {
         $data = $request->input();
-        // dd($data);die;
 
         if($data['distributor_name'] != null)
         {
@@ -143,15 +142,31 @@ trait GoodLoadingControllerBase
                 $data['prices'][$i] = unformatNumber($data['prices'][$i]);
                 $data['stone_prices'][$i] = unformatNumber($data['stone_prices'][$i]);
 
-                $good = Good::where('name', $data['names'][$i])->first();
+                // $good = Good::where('name', $data['names'][$i])->first();
 
-                if($good == null)
-                {
+                // if($good == null)
+                // {
                     $data_good['category_id'] = $data['category_ids'][$i];
                     $data_good['is_old_gold'] = $data['is_old_golds'][$i];
                     $data_good['name'] = $data['names'][$i];
                     $data_good['percentage_id'] = $data['percentage_ids'][$i];
+
+                    $weight = explode('.', $data['weights'][$i]);
                     $data_good['weight'] = $data['weights'][$i];
+                    if(isset($weight[1]))
+                    {
+                        $sub_weight = $weight[1];
+                        while($sub_weight < 100)
+                        {
+                            $data_good['weight'] .= '0';
+                            $sub_weight = $sub_weight * 10; 
+                        }
+                    }
+                    else
+                    {
+                        $data_good['weight'] .= '.000';
+                    }
+
                     $data_good['status'] = $data['statuses'][$i];
                     $data_good['gold_history_number'] = $data['gold_history_numbers'][$i];
                     $data_good['stone_weight'] = $data['stone_weights'][$i];
@@ -188,7 +203,7 @@ trait GoodLoadingControllerBase
                     $data_price['reason']       = 'Harga pertama';
 
                     GoodPrice::create($data_price);
-                }
+                // }
 
                 $data['selling_prices'][$i] = 1;
                 
@@ -390,7 +405,7 @@ trait GoodLoadingControllerBase
                     if($good_unit->good->is_old_gold == 1)
                         $data['old_gold'] = 'MT';
                     $data['stone_weight'] = $good_unit->good->stone_weight;
-                    $data['stone_price'] = $good_unit->good->stone_price;
+                    $data['stone_price'] = showRupiah($good_unit->good->stone_price);
 
                     array_push($goods, $data);
                 // }

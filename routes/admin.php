@@ -176,6 +176,8 @@ Route::group(['prefix' => 'other-transaction'], function () {
 Route::group(['prefix' => 'percentage'], function () {
 	Route::get('/create', 'PercentageController@create');
 	Route::post('/store', 'PercentageController@store')->name('percentage.store');
+    Route::get('/{percentage_id}/edit', 'PercentageController@edit');
+    Route::put('/{percentage_id}/edit', 'PercentageController@update')->name('percentage.update');
 	Route::delete('/{percentage_id}/delete', 'PercentageController@delete')->name('percentage.delete');
 	Route::get('/{pagination}', 'PercentageController@index');
 });

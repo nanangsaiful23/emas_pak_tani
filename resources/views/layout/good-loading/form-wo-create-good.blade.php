@@ -73,7 +73,7 @@
                         <div class="form-group">
                             {!! Form::label('category_id', 'Kategori', array('class' => 'col-sm-4 control-label')) !!}
                             <div class="col-sm-8">
-                                {!! Form::select('category_id', getCategories(), null, ['class' => 'form-control select2',
+                                {!! Form::select('category_id', getCategoriesWoAll(), null, ['class' => 'form-control select2',
                                 'style'=>'width: 100%', 'id' => 'category_id']) !!}
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                         <div class="form-group">
                             {!! Form::label('weight', 'Berat Emas', array('class' => 'col-sm-4 control-label')) !!}
                             <div class="col-sm-8">
-                                {!! Form::text('weight', null, array('class' => 'form-control', 'required'=>'required', 'id' => 'weight', 'placeholder' => '0.00')) !!}<br>Koma menggunakan simbol .
+                                {!! Form::input('number', 'weight', null, array('class' => 'form-control', 'required'=>'required', 'id' => 'weight', 'placeholder' => '0.00')) !!}<br>Koma menggunakan simbol .
                             </div>
                         </div>
 
@@ -133,7 +133,7 @@
                             <div class="form-group">
                                 {!! Form::label('price', 'Harga Beli', array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-8">
-                                    <textarea type="text" name="price" class="form-control" id="price" onkeypress="formatNumber('price')"></textarea>
+                                    <textarea type="number" name="price" class="form-control" id="price" onkeypress="formatNumber('price')"></textarea>
                                 </div>
                             </div>
                         @elseif($type == 'loading')
@@ -164,14 +164,14 @@
                         <div class="form-group">
                             {!! Form::label('stone_weight', 'Berat Batu', array('class' => 'col-sm-4 control-label')) !!}
                             <div class="col-sm-8">
-                                {!! Form::text('stone_weight', '0.00', array('class' => 'form-control', 'id' => 'stone_weight', 'placeholder' => '0.00')) !!}<br>Koma menggunakan simbol .
+                                {!! Form::input('number', 'stone_weight', null, array('class' => 'form-control', 'id' => 'stone_weight', 'placeholder' => '0.00')) !!}<br>Koma menggunakan simbol .
                             </div>
                         </div>
 
                         <div class="form-group">
                             {!! Form::label('stone_price', 'Harga Batu', array('class' => 'col-sm-4 control-label')) !!}
                             <div class="col-sm-8">
-                                {!! Form::text('stone_price', 0, array('class' => 'form-control', 'id' => 'stone_price', 'placeholder' => 'Boleh Kosong', 'onkeyup' => 'formatNumber("stone_price")')) !!}
+                                {!! Form::input('number', 'stone_price', null, array('class' => 'form-control', 'id' => 'stone_price', 'placeholder' => 'Boleh Kosong')) !!}
                             </div>
                         </div>
 
@@ -244,13 +244,13 @@
                     <?php $i = 1; ?>
                     <tr id="row-data-{{ $i }}">
                         <td>
-                            {!! Form::select('category_ids[]', getCategories(), null, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'category_id-' . $i]) !!}
+                            {!! Form::select('category_ids[]', getCategoriesWoAll(), null, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'category_id-' . $i]) !!}
                         </td>
                         <td>
                             {!! Form::select('is_old_golds[]', getGoldTypes(), null, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'is_old_gold-' . $i]) !!}
                         </td>
                         <td width="20%">
-                            {!! Form::textarea('names[]', null, array('class' => 'form-control', 'readonly' => 'readonly', 'id' => 'name-'.$i, 'style' => 'height: 70px')) !!}
+                            {!! Form::textarea('names[]', null, array('class' => 'form-control', 'id' => 'name-'.$i, 'style' => 'height: 70px')) !!}
                         </td>
                         <td>
                             {!! Form::select('percentage_ids[]', getPercentages(), null, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'percentage_id-' . $i]) !!}
@@ -464,9 +464,13 @@
                       {
                           money = document.getElementById("total_price-" + i).value;
                           money = money.replace(/,/g,'');
-                          stone = document.getElementById("stone_price-" + i).value;
-                          stone = stone.replace(/,/g,'');
-                          console.log(money + ' ' + stone);
+                          if(document.getElementById("stone_price-" + i).value == null || document.getElementById("stone_price-" + i).value == '')
+                            stone = 0;
+                          else
+                          {
+                            stone = document.getElementById("stone_price-" + i).value;
+                            stone = stone.replace(/,/g,'');
+                          }
                           total_item_price += parseInt(money) + parseInt(stone);
 
                       }
@@ -563,7 +567,7 @@
               htmlResult = '<tr id="row-data-' + temp1+ '">';
               htmlResult += '<td><select class="form-control select2" id="category_id-' + temp1 + '" name="category_ids[]">@foreach(getCategoryObjects() as $category)<option value="{{ $category->id }}">{{ $category->name }}</option> @endforeach </select></td>';
               htmlResult += '<td><select class="form-control select2" id="is_old_gold-' + temp1 + '" name="is_old_golds[]">@foreach(getGoldTypes() as $x => $y)<option value="{{ $x }}">{{ $y }}</option> @endforeach </select></td>';
-              htmlResult += '<td><textarea id="name-' + temp1 + '" name="names[]" type="text"></textarea></td>';
+              htmlResult += '<td><textarea id="name-' + temp1 + '" name="names[]" type="text" style="height: 70px"></textarea></td>';
               htmlResult += '<td><select class="form-control select2" id="percentage_id-' + temp1 + '" name="percentage_ids[]">@foreach(getPercentageObjects() as $percentage)<option value="{{ $percentage->id }}">{{ $percentage->name }}</option> @endforeach </select></td>';
               htmlResult += '<td><textarea type="text" name="weights[]" class="form-control" id="weight-' + temp1 + '"></textarea></td>';
               htmlResult += '<td>@if($type == "loading") <textarea type="text" name="statuses[]" class="form-control" id="status-' + temp1 + '" readonly="readonly">Siap dijual</textarea> @else <select class="form-control select2" id="status-' + temp1 + '" name="statuses[]">@foreach(getStatusOther() as $x => $y)<option value="{{ $x }}">{{ $y }}</option> @endforeach </select>@endif</td>';

@@ -20,13 +20,16 @@ trait GoldPriceControllerBase
 
     public function storeGoldPriceBase(Request $request)
     {
-        $request->price = unformatNumber($request->price);
+        $request->buy_price = unformatNumber($request->buy_price);
+        $request->selling_price = unformatNumber($request->selling_price);
         $this->validate($request, [
-            'price' => array('required', 'regex:/^[\d\s,]*$/'),
+            'buy_price' => array('required', 'regex:/^[\d\s,]*$/'),
+            'selling_price' => array('required', 'regex:/^[\d\s,]*$/'),
         ]);
         // $data = $request->input();
         $data['weight'] = 1;
-        $data['price'] = unformatNumber($request->price);
+        $data['buy_price'] = unformatNumber($request->buy_price);
+        $data['selling_price'] = unformatNumber($request->selling_price);
         $data['percentage'] = 24;
 
         $gold_price = GoldPrice::create($data);

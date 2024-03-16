@@ -14,9 +14,10 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>Nama</th>
-                <th>Nominal Pengali</th>
+                <th>Nama Persentase</th>
+                <th>Persentase Pengali Harga Emas</th>
                 @if($role == 'admin')
+                  <th class="center">Edit</th>
                   <th class="center">Hapus</th>
                 @endif
               </tr>
@@ -27,6 +28,9 @@
                     <td>{{ $percentage->name }}</td>
                     <td>{{ $percentage->nominal }}</td>
                     @if($role == 'admin')
+                      <td class="center">
+                        <a href="{{ url($role . '/percentage/' . $percentage->id . '/edit') }}" target="_blank()"><i class="fa fa-pencil-square-o orange" aria-hidden="true"></i></a><br>
+                      </td>
                       <td class="center">
                         <button type="button" class="no-btn center" data-toggle="modal" data-target="#modal-danger-{{$percentage->id}}"><i class="fa fa-times" aria-hidden="true" style="color: red !important"></i></button>
 

@@ -27,9 +27,9 @@
           <div class="small-box" style="background-color: #DFF5FF">
             <div class="inner">
               @if(isset($gold_price))
-                <h3>{{ showRupiah($gold_price->price) }}</h3>
+                <h3>{{ showRupiah($gold_price->selling_price) }}</h3>
 
-                <p>Harga emas {{ displayDate($gold_price->created_at) }}</p>
+                <p>Harga jual emas {{ displayDate($gold_price->created_at) }}</p>
               @else
                 <h3>-</h3>
 

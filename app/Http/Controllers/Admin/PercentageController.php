@@ -51,12 +51,34 @@ class PercentageController extends Controller
         return redirect('/admin/percentage/10');
     }
 
+    public function edit($percentage_id)
+    {
+        [$default['type'], $default['color'], $default['data']] = alert();
+
+        $default['page_name'] = 'Ubah Persentase';
+        $default['page'] = 'percentage';
+        $default['section'] = 'edit';
+
+        $percentage = Percentage::find($percentage_id);
+
+        return view('admin.layout.page', compact('default', 'percentage'));
+    }
+
+    public function update($percentage_id, Request $request)
+    {
+        $color = $this->updatePercentageBase($percentage_id, $request);
+
+        session(['alert' => 'edit', 'data' => 'Persentase barang']);
+
+        return redirect('/admin/percentage/15');
+    }
+
     public function delete($percentage_id)
     {
         $this->deletePercentageBase($percentage_id);
 
         session(['alert' => 'delete', 'data' => 'Persentase barang']);
 
-        return redirect('/admin/percentage/all/10');
+        return redirect('/admin/percentage/15');
     }
 }

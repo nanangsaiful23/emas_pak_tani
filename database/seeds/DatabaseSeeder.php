@@ -14,28 +14,28 @@ class DatabaseSeeder extends Seeder
         \App\Admin::create([
             'name'          => 'Admin Pak Tani',
             'email'         => 'admin',
-            'password'      => bcrypt('bismillaah' . '<4d[M!n}'),
+            'password'      => bcrypt('massalman' . '<4d[M!n}'),
             'is_active'     => 1
         ]);
 
         \App\Admin::create([
             'name'          => 'Coba Admin',
             'email'         => 'coba_admin',
-            'password'      => bcrypt('ntn' . '<4d[M!n}'),
+            'password'      => bcrypt('ptn' . '<4d[M!n}'),
             'is_active'     => 1
         ]);
 
         \App\Cashier::create([
             'name'          => 'Cashier Pak Tani',
             'email'         => 'cashier',
-            'password'      => bcrypt('bismillaah' . 'k&4z~1e1R*'),
+            'password'      => bcrypt('massalman' . 'k&4z~1e1R*'),
             'is_active'     => 1
         ]);
 
         \App\Cashier::create([
             'name'          => 'Coba Cashier',
             'email'         => 'coba_cashier',
-            'password'      => bcrypt('ntn' . 'k&4z~1e1R*'),
+            'password'      => bcrypt('ptn' . 'k&4z~1e1R*'),
             'is_active'     => 1
         ]);
 
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('accounts')->insert(array(
             array('code' => '1111', 'name' => 'Kas di Tangan', 'type' => 'Debet', 'group' => 'Neraca', 'activa' => 'aktiva'),
-            array('code' => '1112', 'name' => 'Kas di Bank', 'type' => 'Debet', 'group' => 'Neraca', 'activa' => 'aktiva'),
+            // array('code' => '1112', 'name' => 'Kas di Bank', 'type' => 'Debet', 'group' => 'Neraca', 'activa' => 'aktiva'),
             array('code' => '1131', 'name' => 'Piutang Dagang', 'type' => 'Debet', 'group' => 'Neraca', 'activa' => 'aktiva'),
             array('code' => '1132', 'name' => 'Cadangan Kerugian Piutang', 'type' => 'Debet', 'group' => 'Neraca', 'activa' => 'aktiva'),
             array('code' => '1133', 'name' => 'Piutang Karyawan', 'type' => 'Debet', 'group' => 'Neraca', 'activa' => 'aktiva'),
@@ -115,21 +115,21 @@ class DatabaseSeeder extends Seeder
         ));
 
         DB::table('categories')->insert(array(
-            array('code' => 'RING', 'name' => 'Cincin', 'eng_name' => 'Ring', 'unit_id' => 1),
-            array('code' => 'NECKLACE', 'name' => 'Kalung', 'eng_name' => 'Necklace', 'unit_id' => 1),
-            array('code' => 'BRACELET', 'name' => 'Gelang', 'eng_name' => 'Bracelet', 'unit_id' => 1),
-            array('code' => 'EARRINGS', 'name' => 'Anting-anting', 'eng_name' => 'Earrings', 'unit_id' => 1),
-            array('code' => 'PUREGOLD', 'name' => 'Emas Murni', 'eng_name' => 'Pure Gold', 'unit_id' => 1),
-            array('code' => 'LIONTIN', 'name' => 'Liontin', 'eng_name' => 'Liontin', 'unit_id' => 1),
-            array('code' => 'OTHER', 'name' => 'Lain-lain', 'eng_name' => 'Others', 'unit_id' => 1),
+            array('code' => 'CC', 'name' => 'Cincin', 'eng_name' => 'Ring', 'unit_id' => 1),
+            array('code' => 'KL', 'name' => 'Kalung', 'eng_name' => 'Necklace', 'unit_id' => 1),
+            array('code' => 'GL', 'name' => 'Gelang', 'eng_name' => 'Bracelet', 'unit_id' => 1),
+            array('code' => 'AT', 'name' => 'Anting-anting', 'eng_name' => 'Earrings', 'unit_id' => 1),
+            array('code' => 'LM', 'name' => 'Emas Murni', 'eng_name' => 'Pure Gold', 'unit_id' => 1),
+            array('code' => 'LT', 'name' => 'Liontin', 'eng_name' => 'Liontin', 'unit_id' => 1),
+            array('code' => 'OT', 'name' => 'Lain-lain', 'eng_name' => 'Others', 'unit_id' => 1),
         ));
 
         DB::table('percentages')->insert(array(
-            array('nominal' => '750/17K'),
-            array('nominal' => '80'),
-            array('nominal' => '875/21K'),
-            array('nominal' => '916/22K'),
-            array('nominal' => '999/24K'),
+            array('name' => '750/17K', 'nominal' => '0.4'),
+            // array('name' => '80', 'nominal' => ''),
+            array('name' => '875/21K', 'nominal' => '0.6'),
+            array('name' => '916/22K', 'nominal' => '0.75'),
+            array('name' => '999/24K', 'nominal' => '1'),
         ));
     }
 }

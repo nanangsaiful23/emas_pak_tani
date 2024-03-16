@@ -10,7 +10,7 @@ class GoldPrice extends Model
     use SoftDeletes;
     
     protected $fillable = [
-        'weight', 'price', 'percentage'
+        'weight', 'buy_price', 'selling_price', 'percentage'
     ];
 
     protected $hidden = [

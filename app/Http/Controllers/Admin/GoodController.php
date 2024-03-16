@@ -191,7 +191,7 @@ class GoodController extends Controller
 
         session(['alert' => 'delete', 'data' => 'Barang']);
 
-        return redirect('/admin/good/all/all/20');
+        return redirect('/admin/good/all/all/all/20');
     }
 
     public function exp()

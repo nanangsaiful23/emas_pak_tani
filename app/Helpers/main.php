@@ -225,6 +225,15 @@
         return $categories;
     }
 
+    function getCategoriesWoAll()
+    {
+        $categories = [];
+        foreach (Category::orderBy('name', 'asc')->get() as $data) {
+            $categories = array_add($categories, $data->id, $data->name . ' (' . $data->eng_name . ')');
+        }
+        return $categories;
+    }
+
     function getCokimWeight()
     {
         $cokims = Cokim::where('status', 'sell')->get();
@@ -328,6 +337,7 @@
         $good_units = GoodUnit::join('goods', 'goods.id', 'good_units.good_id')
                               ->select('good_units.*', 'goods.*', 'good_units.id as good_unit_id', 'goods.name as good_name', 'goods.code as good_code')
                               ->where('goods.status', 'Siap dijual')
+                              ->where('goods.deleted_at', null)
                               ->orderBy('goods.name', 'asc')->get();
 
         return $good_units;

@@ -17,7 +17,9 @@ class CreateGoldPricesTable extends Migration
             $table->bigIncrements('id');
             $table->string('weight')
                   ->nullable();
-            $table->string('price')
+            $table->string('buy_price')
+                  ->nullable();
+            $table->string('selling_price')
                   ->nullable();
             $table->string('percentage')
                   ->nullable();
