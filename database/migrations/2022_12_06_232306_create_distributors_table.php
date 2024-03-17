@@ -19,6 +19,8 @@ class CreateDistributorsTable extends Migration
                   ->nullable();
             $table->string('location')
                   ->nullable();
+            $table->string('type')
+                  ->nullable();
                   
             $table->timestamps();
             $table->softDeletes();
