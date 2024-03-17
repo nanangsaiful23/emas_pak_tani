@@ -510,7 +510,7 @@
           function submitForm()
           {
               var isi=true;
-              if(($("#distributor_name").val() == null) && ($("#all_distributor").val() == "null"))
+              if(($("#distributor_name").val() == "") && ($("#all_distributor").val() == "null"))
               {
                 isi=false;
                 alert("silahkan isi distributor");
