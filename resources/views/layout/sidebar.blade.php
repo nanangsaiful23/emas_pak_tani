@@ -187,7 +187,7 @@
           </ul>
         </li>
       @endif
-      @if(\Auth::user()->email == 'admin')
+      <!-- @if(\Auth::user()->email == 'admin')
         <li class="header">LAPORAN KEUANGAN</li>
         <li class="treeview {{ (Request::segment(2) == 'account' ) ? 'active' : ''  }}">
           <a href="#">
@@ -204,7 +204,7 @@
         <li class="{{ Request::segment(2) == 'journal' && Request::segment(3) != 'create' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/journal/all/' . date('Y-m-d') . '/' . date('Y-m-d') . '/15') }}"><i class="fa fa-calculator"></i> Jurnal</a></li>
         <li class="{{ Request::segment(2) == 'profit' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/profit') }}"><i class="fa fa-arrow-circle-up"></i> Laba Rugi</a></li>
         <li class="{{ Request::segment(2) == 'scale' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/scale') }}"><i class="fa fa-balance-scale"></i> Neraca</a></li>
-      @endif
+      @endif -->
     </ul>
   </section>
 </aside>
