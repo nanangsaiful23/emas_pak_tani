@@ -29,7 +29,7 @@
               @if(isset($gold_price))
                 <h3 style="font-size: 22px !important">
                   Harga jual: {{ showRupiah($gold_price->selling_price) }}<br>
-                  Harga beli: {{ showRupiah($gold_price->selling_price) }}<br>
+                  Harga beli: {{ showRupiah($gold_price->buy_price) }}<br>
                   {{ displayDate($gold_price->created_at) }}
                 </h3>
               @else

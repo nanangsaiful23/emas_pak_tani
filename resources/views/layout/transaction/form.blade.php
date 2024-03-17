@@ -92,11 +92,13 @@
         <table class="table table-bordered table-striped" style="overflow-x: auto;">
             <thead>
                 <th>Kode</th>
-                <th>Nama</th>
                 <th>Berat</th>
                 <th>Kadar</th>
+                <th>Harga Emas</th>
+                <th>Barang</th>
                 <th style="display: none">Jumlah</th>
-                <th>Harga</th>
+                <th>Jumlah</th>
+                <th>Harga Batu</th>
                 <th>Potongan</th>
                 <th style="display: none">Total Harga</th>
                 <th>Total Akhir</th>
@@ -109,10 +111,6 @@
                         {!! Form::hidden('barcodes[]', null, array('id' => 'barcode-'.$i)) !!}
                         {!! Form::textarea('codes[]', null, array('class' => 'form-control', 'readonly' => 'readonly', 'id' => 'code-'.$i, 'style' => 'height: 70px')) !!}
                     </td>
-                    <td width="30%">
-                        {!! Form::textarea('name_temps[]', null, array('class' => 'form-control', 'readonly' => 'readonly', 'id' => 'name_temp-'.$i, 'style' => 'height: 70px')) !!}
-                        {!! Form::text('names[]', null, array('id'=>'name-' . $i, 'style' => 'display:none')) !!}
-                    </td>
                     <td>
                         {!! Form::text('weights[]', null, array('class' => 'form-control', 'readonly' => 'readonly', 'id' => 'weight-'.$i)) !!}
                     </td>
@@ -120,12 +118,22 @@
                         {!! Form::text('percentages[]', null, array('class' => 'form-control', 'readonly' => 'readonly', 'id' => 'percentage-'.$i, 'style' => 'display:none')) !!}
                         {!! Form::text('percentage_shows[]', null, array('class' => 'form-control', 'readonly' => 'readonly', 'id' => 'percentage_show-'.$i)) !!}
                     </td>
+                    <td>
+                        {!! Form::text('gold_prices[]', null, array('class' => 'form-control', 'readonly' => 'readonly', 'id' => 'gold_price-'.$i)) !!}
+                    </td>
+                    <td width="10%">
+                        {!! Form::textarea('name_temps[]', null, array('class' => 'form-control', 'readonly' => 'readonly', 'id' => 'name_temp-'.$i, 'style' => 'height: 70px')) !!}
+                        {!! Form::text('names[]', null, array('id'=>'name-' . $i, 'style' => 'display:none')) !!}
+                    </td>
                     <td style="display: none">
                         <input type="text" name="quantities[]" class="form-control" id="quantity-{{ $i }}" onchange="checkDiscount('all_barcode', '{{ $i }}')">
                     </td>
                     <td>
                         {!! Form::text('buy_prices[]', null, array('id'=>'buy_price-' . $i, 'style' => 'display:none')) !!}
                         {!! Form::text('prices[]', null, array('class' => 'form-control', 'id' => 'price-'.$i, 'onchange' => "editPrice('" . $i . "')")) !!}
+                    </td>
+                    <td>
+                        {!! Form::text('stone_prices[]', null, array('class' => 'form-control', 'id' => 'stone_price-'.$i, 'onchange' => "editPrice('" . $i . "')")) !!}
                     </td>
                     <td>
                         @if(\Auth::user()->email == 'admin')
@@ -264,6 +272,10 @@
                     document.getElementById("weight-" + type + items).value = good.weight;
                     document.getElementById("percentage-" + type + items).value = good.percentage.nominal;
                     document.getElementById("percentage_show-" + type + items).value = good.percentage.name;
+                    if(good.stone_price == null || good.stone_price == "")
+                        document.getElementById("stone_price-" + type + items).value = 0;
+                    else
+                        document.getElementById("stone_price-" + type + items).value = good.stone_price;
                     document.getElementById("quantity-" + type + items).value = 1;
 
                     document.getElementById("discount-" + type + items).value = '0';
@@ -273,10 +285,16 @@
                     var today_gold_buy_price = parseInt('{{ getTodayGoldPrice()->buy_price }}');
                     var today_gold_selling_price = parseInt('{{ getTodayGoldPrice()->selling_price }}');
 
+                    document.getElementById("gold_price-" + type + items).value = today_gold_selling_price;
+
                     document.getElementById("buy_price-" + type + items).value = document.getElementById("weight-" + type + items).value * document.getElementById("percentage-" + type + items).value * today_gold_buy_price;
                     document.getElementById("price-" + type + items).value = document.getElementById("weight-" + type + items).value * document.getElementById("percentage-" + type + items).value * today_gold_selling_price;
 
                     editPrice(items);
+
+                    formatNumber("stone_price-" + type + items);
+                    formatNumber("selling_price-" + type + items);
+                    formatNumber("gold_price-" + type + items);
 
                     document.getElementById(name).value = '';
                     $("#" + name).focus();
@@ -388,7 +406,7 @@
                 {
                     if(document.getElementById("barcode-" + i).value != '')
                     {
-                        items = document.getElementById("price-" + i).value * document.getElementById("quantity-" + i).value;
+                        items = (document.getElementById("price-" + i).value * document.getElementById("quantity-" + i).value) + parseInt(unFormatNumber(document.getElementById("stone_price-" + i).value));
 
                         total_item_price += parseInt(items);
 
@@ -503,7 +521,7 @@
             
             document.getElementById("total_price-" + type + index).value = unFormatNumber(document.getElementById("price-" + type + index).value);
 
-            document.getElementById("sum-" + type + index).value = document.getElementById("total_price-" + type + index).value - unFormatNumber(document.getElementById("discount-" + type + index).value);
+            document.getElementById("sum-" + type + index).value = parseInt(unFormatNumber(document.getElementById("total_price-" + type + index).value)) - parseInt(unFormatNumber(document.getElementById("discount-" + type + index).value)) + parseInt(unFormatNumber(document.getElementById("stone_price-" + type + index).value));
 
             formatNumber("total_price-" + type + index);
             formatNumber("sum-" + type + index);
@@ -511,11 +529,19 @@
 
             changeTotal();
 
-            @if(\Auth::user()->email == 'admin')
-                htmlResult = '<tr id="row-data' + "-" + type + temp1 + '"><td><input type="hidden" name="barcodes[]" id="barcode-' + temp1 + '"><input type="text" name="codes' + type + '[]" class="form-control" id="code-' + type + temp1 + '" readonly="readonly"></td><td width="30%"><textarea class="form-control" readonly="readonly" id="name_temp-' + type + temp1 + '" name="name_temps' + type + '[]" type="text" style="height: 70px"></textarea><input id="name-' + type + temp1 + '" name="names' + type + '[]" type="text" style="display:none"></td><td style="display: none"><input type="text" name="quantities' + type + '[]" class="form-control" id="quantity-' + type + temp1+'" onchange="checkDiscount(\'' + '\', \'' + type + temp1 + '\')"></td><td><input type="text" name="weights' + type + '[]" class="form-control" id="weight-' + type + temp1+'" readonly="readonly"></td><td style="display:none"><input type="text" name="percentages' + type + '[]" class="form-control" id="percentage-' + type + temp1+'" readonly="readonly"></td><td><input type="text" name="percentage_shows' + type + '[]" class="form-control" id="percentage_show-' + type + temp1+'" readonly="readonly"></td><td><input id="buy_price-' + type + temp1 + '" name="buy_prices' + type + '[]" type="text" style="display:none"><input class="form-control" id="price-' + type +temp1 + '" name="prices' + type + '[]" type="text" onchange="editPrice(\'' + type + temp1 + '\')"></td><td><input type="text" name="discounts' + type + '[]" class="form-control" id="discount-' + type + temp1+'" onchange="editPrice(\'' + type + temp1 + '\')"></td><td style="display: none"><input class="form-control" readonly="readonly" id="total_price-' + type + temp1 + '" name="total_prices' + type + '[]" type="text"></td><td><input class="form-control" readonly="readonly" id="sum-' + type + temp1 +'" name="sums' + type + '[]" type="text"></td><td><i class="fa fa-times red" id="delete-' + type + temp1 +'" onclick="deleteItem(\'-' + type + temp1 + '\')"></i></td></tr>';
-            @else
-                htmlResult = '<tr id="row-data' + "-" + type + temp1 + '"><td><input type="hidden" name="barcodes[]" id="barcode-' + temp1 + '"><input type="text" name="codes' + type + '[]" class="form-control" id="code-' + type + temp1+ '" readonly="readonly"></td><td width="30%"><textarea  class="form-control" readonly="readonly" id="name_temp-' + type + temp1 + '" name="name_temps' + type + '[]" type="text" style="height: 70px"></textarea><input id="name-' + type + temp1 + '" name="names' + type + '[]" type="text" style="display:none"></td><td style="display: none"><input type="text" name="quantities' + type + '[]" class="form-control" id="quantity-' + type + temp1 +'" onchange="checkDiscount(\'' + '\', \'' + type + temp1 + '\')"></td><td><input type="text" name="weights' + type + '[]" class="form-control" id="weight-' + type + temp1+'" readonly="readonly"></td><td style="display:none"><input type="text" name="percentages' + type + '[]" class="form-control" id="percentage-' + type + temp1+'" readonly="readonly"></td><td><input type="text" name="percentage_shows' + type + '[]" class="form-control" id="percentage_show-' + type + temp1+'" readonly="readonly"></td><td><input id="buy_price-' + type + temp1 + '" name="buy_prices' + type + '[]" type="text" style="display:none"><input class="form-control" id="price-' + type +temp1 + '" name="prices' + type + '[]" type="text" onchange="editPrice(\'' + type + temp1 + '\')"></td><td><input type="text" name="discounts' + type + '[]" class="form-control" id="discount-' + type + temp1 +'" readonly="readonly" value="0"></td><td style="display: none"><input class="form-control" readonly="readonly" id="total_price-' + type + temp1 + '" name="total_prices' + type + '[]" type="text"></td><td><input class="form-control" readonly="readonly" id="sum-' + type + temp1 +'" name="sums' + type + '[]" type="text"></td><td><i class="fa fa-times red" id="delete-' + type + temp1+ '" onclick="deleteItem(\'-' + type + temp1 + '\')"></i></td></tr>';
-            @endif
+            htmlResult = '<tr id="row-data' + "-" + type + temp1 + '">';
+            htmlResult += '<td><input type="hidden" name="barcodes[]" id="barcode-' + temp1 + '"><input type="text" name="codes' + type + '[]" class="form-control" id="code-' + type + temp1 + '" readonly="readonly"></td>';
+            htmlResult += '<td><input type="text" name="weights' + type + '[]" class="form-control" id="weight-' + type + temp1+'" readonly="readonly"></td><td style="display:none"><input type="text" name="percentages' + type + '[]" class="form-control" id="percentage-' + type + temp1+'" readonly="readonly"></td>';
+            htmlResult += '<td><input type="text" name="percentage_shows' + type + '[]" class="form-control" id="percentage_show-' + type + temp1+'" readonly="readonly"></td>';
+            htmlResult += '<td><input type="text" name="gold_prices' + type + '[]" class="form-control" id="gold_price-' + type + temp1+'" readonly="readonly"></td>';
+            htmlResult += '<td width="10%"><textarea class="form-control" readonly="readonly" id="name_temp-' + type + temp1 + '" name="name_temps' + type + '[]" type="text" style="height: 70px"></textarea><input id="name-' + type + temp1 + '" name="names' + type + '[]" type="text" style="display:none"></td>';
+            htmlResult += '<td style="display: none"><input type="text" name="quantities' + type + '[]" class="form-control" id="quantity-' + type + temp1+'" onchange="checkDiscount(\'' + '\', \'' + type + temp1 + '\')"></td>';
+            htmlResult += '<td><input id="buy_price-' + type + temp1 + '" name="buy_prices' + type + '[]" type="text" style="display:none"><input class="form-control" id="price-' + type +temp1 + '" name="prices' + type + '[]" type="text" onchange="editPrice(\'' + type + temp1 + '\')"></td>';
+            htmlResult += '<td><input class="form-control" id="stone_price-' + type +temp1 + '" name="stone_prices' + type + '[]" type="text" onchange="editPrice(\'' + type + temp1 + '\')"></td>';
+            htmlResult += '<td><input type="text" name="discounts' + type + '[]" class="form-control" id="discount-' + type + temp1+'" onchange="editPrice(\'' + type + temp1 + '\')"></td>';
+            htmlResult += '<td style="display: none"><input class="form-control" readonly="readonly" id="total_price-' + type + temp1 + '" name="total_prices' + type + '[]" type="text"></td>';
+            htmlResult += '<td><input class="form-control" readonly="readonly" id="sum-' + type + temp1 +'" name="sums' + type + '[]" type="text"></td>';
+            htmlResult += '<td><i class="fa fa-times red" id="delete-' + type + temp1 +'" onclick="deleteItem(\'-' + type + temp1 + '\')"></i></td></tr>';
             htmlResult += "<script>$('#type-" + type + temp1 + "').select2();<\/script>";
 
             if(index == total_item)

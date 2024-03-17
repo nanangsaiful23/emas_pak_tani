@@ -160,8 +160,6 @@ trait TransactionControllerBase
 
         $transaction = Transaction::create($data_transaction);
 
-        $gold_price = GoldPrice::orderBy('created_at', 'desc')->first();
-
         #tabel transaction detail
         $data_detail['transaction_id'] = $transaction->id;
 
@@ -175,9 +173,11 @@ trait TransactionControllerBase
                 $data_detail['quantity']       = $request->quantities[$i];
                 $data_detail['real_quantity']  = $request->quantities[$i] * $good_unit->unit->quantity;
                 $data_detail['last_stock']     = $good_unit->good->getStock();
-                $data_detail['buy_price']      = $gold_price->price * $good_unit->good->weight * $good_unit->good->percentage->nominal;
+                $data_detail['gold_price']     = unformatNumber($request->gold_prices[$i]);
+                $data_detail['buy_price']      = $data_detail['gold_price'] * $good_unit->good->weight * $good_unit->good->percentage->nominal;
                 $data_detail['selling_price']  = unformatNumber($request->prices[$i]);
                 $data_detail['discount_price'] = unformatNumber($request->discounts[$i]);
+                $data_detail['stone_price']    = unformatNumber($request->stone_prices[$i]);
                 $data_detail['sum_price']      = unformatNumber($request->sums[$i]);
 
                 TransactionDetail::create($data_detail);

@@ -24,6 +24,11 @@
 			{
 				border: none !important;
 			}
+
+			.no-pad, .no-pad td
+			{
+				height: 20px;
+			}
 /*		}*/
 		.container {
 		  width: 100%;
@@ -49,24 +54,46 @@
 
 	<body style="font-family: 'inter'" class="container">
 		<div class="infoi">
-			<div class="wrapper">
+			<div class="wrapper" style="margin-top: 20px;">
 				<div class="row">
 					<div class="col-sm-12">
-						<div class="col-sm-5" style="text-align: center; font-size: 20px;">	
-							<b>Toko Mas Asli<br>
-							<span style="font-family: 'Dancing script'; font-size: 30px;">Pak Tani Demak</span><br></b>
-							Jalan Sultan Fatah no 38A<br>
-							Telp (0291)685156 Demak<br>
-						</div>
 						<div class="col-sm-2">	
 	            			<img src="{{asset('assets/icon/TokoPaktani.png')}}" alt="about" style="display: block;width: 100%;margin-left: auto;margin-right: auto;display: block;">
 						</div>
-						<div class="col-sm-offset-1 col-sm-4" style="font-size: 18px">	
-							<b>{{ displayDate($transaction->created_at) }}<br></b>
-							Persentase<br>
-							TUA 75% 80% 83% 85%<br>
-							STW 33% 37%<br>
-							MUDA 28% 30%
+						<div class="col-sm-5" style="text-align: center; font-size: 20px;">	
+							<b>Toko Mas Asli<br>
+							<span style="font-family: 'Dancing script'; font-size: 30px;">{{ config('app.store_name') }}</span><br></b>
+							{{ config('app.address') }}<br>
+							{{ config('app.phone_number') }}<br>
+						</div>
+						<div class="col-sm-5">	
+							<table class="none no-pad" style="font-size: 14px">
+								<tr>
+									<td>Nama</td>
+									<td>:</td>
+									<td style="border-bottom: 0.5px dotted !important;"></td>
+								</tr>
+								<tr>
+									<td>Alamat</td>
+									<td>:</td>
+									<td style="border-bottom: 0.5px dotted !important;"></td>
+								</tr>
+								<tr>
+									<td>Telp/HP</td>
+									<td>:</td>
+									<td style="border-bottom: 0.5px dotted !important;"></td>
+								</tr>
+								<tr>
+									<td>Tanggal</td>
+									<td>:</td>
+									<td style="border-bottom: 0.5px dotted !important;">{{ displayDate($transaction->created_at) }}</td>
+								</tr>
+								<tr>
+									<td>Sales person</td>
+									<td>:</td>
+									<td style="border-bottom: 0.5px dotted !important;"></td>
+								</tr>
+							</table>
 						</div>
 					</div>
 					<div class="col-sm-12" style="text-align:center; margin-top: 10px; font-weight: bold;">
@@ -80,24 +107,26 @@
 				</div>
 			</div>
 			<hr>
-			<table class="col-sm-11" style="font-size: 20px; text-align: center;">
+			<table class="col-sm-11" style="font-size: 16px; text-align: center;">
 				<thead style="font-weight: bold;">
-					<td>Name</td>
-					<td>Persentase</td>
-					<td>Code</td>
+					<td>Kode</td>
 					<td>Berat</td>
+					<td>Kadar</td>
 					<td>Harga</td>
+					<td>Barang</td>
+					<td>Jumlah</td>
 				</thead>
 				<tbody>	
 					@foreach($transaction->details as $detail)
 						<tr>
+							<td>{{ $detail->good_unit->good->code }}</td>
+							<td>{{ $detail->good_unit->good->weight }}</td>
+							<td>{{ $detail->good_unit->good->percentage->name }}</td>
+							<td style="text-align: right !important;">{{ showRupiah($detail->gold_price) }}</td>
 							<td style="text-align: left !important; padding-left: 10px;">
 								{{ $detail->good_unit->good->name }}
 							</td>
-							<td>{{ $detail->good_unit->good->percentage->name }}</td>
-							<td>{{ $detail->good_unit->good->code }}</td>
-							<td>{{ $detail->good_unit->good->weight }}</td>
-							<td style="text-align: right !important;">{{ showRupiah($detail->selling_price) }}</td>
+							<td style="text-align: right !important;">{{ showRupiah($detail->sum_price) }}</td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -135,24 +164,47 @@
 				</div>
 			</div>
 
+			
 			<div class="wrapper" style="margin-top: 70px">
 				<div class="row">
 					<div class="col-sm-12">
-						<div class="col-sm-5" style="text-align: center; font-size: 20px;">	
-							<b>Toko Mas Asli<br>
-							<span style="font-family: 'Dancing script'; font-size: 30px;">Pak Tani Demak</span><br></b>
-							Jalan Sultan Fatah no 38A<br>
-							Telp (0291)685156 Demak<br>
-						</div>
 						<div class="col-sm-2">	
 	            			<img src="{{asset('assets/icon/TokoPaktani.png')}}" alt="about" style="display: block;width: 100%;margin-left: auto;margin-right: auto;display: block;">
 						</div>
-						<div class="col-sm-offset-1 col-sm-4" style="font-size: 18px">	
-							<b>{{ displayDate($transaction->created_at) }}<br></b>
-							Persentase<br>
-							TUA 75% 80% 83% 85%<br>
-							STW 33% 37%<br>
-							MUDA 28% 30%
+						<div class="col-sm-5" style="text-align: center; font-size: 20px;">	
+							<b>Toko Mas Asli<br>
+							<span style="font-family: 'Dancing script'; font-size: 30px;">{{ config('app.store_name') }}</span><br></b>
+							{{ config('app.address') }}<br>
+							{{ config('app.phone_number') }}<br>
+						</div>
+						<div class="col-sm-5">	
+							<table class="none no-pad" style="font-size: 14px">
+								<tr>
+									<td>Nama</td>
+									<td>:</td>
+									<td style="border-bottom: 0.5px dotted !important;"></td>
+								</tr>
+								<tr>
+									<td>Alamat</td>
+									<td>:</td>
+									<td style="border-bottom: 0.5px dotted !important;"></td>
+								</tr>
+								<tr>
+									<td>Telp/HP</td>
+									<td>:</td>
+									<td style="border-bottom: 0.5px dotted !important;"></td>
+								</tr>
+								<tr>
+									<td>Tanggal</td>
+									<td>:</td>
+									<td style="border-bottom: 0.5px dotted !important;">{{ displayDate($transaction->created_at) }}</td>
+								</tr>
+								<tr>
+									<td>Sales person</td>
+									<td>:</td>
+									<td style="border-bottom: 0.5px dotted !important;"></td>
+								</tr>
+							</table>
 						</div>
 					</div>
 					<div class="col-sm-12" style="text-align:center; margin-top: 10px; font-weight: bold;">
@@ -166,24 +218,26 @@
 				</div>
 			</div>
 			<hr>
-			<table class="col-sm-11" style="font-size: 20px; text-align: center;">
+			<table class="col-sm-11" style="font-size: 16px; text-align: center;">
 				<thead style="font-weight: bold;">
-					<td>Name</td>
-					<td>Persentase</td>
-					<td>Code</td>
+					<td>Kode</td>
 					<td>Berat</td>
+					<td>Kadar</td>
 					<td>Harga</td>
+					<td>Barang</td>
+					<td>Jumlah</td>
 				</thead>
 				<tbody>	
 					@foreach($transaction->details as $detail)
 						<tr>
+							<td>{{ $detail->good_unit->good->code }}</td>
+							<td>{{ $detail->good_unit->good->weight }}</td>
+							<td>{{ $detail->good_unit->good->percentage->name }}</td>
+							<td style="text-align: right !important;">{{ showRupiah($detail->gold_price) }}</td>
 							<td style="text-align: left !important; padding-left: 10px;">
 								{{ $detail->good_unit->good->name }}
 							</td>
-							<td>{{ $detail->good_unit->good->percentage->name }}</td>
-							<td>{{ $detail->good_unit->good->code }}</td>
-							<td>{{ $detail->good_unit->good->weight }}</td>
-							<td style="text-align: right !important;">{{ showRupiah($detail->selling_price) }}</td>
+							<td style="text-align: right !important;">{{ showRupiah($detail->sum_price) }}</td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -233,8 +287,8 @@
         	window.print();
         }); 
 
-	    window.setTimeout(function(){
-      		window.location = window.location.origin + '/{{ $role }}/transaction/create';
-	    }, 5000);
+	    // window.setTimeout(function(){
+      	// 	window.location = window.location.origin + '/{{ $role }}/transaction/create';
+	    // }, 5000);
 	</script>
 </html>
