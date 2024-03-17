@@ -299,7 +299,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="form-group">
+        <div class="form-group" style="display:none">
             {!! Form::label('total_item_price', 'Total Harga', array('class' => 'col-sm-3 control-label')) !!}
             <div class="col-sm-3">
                 {!! Form::text('total_item_price', null, array('class' => 'form-control', 'readonly' => 'readonly', 'id'
@@ -510,11 +510,13 @@
           function submitForm()
           {
               var isi=true;
-              if ( $("#distributor").val()==""){
+              if(($("#distributor_name").val() == null) && ($("#all_distributor").val() == "null"))
+              {
                 isi=false;
                 alert("silahkan isi distributor");
               }
-              if ( $("#loading_date").val()==""){
+              if($("#loading_date").val()=="")
+              {
                 isi=false;
                 alert("silahkan isi tanggal pembelian");
               }
@@ -526,7 +528,6 @@
               if(isi)
               {
                   document.getElementById('loading-form').submit();
-                  // alert('hay');
               }
 
           }
