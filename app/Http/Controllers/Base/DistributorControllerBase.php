@@ -8,12 +8,12 @@ use App\Models\Distributor;
 
 trait DistributorControllerBase 
 {
-    public function indexDistributorBase($pagination)
+    public function indexDistributorBase($type, $pagination)
     {
         if($pagination == 'all')
-           $distributors = Distributor::orderBy('name', 'asc')->get();
+           $distributors = Distributor::where('type', $type)->orderBy('name', 'asc')->get();
         else
-           $distributors = Distributor::orderBy('name', 'asc')->paginate($pagination);
+           $distributors = Distributor::where('type', $type)->orderBy('name', 'asc')->paginate($pagination);
 
         return $distributors;
     }
