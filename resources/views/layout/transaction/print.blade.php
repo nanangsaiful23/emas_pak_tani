@@ -133,10 +133,13 @@
 			</table>
 			<table class="col-sm-11 none" style="font-size: 20px; text-align: center;">
 				<tr>
-					<td style="text-align: right !important" width="80%">
+					<td style="width: 40%">
+						{!! DNS1D::getBarcodeSVG(date('Y') . $detail->good_unit->good->getBarcode(), 'UPCE', 2, 50, 'black', false) !!}
+					</td>
+					<td style="text-align: right !important" width="60%">
 						Total akhir
 					</td>
-					<td style="text-align: right !important">
+					<td style="text-align: right !important; padding-left: 10px;">
 						{{ showRupiah(checkNull($transaction->total_sum_price)) }}
 					</td>
 				</tr>
@@ -244,10 +247,13 @@
 			</table>
 			<table class="col-sm-11 none" style="font-size: 20px; text-align: center;">
 				<tr>
-					<td style="text-align: right !important" width="80%">
+					<td style="width: 40%">
+						{!! DNS1D::getBarcodeSVG(date('Y') . $detail->good_unit->good->getBarcode(), 'UPCE', 2, 50, 'black', false) !!}
+					</td>
+					<td style="text-align: right !important" width="60%">
 						Total akhir
 					</td>
-					<td style="text-align: right !important">
+					<td style="text-align: right !important; padding-left: 10px;">
 						{{ showRupiah(checkNull($transaction->total_sum_price)) }}
 					</td>
 				</tr>
@@ -287,8 +293,8 @@
         	window.print();
         }); 
 
-	    // window.setTimeout(function(){
-      	// 	window.location = window.location.origin + '/{{ $role }}/transaction/create';
-	    // }, 5000);
+	    window.setTimeout(function(){
+      		window.location = window.location.origin + '/{{ $role }}/transaction/create';
+	    }, 5000);
 	</script>
 </html>

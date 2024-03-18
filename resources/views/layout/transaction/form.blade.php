@@ -293,7 +293,7 @@
                     editPrice(items);
 
                     formatNumber("stone_price-" + type + items);
-                    formatNumber("selling_price-" + type + items);
+                    formatNumber("price-" + type + items);
                     formatNumber("gold_price-" + type + items);
 
                     document.getElementById(name).value = '';
