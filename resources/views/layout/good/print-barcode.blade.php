@@ -40,7 +40,7 @@
 		<table class="space-top-2">
 			<tbody>	
 				<?php $i = 0; ?>
-				@while(isset($goods[$i]))
+				@while(isset($goods[$i * 2]))
 					<tr>
 		            	<td style="width: 20mm; height: 10mm;">
 			            	<div style="text-align: center; height: 8mm;">

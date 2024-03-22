@@ -133,9 +133,13 @@
 			</table>
 			<table class="col-sm-11 none" style="font-size: 20px; text-align: center;">
 				<tr>
-					<td style="width: 40%">
-						{!! DNS1D::getBarcodeSVG(date('Y') . $detail->good_unit->good->getBarcode(), 'UPCE', 2, 50, 'black', false) !!}
-					</td>
+					@foreach($transaction->details as $detail)
+						<td style="width: 40%">
+							{!! DNS1D::getBarcodeSVG(date('Y') . $detail->good_unit->good->getBarcode(), 'UPCE', 2, 50, 'black', false) !!}
+							<br>
+							{{ $detail->good_unit->good->code }}
+						</td>
+					@endforeach
 					<td style="text-align: right !important" width="60%">
 						Total akhir
 					</td>
@@ -168,7 +172,7 @@
 			</div>
 
 			
-			<div class="wrapper" style="margin-top: 70px">
+			<div class="wrapper" style="margin-top: 30px">
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="col-sm-2">	
@@ -247,9 +251,13 @@
 			</table>
 			<table class="col-sm-11 none" style="font-size: 20px; text-align: center;">
 				<tr>
-					<td style="width: 40%">
-						{!! DNS1D::getBarcodeSVG(date('Y') . $detail->good_unit->good->getBarcode(), 'UPCE', 2, 50, 'black', false) !!}
-					</td>
+					@foreach($transaction->details as $detail)
+						<td style="width: 40%">
+							{!! DNS1D::getBarcodeSVG(date('Y') . $detail->good_unit->good->getBarcode(), 'UPCE', 2, 50, 'black', false) !!}
+							<br>
+							{{ $detail->good_unit->good->code }}
+						</td>
+					@endforeach
 					<td style="text-align: right !important" width="60%">
 						Total akhir
 					</td>

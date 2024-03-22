@@ -406,7 +406,7 @@
                 {
                     if(document.getElementById("barcode-" + i).value != '')
                     {
-                        items = (document.getElementById("price-" + i).value * document.getElementById("quantity-" + i).value) + parseInt(unFormatNumber(document.getElementById("stone_price-" + i).value));
+                        items = (unFormatNumber(document.getElementById("price-" + i).value) * document.getElementById("quantity-" + i).value) + parseInt(unFormatNumber(document.getElementById("stone_price-" + i).value));
 
                         total_item_price += parseInt(items);
 
@@ -416,29 +416,6 @@
                         total_sum_price += parseInt(sums);
 
                         discount = document.getElementById("discount-" + i).value;
-                        discount = discount.replace(/,/g,'');
-
-                        total_discount_items += parseInt(discount);
-                    }
-                }
-            }
-
-            for (var i = 1; i <= total_item_retur; i++)
-            {
-                if(document.getElementById("barcode-retur_s" + i))
-                {
-                    if(document.getElementById("barcode-retur_s" + i).value != '')
-                    {
-                        items = document.getElementById("price-retur_s" + i).value * document.getElementById("quantity-retur_s" + i).value;
-
-                        total_item_price -= parseInt(items);
-
-                        sums = document.getElementById("sum-retur_s" + i).value;
-                        sums = sums.replace(/,/g,'');
-
-                        total_sum_price -= parseInt(sums);
-
-                        discount = document.getElementById("discount-retur_s" + i).value;
                         discount = discount.replace(/,/g,'');
 
                         total_discount_items += parseInt(discount);
@@ -518,8 +495,9 @@
         {
             temp1=parseInt(index)+1
             var type = '';
-            
             document.getElementById("total_price-" + type + index).value = unFormatNumber(document.getElementById("price-" + type + index).value);
+            
+            console.log('hay ' + document.getElementById("total_price-" + type + index).value);
 
             document.getElementById("sum-" + type + index).value = parseInt(unFormatNumber(document.getElementById("total_price-" + type + index).value)) - parseInt(unFormatNumber(document.getElementById("discount-" + type + index).value)) + parseInt(unFormatNumber(document.getElementById("stone_price-" + type + index).value));
 
