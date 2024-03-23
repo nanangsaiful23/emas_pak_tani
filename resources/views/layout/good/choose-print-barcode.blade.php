@@ -94,11 +94,12 @@
         $("#weight-" + total_item).html("<h3>MT " + good[3] + "GR</h3>");
       else
         $("#weight-" + total_item).html("<h3>" + good[3] + "GR</h3>");
-      if(good[6] != '0.00' && good[6] != '' && good[6] != null && good[6] != '0')
-      {
-        $("#stone_weight-" + total_item).html("<h5>BATU " + good[6] + "GR</h5>");
-        $("#stone_price-" + total_item).html("<h5>ONGKOS " + good[7] + "</h5>");
-      }
+      $("#stone_weight-" + total_item).html("{{ config('app.store_name') }}");
+      // if(good[6] != '0.00' && good[6] != '' && good[6] != null && good[6] != '0')
+      // {
+      //   $("#stone_weight-" + total_item).html("<h5>BATU " + good[6] + "GR</h5>");
+      //   $("#stone_price-" + total_item).html("<h5>ONGKOS " + good[7] + "</h5>");
+      // }
       
       addElement(total_item);
       total_item += 1;

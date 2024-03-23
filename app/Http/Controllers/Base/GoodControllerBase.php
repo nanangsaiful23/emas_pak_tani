@@ -365,7 +365,7 @@ trait GoodControllerBase
             }
             $barcode .= $good->id;
 
-            $data_good['code'] = $category->code . date('y') . $barcode . date('m') . $request->gold_history_number;
+            $data_good['code'] = $category->code . ' ' . date('y') . ' ' . $barcode . ' ' . date('m') . ' ' . $request->gold_history_number;
             $good->update($data_good);
             $good->code = $data_good['code'];
 
