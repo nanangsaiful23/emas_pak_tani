@@ -65,10 +65,10 @@
 					            		<b>{{ $goods[$i * 2]['old_gold'] . ' ' . $goods[$i * 2]['weight'] }}GR</b>
 					            	</div>
 					            @endif -->
-				            	<div style="font-size: 13px; text-align: center; margin-top: 2mm;">
-				            		<b>{{ $goods[$i * 2]['old_gold'] . ' ' . $goods[$i * 2]['weight'] }}GR</b>
+				            	<div style="font-size: 15px; text-align: center; margin-top: 2mm;">
+				            		<b>{{ $goods[$i * 2]['old_gold'] . ' ' . $goods[$i * 2]['weight'] }} GR</b>
 				            	</div>
-				            	<div style="font-size: 10px; text-align: center;">
+				            	<div style="font-size: 12px; text-align: center;">
 				            		<b>{{ config('app.store_name') }}</b>
 				            	</div>
 			            	</div>
@@ -101,10 +101,10 @@
 						            		<b>{{ $goods[$i * 2 + 1]['old_gold'] . ' ' . $goods[$i * 2 + 1]['weight'] }}GR</b>
 						            	</div>
 						            @endif -->
-					            	<div style="font-size: 13px; text-align: center; margin-top: 2mm;">
-					            		<b>{{ $goods[$i * 2 + 1]['old_gold'] . ' ' . $goods[$i * 2 + 1]['weight'] }}GR</b>
+					            	<div style="font-size: 15px; text-align: center; margin-top: 2mm;">
+					            		<b>{{ $goods[$i * 2 + 1]['old_gold'] . ' ' . $goods[$i * 2 + 1]['weight'] }} GR</b>
 					            	</div>
-					            	<div style="font-size: 10px; text-align: center;">
+					            	<div style="font-size: 12px; text-align: center;">
 					            		<b>{{ config('app.store_name') }}</b>
 					            	</div>
 				            	</div>
