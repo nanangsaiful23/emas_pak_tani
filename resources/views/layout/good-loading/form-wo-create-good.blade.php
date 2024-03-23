@@ -216,7 +216,9 @@
                         <div>
                             <option value="null">Silahkan pilih barang</option>
                             @foreach($goods as $good)
-                            <option value="{{ $good->id }}">{{ $good->name . ' ' }}</option>
+                                @if($good->getStock() <= 0)
+                                    <option value="{{ $good->id }}">{{ $good->name . ' ' }}</option>
+                                @endif
                             @endforeach
                         </div>
                     </select>
@@ -232,7 +234,7 @@
                     <th>Persentase</th>
                     <th>Berat</th>
                     <th>Status Barang</th>
-                    @if($type == 'buy-other')
+                    @if($type == 'buy-other' || $type == 'buy')
                         <th>Harga Beli</th>
                     @endif
                     <th>History Barang</th>
@@ -265,7 +267,7 @@
                                 {!! Form::select('statuses[]', getStatusOther(), null, ['class' => 'form-control select2','required'=>'required', 'style'=>'width:100%', 'id' => 'status-' . $i]) !!}
                             @endif
                         </td>
-                        @if($type == 'buy-other')
+                        @if($type == 'buy-other' || $type == 'buy')
                             <td>
                                  <textarea type="text" name="prices[]" class="form-control" id="price-{{ $i }}"
                                     onchange="editPrice('{{ $i }}')" onkeypress="editPrice('{{ $i }}')"></textarea>
@@ -299,7 +301,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="form-group" style="display:none">
+        <div class="form-group" @if($type == 'loading') style="display:none" @endif>
             {!! Form::label('total_item_price', 'Total Harga', array('class' => 'col-sm-3 control-label')) !!}
             <div class="col-sm-3">
                 {!! Form::text('total_item_price', null, array('class' => 'form-control', 'readonly' => 'readonly', 'id'
@@ -342,18 +344,25 @@
 
               if(good.length != 0)
               {
-                  document.getElementById("name-" + total_item).value = good.id;
-                  document.getElementById("name_temp-" + total_item).value = good.name;
-                  document.getElementById("barcode-" + total_item).value = good.code;
-                  $("#price-" + total_item).val(good.getPcsSellingPrice.buy_price);
-                  document.getElementById("quantity-" + total_item).value = 1;
-                  $("#percentage-" + total_item).val(good.percentage_id).change();
-                  document.getElementById("weight-" + total_item).value = good.weight;
-                  document.getElementById("stone_weight-" + total_item).value = good.stone_weight;
-                  document.getElementById("stone_price-" + total_item).value = good.stone_price;
-                  $("#status-" + total_item).val(good.status).change();
-                  document.getElementById("old_stock-" + total_item).value = good.old_stock;
-                  document.getElementById("new_stock-" + total_item).value = parseInt(good.old_stock) + 1;
+                $("#category_id-" + total_item).val(good.category_id).change();
+                $("#is_old_gold-" + total_item).val(good.is_old_gold).change();
+                $("#name-" + total_item).val(good.name);
+                $("#percentage_id-" + total_item).val(good.percentage_id).change();
+                $("#weight-" + total_item).val(good.weight);
+                $("#status-" + total_item).val(good.status).change();
+                $("#price-" + total_item).val(good.getPcsSellingPrice.buy_price);
+                $("#gold_history_number-" + total_item).val(good.gold_history_number).change();
+                $("#stone_weight-" + total_item).val(good.stone_weight);
+                $("#stone_price-" + total_item).val(good.stone_price);
+
+                  // document.getElementById("name-" + total_item).value = good.id;
+                  // $("#price-" + total_item).val(good.getPcsSellingPrice.buy_price);
+                  // document.getElementById("quantity-" + total_item).value = 1;
+                  // $("#percentage-" + total_item).val(good.percentage_id).change();
+                  // document.getElementById("weight-" + total_item).value = good.weight;
+                  // document.getElementById("stone_weight-" + total_item).value = good.stone_weight;
+                  // document.getElementById("stone_price-" + total_item).value = good.stone_price;
+                  // $("#status-" + total_item).val(good.status).change();
 
                   editPrice(total_item);
                   total_real_item += 1;
@@ -362,7 +371,6 @@
               else
               {
                   alert('Barang tidak ditemukan');
-                  document.getElementById("barcode-" + index).value = '';
                   document.getElementById("name-" + index).focus();
               }
           }
@@ -442,7 +450,7 @@
 
                     for (var i = 0; i < r.length; i++) {
                         const getPcsSellingPrice = {unit_id: r[i].unit_id, buy_price: r[i].buy_price, selling_price: r[i].selling_price};
-                        const good = {id: r[i].good_id, name: r[i].name, code: r[i].code, percentage_id: r[i].percentage_id, weight: r[i].weight, stone_weight: r[i].stone_weight, stone_price: r[i].stone_price, getPcsSellingPrice: getPcsSellingPrice, old_stock: r[i].stock, status: r[i].status};
+                        const good = {id: r[i].good_id, category_id: r[i].category_id, is_old_gold: r[i].is_old_gold, name: r[i].name, code: r[i].code, percentage_id: r[i].percentage.id, weight: r[i].weight, gold_history_number: r[i].gold_history_number, stone_weight: r[i].stone_weight, stone_price: r[i].stone_price, getPcsSellingPrice: getPcsSellingPrice, old_stock: r[i].stock, status: r[i].status};
                         
                         fillItem(good,index);
                     }
@@ -462,8 +470,13 @@
                   {
                       if(document.getElementById("name-" + i).value != '')
                       {
-                          money = document.getElementById("total_price-" + i).value;
-                          money = money.replace(/,/g,'');
+                          if(document.getElementById("total_price-" + i).value == null || document.getElementById("total_price-" + i).value == '')
+                            money = 0;
+                          else
+                          {
+                              money = document.getElementById("total_price-" + i).value;
+                              money = money.replace(/,/g,'');
+                          }
                           if(document.getElementById("stone_price-" + i).value == null || document.getElementById("stone_price-" + i).value == '')
                             stone = 0;
                           else
@@ -572,7 +585,7 @@
               htmlResult += '<td><select class="form-control select2" id="percentage_id-' + temp1 + '" name="percentage_ids[]">@foreach(getPercentageObjects() as $percentage)<option value="{{ $percentage->id }}">{{ $percentage->name }}</option> @endforeach </select></td>';
               htmlResult += '<td><textarea type="text" name="weights[]" class="form-control" id="weight-' + temp1 + '"></textarea></td>';
               htmlResult += '<td>@if($type == "loading") <textarea type="text" name="statuses[]" class="form-control" id="status-' + temp1 + '" readonly="readonly">Siap dijual</textarea> @else <select class="form-control select2" id="status-' + temp1 + '" name="statuses[]">@foreach(getStatusOther() as $x => $y)<option value="{{ $x }}">{{ $y }}</option> @endforeach </select>@endif</td>';
-              htmlResult += '@if($type == "buy-other")<td><textarea type="text" name="prices[]" class="form-control" id="price-' + temp1+'" onkeypress="editPrice(' + temp1+')" onchange="editPrice(' + temp1+ ')"></textarea></td><td style="display: none"><textarea class="form-control" readonly="readonly" id="total_price-' + temp1+ '" name="total_prices[]" type="text"></textarea></td> @elseif($type == "loading")<td style="display: none"><textarea type="text" name="prices[]" class="form-control" id="price-' + temp1+'" onkeypress="editPrice(' + temp1+')" onchange="editPrice(' + temp1+ ')"></textarea></td><td style="display: none"><textarea class="form-control" readonly="readonly" id="total_price-' + temp1+ '" name="total_prices[]" type="text"></textarea></td> @endif';
+              htmlResult += '@if($type == "buy-other" || $type == "buy")<td><textarea type="text" name="prices[]" class="form-control" id="price-' + temp1+'" onkeypress="editPrice(' + temp1+')" onchange="editPrice(' + temp1+ ')"></textarea></td><td style="display: none"><textarea class="form-control" readonly="readonly" id="total_price-' + temp1+ '" name="total_prices[]" type="text"></textarea></td> @elseif($type == "loading")<td style="display: none"><textarea type="text" name="prices[]" class="form-control" id="price-' + temp1+'" onkeypress="editPrice(' + temp1+')" onchange="editPrice(' + temp1+ ')"></textarea></td><td style="display: none"><textarea class="form-control" readonly="readonly" id="total_price-' + temp1+ '" name="total_prices[]" type="text"></textarea></td> @endif';
               htmlResult += '<td><select class="form-control select2" id="gold_history_number-' + temp1 + '" name="gold_history_numbers[]">@foreach(getGoldHistoryNumber() as $x => $y)<option value="{{ $x }}">{{ $y }}</option> @endforeach </select></td>';
               htmlResult += '<td><textarea class="form-control" id="stone_weight-' + temp1 + '" name="stone_weights[]" type="text"></textarea></td><td><textarea class="form-control" id="stone_price-' + temp1 + '" name="stone_prices[]" type="text"></textarea></td><td><i class="fa fa-times red" id="delete-' + temp1+'" onclick="deleteItem(' + temp1+ ')"></i></td></tr>';
               htmlResult += "<script>$('#category_id-" + temp1 + "').select2();$('#is_old_gold-" + temp1 + "').select2();$('#percentage_id-" + temp1 + "').select2();$('#gold_history_number-" + temp1 + "').select2();@if($type != 'loading')$('#status-" + temp1 + "').select2();@endif<\/script>";

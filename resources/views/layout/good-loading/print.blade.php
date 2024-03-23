@@ -98,7 +98,7 @@
 							<td>{{ $detail->good_unit->good->percentage->name }}</td>
 							<td>{{ $detail->good_unit->good->code }}</td>
 							<td>{{ $detail->good_unit->good->weight }} gram</td>
-							<td style="text-align: right !important;">{{ showRupiah($detail->price) }}</td>
+							<td style="text-align: right !important;">{{ showRupiah($detail->price + checkNull($detail->good_unit->good->stone_price)) }}</td>
 						</tr>
 					@endforeach
 				</tbody>

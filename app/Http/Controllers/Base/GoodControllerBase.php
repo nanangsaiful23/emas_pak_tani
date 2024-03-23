@@ -197,17 +197,18 @@ trait GoodControllerBase
         {
             $temp = [];
             $temp['good_id'] = $good->id;
+            $temp['category_id'] = $good->category_id;
+            $temp['is_old_gold'] = $good->is_old_gold;
             $temp['good_unit_id'] = $unit->id;
             $temp['unit_id'] = $unit->unit_id;
             $temp['code'] = $good->code;
             $temp['name'] = $good->name;
             $temp['percentage'] = $good->percentage;
             $temp['weight'] = $good->weight;
-            $temp['unit'] = $unit->unit->name;
-            $temp['buy_price'] = $unit->buy_price;
-            $temp['selling_price'] = $unit->selling_price;
-            $temp['stock'] = $good->stock;
             $temp['status'] = $good->status;
+            $temp['gold_history_number'] = $good->gold_history_number;
+            $temp['stone_price'] = $good->stone_price;
+            $temp['stone_weight'] = $good->stone_weight;
             array_push($units, $temp);
         }
 
