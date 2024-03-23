@@ -245,6 +245,12 @@
                 <tbody id="table-transaction">
                     <?php $i = 1; ?>
                     <tr id="row-data-{{ $i }}">
+                        @if($type == 'buy')
+                            <td style="display: none;">
+                                {!! Form::textarea('ids[]', null, array('class' => 'form-control', 'readonly' =>
+                                'readonly', 'id' => 'id-'.$i)) !!}
+                            </td>
+                        @endif
                         <td>
                             {!! Form::select('category_ids[]', getCategoriesWoAll(), null, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'category_id-' . $i]) !!}
                         </td>
@@ -344,6 +350,9 @@
 
               if(good.length != 0)
               {
+                @if($type == 'buy')
+                    $("#id-" + total_item).val(good.id);
+                @endif
                 $("#category_id-" + total_item).val(good.category_id).change();
                 $("#is_old_gold-" + total_item).val(good.is_old_gold).change();
                 $("#name-" + total_item).val(good.name);
@@ -579,6 +588,10 @@
               changeTotal();
               temp1=parseInt(index)+1
               htmlResult = '<tr id="row-data-' + temp1+ '">';
+
+              @if($type == 'buy')
+                htmlResult += '<td style="display: none"><textarea type="text" name="ids[]" class="form-control" id="id-' + temp1+'"></textarea></td>';
+              @endif
               htmlResult += '<td><select class="form-control select2" id="category_id-' + temp1 + '" name="category_ids[]">@foreach(getCategoryObjects() as $category)<option value="{{ $category->id }}">{{ $category->name }}</option> @endforeach </select></td>';
               htmlResult += '<td><select class="form-control select2" id="is_old_gold-' + temp1 + '" name="is_old_golds[]">@foreach(getGoldTypes() as $x => $y)<option value="{{ $x }}">{{ $y }}</option> @endforeach </select></td>';
               htmlResult += '<td><textarea id="name-' + temp1 + '" name="names[]" type="text" style="height: 70px"></textarea></td>';

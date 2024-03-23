@@ -491,30 +491,30 @@ trait GoodControllerBase
         $good = Good::find($good_id);
         $good->update($data);
 
-        $good_unit = GoodUnit::where('good_id', $good->id)
-                             ->where('unit_id', 1)
-                             ->first();
+        // $good_unit = GoodUnit::where('good_id', $good->id)
+        //                      ->where('unit_id', 1)
+        //                      ->first();
 
-        $data['selling_price'] = unformatNumber($data['selling_price']);
+        // $data['selling_price'] = unformatNumber($data['selling_price']);
 
-        if($good_unit)
-        {
-            if($good_unit->selling_price != $data['selling_price'])
-            {
-                $data_price['role']         = $role;
-                $data_price['role_id']      = \Auth::user()->id;
-                $data_price['good_unit_id'] = $good_unit->id;
-                $data_price['old_price']    = $good_unit->selling_price;
-                $data_price['recent_price'] = $data['selling_price'];
-                $data_price['reason']       = 'Diubah saat edit barang';
+        // if($good_unit)
+        // {
+        //     if($good_unit->selling_price != $data['selling_price'])
+        //     {
+        //         $data_price['role']         = $role;
+        //         $data_price['role_id']      = \Auth::user()->id;
+        //         $data_price['good_unit_id'] = $good_unit->id;
+        //         $data_price['old_price']    = $good_unit->selling_price;
+        //         $data_price['recent_price'] = $data['selling_price'];
+        //         $data_price['reason']       = 'Diubah saat edit barang';
 
-                GoodPrice::create($data_price);
-            }
+        //         GoodPrice::create($data_price);
+        //     }
 
-            $data_unit['selling_price'] = $data['selling_price'];
+        //     $data_unit['selling_price'] = $data['selling_price'];
 
-            $good_unit->update($data_unit);
-        }
+        //     $good_unit->update($data_unit);
+        // }
 
         return $good;
     }

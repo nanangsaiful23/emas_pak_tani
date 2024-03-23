@@ -109,6 +109,7 @@ trait GoodLoadingControllerBase
     public function storeGoodLoadingBase($role, $role_id, Request $request)
     {
         $data = $request->input();
+        // dd($data);die;
 
         if($data['distributor_name'] != null)
         {
@@ -142,10 +143,12 @@ trait GoodLoadingControllerBase
                 $data['prices'][$i] = unformatNumber($data['prices'][$i]);
                 $data['stone_prices'][$i] = unformatNumber($data['stone_prices'][$i]);
 
-                // $good = Good::where('name', $data['names'][$i])->first();
-
-                // if($good == null)
-                // {
+                if($request->type == 'buy')
+                {
+                    $good = Good::find($data['ids'][$i]);
+                }
+                else
+                {
                     $data_good['category_id'] = $data['category_ids'][$i];
                     $data_good['is_old_gold'] = $data['is_old_golds'][$i];
                     $data_good['name'] = $data['names'][$i];
@@ -187,22 +190,27 @@ trait GoodLoadingControllerBase
 
                     $data_code['code'] = $category->code . date('y') . $barcode . date('m') . $good->gold_history_number;
                     $good->update($data_code);
+                }
+                // $good = Good::where('name', $data['names'][$i])->first();
 
-                    $data_unit['good_id']       = $good->id;
-                    $data_unit['unit_id']       = 1;
-                    $data_unit['buy_price']     = $data['prices'][$i];
-                    $data_unit['selling_price'] = 1;
+                // if($good == null)
+                // {
+                    
+                $data_unit['good_id']       = $good->id;
+                $data_unit['unit_id']       = 1;
+                $data_unit['buy_price']     = $data['prices'][$i];
+                $data_unit['selling_price'] = 1;
 
-                    $good_unit = GoodUnit::create($data_unit);
+                $good_unit = GoodUnit::create($data_unit);
 
-                    $data_price['role']         = $role;
-                    $data_price['role_id']      = $role_id;
-                    $data_price['good_unit_id'] = $good_unit->id;
-                    $data_price['old_price']    = $good_unit->selling_price;
-                    $data_price['recent_price'] = 1;
-                    $data_price['reason']       = 'Harga pertama';
+                $data_price['role']         = $role;
+                $data_price['role_id']      = $role_id;
+                $data_price['good_unit_id'] = $good_unit->id;
+                $data_price['old_price']    = $good_unit->selling_price;
+                $data_price['recent_price'] = 1;
+                $data_price['reason']       = 'Harga pertama';
 
-                    GoodPrice::create($data_price);
+                GoodPrice::create($data_price);
                 // }
 
                 $data['selling_prices'][$i] = 1;
