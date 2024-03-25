@@ -21,7 +21,7 @@ class CreateGoodsTable extends Migration
             $table->bigInteger('brand_id')
                   ->unsigned()
                   ->nullable();
-            $table->boolean('is_old_gold')
+            $table->integer('is_old_gold')
                   ->default(0)
                   ->nullable();
             $table->string('code')

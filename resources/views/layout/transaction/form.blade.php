@@ -283,12 +283,12 @@
                     // document.getElementById("total_price-" + type + items).value = good.getPcsSellingPrice.selling_price;
 
                     var today_gold_buy_price = parseInt('{{ getTodayGoldPrice()->buy_price }}');
-                    var today_gold_selling_price = parseInt('{{ getTodayGoldPrice()->selling_price }}');
+                    // var today_gold_selling_price = parseInt('{{ getTodayGoldPrice()->selling_price }}');
 
                     document.getElementById("gold_price-" + type + items).value = today_gold_selling_price;
 
                     document.getElementById("buy_price-" + type + items).value = document.getElementById("weight-" + type + items).value * document.getElementById("percentage-" + type + items).value * today_gold_buy_price;
-                    document.getElementById("price-" + type + items).value = document.getElementById("weight-" + type + items).value * document.getElementById("percentage-" + type + items).value * today_gold_selling_price;
+                    document.getElementById("price-" + type + items).value = document.getElementById("weight-" + type + items).value * document.getElementById("percentage-" + type + items).value * today_gold_buy_price;
 
                     editPrice(items);
 

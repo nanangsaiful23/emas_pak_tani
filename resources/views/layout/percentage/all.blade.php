@@ -16,6 +16,7 @@
               <tr>
                 <th>Nama Persentase</th>
                 <th>Persentase Pengali Harga Emas</th>
+                <th>Laba</th>
                 @if($role == 'admin')
                   <th class="center">Edit</th>
                   <th class="center">Hapus</th>
@@ -27,6 +28,7 @@
                   <tr>
                     <td>{{ $percentage->name }}</td>
                     <td>{{ $percentage->nominal }}</td>
+                    <td>{{ $percentage->profit }} %</td>
                     @if($role == 'admin')
                       <td class="center">
                         <a href="{{ url($role . '/percentage/' . $percentage->id . '/edit') }}" target="_blank()"><i class="fa fa-pencil-square-o orange" aria-hidden="true"></i></a><br>

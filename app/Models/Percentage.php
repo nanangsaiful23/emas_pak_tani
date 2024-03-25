@@ -10,7 +10,7 @@ class Percentage extends Model
     use SoftDeletes;
     
     protected $fillable = [
-        'nominal', 'name'
+        'nominal', 'name', 'profit'
     ];
 
     protected $hidden = [

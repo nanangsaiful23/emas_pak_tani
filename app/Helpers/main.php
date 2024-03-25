@@ -313,7 +313,7 @@
 
     function getGoldTypes()
     {
-        $types = [0 => 'Emas Muda', 1 => 'Emas Tua'];
+        $types = [0 => 'Emas Muda', 1 => 'Emas Tua', '2' => 'Emas Pertengahan'];
 
         return $types;
     }

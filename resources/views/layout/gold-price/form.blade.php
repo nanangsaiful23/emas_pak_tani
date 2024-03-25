@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+       <!--  <div class="form-group">
             {!! Form::label('selling_price', 'Harga Jual', array('class' => 'col-sm-12')) !!}
             <div class="col-sm-5">
                 @if($SubmitButtonText == 'View')
@@ -31,7 +31,7 @@
                     {!! Form::text('selling_price', null, array('class' => 'form-control', 'required'=>'required', 'id' => 'selling_price', 'onkeyup' => 'formatNumber("selling_price")')) !!}
                 @endif
             </div>
-        </div>
+        </div> -->
 
        <!--  <div class="form-group">
             {!! Form::label('percentage', 'Persentase/Karat', array('class' => 'col-sm-12')) !!}

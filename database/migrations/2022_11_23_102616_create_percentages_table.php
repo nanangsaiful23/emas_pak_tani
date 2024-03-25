@@ -19,6 +19,8 @@ class CreatePercentagesTable extends Migration
                   ->nullable();
             $table->string('name')
                   ->nullable();
+            $table->string('profit')
+                  ->nullable();
                   
             $table->timestamps();
             $table->softDeletes();
