@@ -83,7 +83,7 @@
                     </td>
                     <td>{{ $good->weight }} gram</td>
                     <td>{{ $good->percentage->name }}</td>
-                    @if($good->stone_weight != '0.00' || $good->stone_weight != null || $good->stone_weight != '' || $good->stone_weight != '0') 
+                    @if($good->stone_weight != '0.00' && $good->stone_weight != null && $good->stone_weight != '' && $good->stone_weight != '0') 
                       <td>{{ $good->stone_weight }} gram</td>
                       <td>{{ showRupiah($good->stone_price) }}</td>
                     @else
