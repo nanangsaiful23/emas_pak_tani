@@ -83,8 +83,13 @@
                     </td>
                     <td>{{ $good->weight }} gram</td>
                     <td>{{ $good->percentage->name }}</td>
-                    <td>{{ $good->stone_weight }} gram</td>
-                    <td>{{ showRupiah($good->stone_price) }}</td>
+                    @if($good->stone_weight != '0.00' || $good->stone_weight != null || $good->stone_weight != '' || $good->stone_weight != '0') 
+                      <td>{{ $good->stone_weight }} gram</td>
+                      <td>{{ showRupiah($good->stone_price) }}</td>
+                    @else
+                      <td>-</td>
+                      <td>-</td>
+                    @endif
                     <td @if($good->status != 'Siap dijual') style="background-color: red !important"@endif>
                       {{ $good->status }}<br>
                       @if($good->status != 'Siap dijual')
