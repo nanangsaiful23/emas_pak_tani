@@ -188,7 +188,7 @@ trait GoodLoadingControllerBase
                     }
                     $barcode .= $good->id;
 
-                    $data_code['code'] = $category->code . date('y') . $barcode . date('m') . $good->gold_history_number;
+                    $data_code['code'] = $category->code . ' ' . date('y') . ' ' . $barcode . ' ' . date('m') . ' ' . $good->gold_history_number;
                     $good->update($data_code);
                 }
                 // $good = Good::where('name', $data['names'][$i])->first();
