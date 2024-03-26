@@ -57,7 +57,7 @@
                   <th style="width: 20%; text-align: center;">Nama</th>
                   <th style="width: 12%; text-align: center;">Berat Emas</th>
                   <th style="width: 12%; text-align: center;">Persentase</th>
-                  <th style="width: 12%; text-align: center;">Berat Batu</th>
+                  <th style="width: 10%; text-align: center;">Berat Batu</th>
                   <th style="width: 12%; text-align: center;">Harga Batu</th>
                   <th style="width: 12%; text-align: center;">Status</th>
                   <th style="width: 12%; text-align: center;">Stock</th>
@@ -65,7 +65,7 @@
                   @if(\Auth::user()->email == 'admin')
                     <!-- <th style="width: 10%; text-align: center;">Harga Beli</th> -->
                   @endif
-                  <th style="width: 5%; text-align: center;">Action</th>
+                  <th style="width: 10%; text-align: center;">Action</th>
                 </tr>
               </thead>
               <tbody>
