@@ -25,6 +25,9 @@ class CreateGoodUnitsTable extends Migration
                   ->nullable();
             $table->string('selling_price')
                   ->nullable();
+            $table->boolean('is_barcode_printed')
+                  ->default(0)
+                  ->nullable();
 
             $table->timestamps();
             $table->softDeletes();

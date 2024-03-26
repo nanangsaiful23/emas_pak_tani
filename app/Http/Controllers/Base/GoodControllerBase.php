@@ -818,6 +818,9 @@ trait GoodControllerBase
                         array_push($goods, $data);
                     }
                 }
+
+                $data_good_unit['is_barcode_printed'] = 1;
+                $good_unit->update($data_good_unit);
             }
         }
         

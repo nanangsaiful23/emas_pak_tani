@@ -129,9 +129,9 @@
                       </td>
                     @endif -->
                     <td>
-                      <a href="{{ url($role . '/good/' . $good->id . '/detail') }}" target="_blank()"><i class="fa fa-hand-o-right tosca" aria-hidden="true"></i></a><br>
-                      <a href="{{ url($role . '/good/' . $good->id . '/edit') }}" target="_blank()"><i class="fa fa-pencil-square-o orange" aria-hidden="true"></i></a><br>
-                      <a href="{{ url($role . '/good/' . $good->id . '/photo/create') }}" target="_blank()"><i class="fa fa-camera orange" aria-hidden="true"></i></a><br>
+                      <a href="{{ url($role . '/good/' . $good->id . '/detail') }}" target="_blank()"><i class="fa fa-hand-o-right tosca" aria-hidden="true"></i> Detail</a><br>
+                      <a href="{{ url($role . '/good/' . $good->id . '/edit') }}" target="_blank()"><i class="fa fa-pencil-square-o orange" aria-hidden="true"></i> Edit</a><br>
+                      <a href="{{ url($role . '/good/' . $good->id . '/photo/create') }}" target="_blank()"><i class="fa fa-camera orange" aria-hidden="true"></i> Photo</a><br>
                       @if($good->getStock() == 0)
                         <button type="button" class="no-btn" data-toggle="modal" data-target="#modal-danger-{{$good->id}}"><i class="fa fa-times red" aria-hidden="true"></i></button>
 
@@ -222,7 +222,7 @@
                 htmlResult += "</td>";
               }
 
-              htmlResult += "<td><a href=\"" + window.location.origin + "/" + '{{ $role }}' + "/good/" + r[i].id + "/detail\" target=\"_blank()\"><i class=\"fa fa-hand-o-right tosca\" aria-hidden=\"true\"></i></a><br><a href=\"" + window.location.origin + "/" + '{{ $role }}' + "/good/" + r[i].id + "/edit\" target=\"_blank()\"><i class=\"fa fa-pencil-square-o orange\"></i></a><br><a href=\"" + window.location.origin + "/" + '{{ $role }}' + "/good/" + r[i].id + "/photo/create\" target=\"_blank()\"><i class=\"fa fa-camera orange\"></i></a><br>";
+              htmlResult += "<td><a href=\"" + window.location.origin + "/" + '{{ $role }}' + "/good/" + r[i].id + "/detail\" target=\"_blank()\"><i class=\"fa fa-hand-o-right tosca\" aria-hidden=\"true\"></i> Detail</a><br><a href=\"" + window.location.origin + "/" + '{{ $role }}' + "/good/" + r[i].id + "/edit\" target=\"_blank()\"><i class=\"fa fa-pencil-square-o orange\"></i> Edit</a><br><a href=\"" + window.location.origin + "/" + '{{ $role }}' + "/good/" + r[i].id + "/photo/create\" target=\"_blank()\"><i class=\"fa fa-camera orange\"></i> Photo</a><br>";
 
 
               if(r[i].stock == '0')

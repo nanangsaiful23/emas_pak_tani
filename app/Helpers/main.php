@@ -339,7 +339,7 @@
                               ->where('goods.status', 'Siap dijual')
                               ->where('goods.deleted_at', null)
                               ->orderBy('goods.name', 'asc')->get();
-
+                              
         return $good_units;
     }
 

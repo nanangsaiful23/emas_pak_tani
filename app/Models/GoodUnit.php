@@ -10,7 +10,7 @@ class GoodUnit extends Model
     use SoftDeletes;
     
     protected $fillable = [
-        'good_id', 'unit_id', 'buy_price', 'selling_price'
+        'good_id', 'unit_id', 'buy_price', 'selling_price', 'is_barcode_printed'
     ];
 
     protected $hidden = [

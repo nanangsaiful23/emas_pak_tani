@@ -41,7 +41,7 @@
 			<tbody>	
 				<?php $i = 0; ?>
 				@while(isset($goods[$i * 2]))
-					<tr style="height: 24mm !important">
+					<tr style="height: 26mm !important">
 		            	<td style="width: 20mm; height: 10mm;">
 			            	<div style="text-align: center; height: 8mm;">
 				            	<div style="font-size: 5px;">{!! DNS1D::getBarcodeSVG(date('Y') . $goods[$i * 2]['barcode'], 'UPCE', 1.3, 20, 'black', false) !!}</div>
