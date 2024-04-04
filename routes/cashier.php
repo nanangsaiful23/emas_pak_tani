@@ -25,7 +25,18 @@ Route::group(['prefix' => 'good'], function () {
     Route::get('/{good_id}/detail', 'GoodController@detail');
     Route::get('/{good_id}/edit', 'GoodController@edit');
     Route::put('/{good_id}/edit', 'GoodController@update')->name('good.update');
-	Route::get('/{category_id}/{distributor_id}/{pagination}', 'GoodController@index');
+	Route::get('/{category_id}/{distributor_id}/{status}/{pagination}', 'GoodController@index');
+});
+
+Route::group(['prefix' => 'good-loading'], function () {
+	Route::get('/{type}/create', 'GoodLoadingController@create');
+    Route::post('/store', 'GoodLoadingController@store')->name('good-loading.store');
+	Route::get('/excel', 'GoodLoadingController@excel');
+    Route::post('/storeExcel', 'GoodLoadingController@storeExcel')->name('good-loading.storeExcel');
+	Route::get('/{type}/{start_date}/{end_date}/{distributor_id}/{pagination}', 'GoodLoadingController@index');
+    Route::get('/{good_loading_id}/detail', 'GoodLoadingController@detail');
+    Route::get('/{good_loading_id}/print', 'GoodLoadingController@print');
+	Route::get('/{good_loading_id}/printBarcode', 'GoodLoadingController@printBarcode');
 });
 
 Route::group(['prefix' => 'good-price'], function () {

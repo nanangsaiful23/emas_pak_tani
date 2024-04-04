@@ -15,11 +15,13 @@
             {!! Form::label('show', 'Show', array('class' => 'col-sm-1 control-label')) !!}
            <div class="col-sm-1">
               {!! Form::select('show', getPaginations(), $pagination, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'show', 'onchange' => 'advanceSearch()']) !!}
-            </div>
-            {!! Form::label('type', 'Tipe', array('class' => 'col-sm-1 control-label')) !!}
-           <div class="col-sm-3">
-              {!! Form::select('type', getGoodLoadingTypes(), $type, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'type', 'onchange' => 'advanceSearch()']) !!}
-            </div>
+           </div>
+           @if($type != 'loading')
+             {!! Form::label('type', 'Tipe', array('class' => 'col-sm-1 control-label')) !!}
+             <div class="col-sm-3">
+                {!! Form::select('type', getGoodLoadingTypes(), $type, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'type', 'onchange' => 'advanceSearch()']) !!}
+              </div>
+            @endif
             {!! Form::label('distributor', 'Distributor', array('class' => 'col-sm-1 control-label')) !!}
             <div class="col-sm-3">
               {!! Form::select('distributor', getDistributorLoading($distributor_id, $start_date, $end_date), $distributor_id, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'distributor', 'onchange' => 'advanceSearch()']) !!}
@@ -56,6 +58,7 @@
                 <th>Catatan</th>
                 <th>User</th>
                 <th class="center">Detail</th>
+                <th class="center">Print</th>
               </tr>
               </thead>
               <tbody id="table-good">
@@ -70,6 +73,11 @@
                     <td>{{ $good_loading->note }}</td>
                     <td>{{ $good_loading->actor()->name }}</td>
                     <td class="center"><a href="{{ url($role . '/good-loading/' . $good_loading->id . '/detail') }}"><i class="fa fa-hand-o-right tosca" aria-hidden="true"></i></a></td>
+                    @if($type == 'loading')
+                      <td class="center"><a href="{{ url($role . '/good-loading/' . $good_loading->id . '/printBarcode') }}" target="_blank()"><i class="fa fa-print tosca" aria-hidden="true"></i></a></td>
+                    @else
+                      <td class="center"><a href="{{ url($role . '/good-loading/' . $good_loading->id . '/print') }}" target="_blank()"><i class="fa fa-print tosca" aria-hidden="true"></i></a></td>
+                    @endif
                   </tr>
                 @endforeach
               </tbody>

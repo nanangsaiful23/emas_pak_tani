@@ -19,17 +19,17 @@ class GoodController extends Controller
         $this->middleware('cashier');
     }
 
-    public function index($category_id, $distributor_id, $pagination)
+    public function index($category_id, $distributor_id, $status, $pagination)
     {
         [$default['type'], $default['color'], $default['data']] = alert();
 
         $default['page_name'] = 'Daftar Barang';
-        $default['page'] = 'Good';
+        $default['page'] = 'good';
         $default['section'] = 'all';
 
-        $goods = $this->indexGoodBase($category_id, $distributor_id, $pagination);
+        $goods = $this->indexGoodBase($category_id, $distributor_id, $status, $pagination);
 
-        return view('cashier.layout.page', compact('default', 'goods', 'category_id', 'distributor_id', 'pagination'));
+        return view('cashier.layout.page', compact('default', 'goods', 'category_id', 'distributor_id', 'status', 'pagination'));
     }
 
     public function searchByBarcode($barcode)

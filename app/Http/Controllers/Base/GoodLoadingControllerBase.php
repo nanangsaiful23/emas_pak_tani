@@ -28,6 +28,7 @@ trait GoodLoadingControllerBase
                 {
                     $good_loadings = GoodLoading::whereDate('good_loadings.created_at', '>=', $start_date)
                                                 ->whereDate('good_loadings.created_at', '<=', $end_date) 
+                                                ->where('type', '!=', 'loading')
                                                 ->orderBy('good_loadings.loading_date','asc')
                                                 ->get();
                 }
@@ -46,6 +47,7 @@ trait GoodLoadingControllerBase
                 {
                     $good_loadings = GoodLoading::whereDate('good_loadings.created_at', '>=', $start_date)
                                                 ->whereDate('good_loadings.created_at', '<=', $end_date)
+                                                ->where('type', '!=', 'loading')
                                                 ->orderBy('good_loadings.loading_date','asc')
                                                 ->paginate($pagination);
                 }
@@ -68,6 +70,7 @@ trait GoodLoadingControllerBase
                     $good_loadings = GoodLoading::whereDate('good_loadings.created_at', '>=', $start_date)
                                                 ->whereDate('good_loadings.created_at', '<=', $end_date) 
                                                 ->where('good_loadings.distributor_id', $distributor_id)
+                                                ->where('type', '!=', 'loading')
                                                 ->orderBy('good_loadings.loading_date','asc')
                                                 ->get();
                 }
@@ -88,6 +91,7 @@ trait GoodLoadingControllerBase
                     $good_loadings = GoodLoading::whereDate('good_loadings.created_at', '>=', $start_date)
                                                 ->whereDate('good_loadings.created_at', '<=', $end_date)
                                                 ->where('good_loadings.distributor_id', $distributor_id)
+                                                ->where('type', '!=', 'loading')
                                                 ->orderBy('good_loadings.loading_date','asc')
                                                 ->paginate($pagination);
                 }

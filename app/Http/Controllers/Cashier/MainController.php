@@ -57,14 +57,6 @@ class MainController extends Controller
                                     ->whereDate('journals.journal_date', '=', date('Y-m-d')) 
                                     ->get();
 
-        $good_prices = GoodPrice::join('good_units', 'good_units.id', 'good_prices.good_unit_id')
-                                ->join('goods', 'goods.id', 'good_units.good_id')
-                                ->select('good_prices.*')
-                                ->where('good_prices.is_checked', 0)
-                                ->where('good_units.deleted_at', null)
-                                ->where('goods.deleted_at', null)
-                                ->get();
-
-        return view('cashier.index', compact('default', 'transactions', 'other_transactions', 'good_prices'));
+        return view('cashier.index', compact('default', 'transactions', 'other_transactions'));
     }
 }

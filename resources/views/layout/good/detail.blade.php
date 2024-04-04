@@ -67,9 +67,11 @@
                     </div>
                     <hr>
                     <div class="row">
-                      <a href="{{ url($role . '/good/' . $good->id . '/edit') }}" class="btn btn-info btn-flat btn-block form-control" target="_blank()">Ubah Data Barang</a>
-                      <a href="{{ url($role . '/good/' . $good->id . '/transaction/2018-01-01/' . date('Y-m-d') . '/10') }}" class="btn btn-flat btn-block form-control back-pink white" target="_blank()">Lihat Riwayat Penjualan Barang</a>
-                      <a href="{{ url($role . '/good/' . $good->id . '/loading/2018-01-01/' . date('Y-m-d') . '/10') }}" class="btn btn-success btn-flat btn-block form-control" target="_blank()">Lihat Riwayat Loading Barang</a>
+                        @if($role == 'admin')
+                          <a href="{{ url($role . '/good/' . $good->id . '/edit') }}" class="btn btn-info btn-flat btn-block form-control" target="_blank()">Ubah Data Barang</a>
+                          <a href="{{ url($role . '/good/' . $good->id . '/transaction/2018-01-01/' . date('Y-m-d') . '/10') }}" class="btn btn-flat btn-block form-control back-pink white" target="_blank()">Lihat Riwayat Penjualan Barang</a>
+                          <a href="{{ url($role . '/good/' . $good->id . '/loading/2018-01-01/' . date('Y-m-d') . '/10') }}" class="btn btn-success btn-flat btn-block form-control" target="_blank()">Lihat Riwayat Loading Barang</a>
+                        @endif
                       <a href="{{ url($role . '/good/all/all/Siap dijual/20') }}" class="btn btn-success btn-flat btn-block form-control" target="_blank()">Kembali ke Daftar Barang</a>
                       <!-- <a href="{{ url($role . '/good/' . $good->id . '/price/10') }}" class="btn btn-danger btn-flat btn-block form-control" target="_blank()">Lihat Riwayat Pricing Barang</a> -->
                     </div>

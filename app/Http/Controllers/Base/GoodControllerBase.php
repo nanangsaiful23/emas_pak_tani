@@ -247,6 +247,16 @@ trait GoodControllerBase
             $good->transaction = $good->good_transactions()->sum('real_quantity') / $good->getPcsSellingPrice()->unit->quantity;
             $good->loading = $good->good_loadings()->sum('real_quantity') / $good->getPcsSellingPrice()->unit->quantity;
             $good->unit = $good->getPcsSellingPrice() == null ? "" : $good->getPcsSellingPrice()->unit->code;
+            $good->percentage = $good->percentage;
+            if($good->stone_weight != '0.00' && $good->stone_weight != null && $good->stone_weight != '' && $good->stone_weight != '0')
+            {
+                $good->stone_price = showRupiah($good->stone_price);
+            }
+            else
+            {
+                $good->stone_weight = '-';
+                $good->stone_price = '-';
+            }
 
             foreach($good->good_units as $unit)
             {

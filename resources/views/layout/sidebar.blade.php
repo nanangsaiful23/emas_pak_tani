@@ -86,6 +86,8 @@
               </li>
           </ul>
         </li>
+      @endif
+      @if($role == 'admin' || \Auth::user()->role == 'kulak_cashier') 
         <li class="treeview {{ (Request::segment(2) == 'good-loading' && Request::segment(3) == 'loading' ) ? 'active' : ''  }}">
           <a href="#">
               <i class="fa fa-truck"></i><span> Kulak Emas</span>
@@ -98,7 +100,9 @@
               <li class="{{ Request::segment(2) == 'good-loading' && Request::segment(4) != 'create' && Request::segment(3) == 'loading' && Request::segment(4) != 'excel' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/good-loading/loading/' . date('Y-m-d') . '/' . date('Y-m-d') . '/all/50') }}"><i class="fa fa-circle-o"></i> Daftar Kulak Emas</a></li>
           </ul>
         </li>
-        <li class="treeview {{ (Request::segment(2) == 'good-loading' && (Request::segment(3) == 'buy' || Request::segment(3) == 'buy-other') ) ? 'active' : ''  }}">
+      @endif
+      @if($role == 'admin' || \Auth::user()->role == 'pembelian_cashier') 
+        <li class="treeview {{ (Request::segment(2) == 'good-loading' && Request::segment(3) != 'loading' ) ? 'active' : ''  }}">
           <a href="#">
               <i class="fa fa-dollar"></i><span> Pembelian Emas</span>
             <span class="pull-right-container">
@@ -108,22 +112,24 @@
           <ul class="treeview-menu">
               <li class="{{ Request::segment(2) == 'good-loading' && Request::segment(4) == 'create' && Request::segment(3) == 'buy' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/good-loading/buy/create') }}"><i class="fa fa-circle-o"></i> Pembelian Emas dengan Surat</a></li>
               <li class="{{ Request::segment(2) == 'good-loading' && Request::segment(4) == 'create' && Request::segment(3) == 'buy-other' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/good-loading/buy-other/create') }}"><i class="fa fa-circle-o"></i> Pembelian Emas tanpa Surat</a></li>
-              <li class="{{ Request::segment(2) == 'good-loading' && Request::segment(4) != 'create' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/good-loading/all/' . date('Y-m-d') . '/' . date('Y-m-d') . '/all/50') }}"><i class="fa fa-circle-o"></i> Daftar Pembelian Emas</a></li>
+              <li class="{{ Request::segment(2) == 'good-loading' && Request::segment(4) != 'create' && Request::segment(3) != 'loading' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/good-loading/all/' . date('Y-m-d') . '/' . date('Y-m-d') . '/all/50') }}"><i class="fa fa-circle-o"></i> Daftar Pembelian Emas</a></li>
           </ul>
         </li>
       @endif
-      <li class="treeview {{ (Request::segment(2) == 'transaction' ) ? 'active' : ''  }}">
-        <a href="#">
-            <i class="fa fa-money"></i><span> Penjualan Emas</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-            <li class="{{ Request::segment(2) == 'transaction' && Request::segment(3) == 'create' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/transaction/create') }}"><i class="fa fa-circle-o"></i> Tambah Penjualan</a></li>
-            <li class="{{ Request::segment(2) == 'transaction' && Request::segment(3) != 'create' && Request::segment(3) != 'resume' && Request::segment(3) != 'resumeTotal' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/transaction/all/all/' . date('Y-m-d') . '/' . date('Y-m-d') . '/20') }}"><i class="fa fa-circle-o"></i> Daftar Penjualan</a></li>
-        </ul>
-      </li>
+      @if($role == 'admin' || \Auth::user()->role == 'penjualan_cashier') 
+        <li class="treeview {{ (Request::segment(2) == 'transaction' ) ? 'active' : ''  }}">
+          <a href="#">
+              <i class="fa fa-money"></i><span> Penjualan Emas</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+              <li class="{{ Request::segment(2) == 'transaction' && Request::segment(3) == 'create' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/transaction/create') }}"><i class="fa fa-circle-o"></i> Tambah Penjualan</a></li>
+              <li class="{{ Request::segment(2) == 'transaction' && Request::segment(3) != 'create' && Request::segment(3) != 'resume' && Request::segment(3) != 'resumeTotal' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/transaction/all/all/' . date('Y-m-d') . '/' . date('Y-m-d') . '/20') }}"><i class="fa fa-circle-o"></i> Daftar Penjualan</a></li>
+          </ul>
+        </li>
+      @endif
       @if($role == 'admin')
         <li class="header">MENU LAIN</li>
         <li class="treeview {{ (Request::segment(2) == 'distributor' && Request::segment(3) == 'seller') ? 'active' : ''  }}">
