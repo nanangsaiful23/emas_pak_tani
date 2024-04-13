@@ -5,64 +5,24 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="box">
-            <h4>{{ $good->category->name }}</h4>
-              <div class="box-header" style="text-align: center;">
-                <h1>{{ $good->name }}</h1>
-                <h4>{{ $good->code }}</h4>
-                <h5>@if($good->brand != null){{ $good->brand->name }}@endif</h5>
-              </div>
             <div class="box-body">
                 <div style="text-align: center;">
-                    @if($good->profilePicture() != null)<img src="{{ URL::to($role . '/image/' . $good->profilePicture()->location) }}" style="height: 200px;"><br>@endif
-                    <a href="{{ url($role . '/good/' . $good->id . '/photo/create') }}"><i class="fa fa-camera"></i><br>Tambah Foto</a><br>
                 </div>
                 <hr>
                 <div class="panel-body">
-                    <div class="row" style="text-align: center; background-color: #FFFAD7;">
-                        <h4>Stock Barang</h4>
-                        <div class="col-sm-12">
-                            <div class="col-sm-4">
-                                <h4>Total Loading</h4> 
-                                <h3>{{ $good->good_loadings()->sum('real_quantity') . ' ' . $good->getPcsSellingPrice()->unit->code }}</h3>
-                            </div>
-                            <div class="col-sm-4">
-                                <h4>Total Terjual</h4>
-                                <h3>{{ $good->good_transactions()->sum('real_quantity') . ' ' . $good->getPcsSellingPrice()->unit->code }}</h3>
-                            </div>
-                            <div class="col-sm-4">
-                                <h4>Sisa Barang</h4>
-                                <h3>{{ $good->getStock() . ' ' . $good->getPcsSellingPrice()->unit->code }}</h3>
-                            </div>
+                    <div class="row">
+                        <div class="col-sm-3" style="background-color: #F0EBE3; height: 250px; border: solid 2px #F0EBE3; border-radius: 5px; text-align: center;">
+                            @if($good->profilePicture() != null)
+                                <img src="{{ URL::to('/image/' . $good->profilePicture()->location) }}" style="height: 200px;"><br>
+                            @endif
+                            <a href="{{ url($role . '/good/' . $good->id . '/photo/create') }}"><i class="fa fa-camera"></i><br>Tambah Foto</a><br>
                         </div>
-                    </div>
-                    <hr>
-                    @if(\Auth::user()->email == 'admin')
-                        <div class="row" style="text-align: center; background-color: #A1C2F1;">
-                            <h4>Harga Beli</h4>
-                            <h3>@if($good->getLastBuy() != null) {{ $good->getLastBuy()->good_loading->distributor->name . ' (' . $good->getLastBuy()->good_loading->note . ')' }} @endif</h3>
-                            <div class="col-sm-12">
-                                @foreach($good->good_units as $unit)
-                                    <div class="col-sm-4">
-                                        <h3>{{ showRupiah(roundMoney($unit->buy_price)) . ' /' . $unit->unit->name}}</h3>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <hr>
-                    @endif
-                    <div class="row" style="text-align: center; background-color: #FDCEDF;">
-                        <h4>Harga Jual</h4>
-                        <div class="col-sm-12">
-                            @foreach($good->good_units as $unit)
-                                <div class="col-sm-4">
-                                    <h3>
-                                        {{ showRupiah(roundMoney($unit->selling_price)) . ' /' . $unit->unit->name}}
-                                        @if(\Auth::user()->email == 'admin')
-                                          <br>Untung: {{ showRupiah(roundMoney($unit->selling_price) - $unit->buy_price) . ' (' . calculateProfit($unit->buy_price, roundMoney($unit->selling_price)) }}%)
-                                        @endif
-                                    </h3>
-                                </div>
-                            @endforeach
+                        <div class="col-sm-4" style="text-align: right;">
+                            <small>nama </small><br><span style="font-size: 25px; text-transform: capitalize;">{{ $good->name }}</span><br>
+                            <small>kode </small><br><span style="font-size: 15px">{{ $good->code }}</span><br>
+                            <small>persentase </small><br><span style="font-size: 20px">{{ $good->percentage->name }}</span><br>
+                            <small>berat </small><br><span style="font-size: 20px">{{ $good->weight }}gram</span><br>
+                            @if($good->getStock() > 0) <h4>{{ $good->status }}</h4> @else Sudah terjual @endif
                         </div>
                     </div>
                     <hr>

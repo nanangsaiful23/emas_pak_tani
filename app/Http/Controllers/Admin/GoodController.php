@@ -284,13 +284,28 @@ class GoodController extends Controller
         return view('admin.layout.page', compact('default', 'goods', 'category_id', 'location', 'distributor_id', 'stock'));
     }
 
-    public function changeStatus($good_id, $type)
+    public function changeStatus()
     {
-        $this->changeStatusGoodBase($good_id, $type);
+        [$default['type'], $default['color'], $default['data']] = alert();
 
-        session(['alert' => 'edit', 'data' => 'Status barang']);
+        $default['page_name'] = 'Ubah Status Barang';
+        $default['page'] = 'good';
+        $default['section'] = 'change-status';
 
-        return redirect('/admin/good/' . $good_id . '/detail');
+        $goods = Good::where('status', 'Service')
+                     ->orWhere('status', 'Cuci')
+                     ->get();
+
+        return view('admin.layout.page', compact('default', 'goods'));
+    }
+
+    public function updateChangeStatus(Request $request)
+    {
+        $role = 'admin';
+        
+        $goods = $this->changeStatusGoodBase($request);
+        
+        return view('layout.good.print-barcode', compact('role', 'goods'));
     }
 
     public function history($good_id, $start_date, $end_date, $pagination)

@@ -850,15 +850,26 @@ trait GoodControllerBase
         return $loadings;
     }
 
-    public function changeStatusGoodBase($good_id, $status)
+    public function changeStatusGoodBase(Request $request)
     {
-        if($status == 'sell') $status = 'Siap dijual';
-        $data['status'] = $status;
+        $results = [];
+        for($i = 0; $i < sizeof($request->ids); $i++)
+        {
+            if($request->ids[$i] != null && $request->statuses[$i] == 'Siap dijual')
+            {
+                $good = Good::find($request->ids[$i]);
 
-        $good = Good::find($good_id);
-        $good->update($data);
+                $data['status'] = $request->statuses[$i];
+                $data['change_status_fee'] = unformatNumber($request->fees[$i]);
 
-        return $good;
+                $good->update($data);
+
+                array_push($results, $good);
+            }
+        }
+
+// dd($results);die;
+        return $results;
     }
 
     public function historyGoodBase($good_id, $start_date, $end_date, $pagination)

@@ -412,6 +412,13 @@
         return $statuses;
     }
 
+    function getStatusOtherWoAll()
+    {
+        $statuses = ['Siap dijual' => 'Siap dijual', 'Service' => 'Service', 'Cuci' => 'Cuci', 'Tidak layak jual' => 'Tidak layak jual'];
+
+        return $statuses;
+    }
+
     function getTodayGoldPrice()
     {
         $gold_price = GoldPrice::orderBy('created_at', 'desc')->first();

@@ -13,7 +13,7 @@ class Good extends Model
     use SoftDeletes;
     
     protected $fillable = [
-        'category_id', 'brand_id', 'is_old_gold', 'code', 'name', 'percentage_id', 'weight', 'status', 'gold_history_number', 'description', 'stone_weight', 'stone_price', 'last_distributor_id'
+        'category_id', 'brand_id', 'is_old_gold', 'code', 'name', 'percentage_id', 'weight', 'status', 'gold_history_number', 'description', 'stone_weight', 'stone_price', 'change_status_fee', 'last_distributor_id'
     ];
 
     protected $hidden = [
