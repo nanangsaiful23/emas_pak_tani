@@ -104,17 +104,6 @@
         </div>
 
         <div class="form-group">
-            {!! Form::label('price', 'Harga Beli', array('class' => 'col-sm-12')) !!}
-            <div class="col-sm-5">
-                @if($SubmitButtonText == 'View')
-                    {!! Form::text('price', null, array('class' => 'form-control', 'readonly' => 'readonly')) !!}
-                @else
-                    {!! Form::text('price', null, array('class' => 'form-control')) !!}
-                @endif
-            </div>
-        </div>
-
-        <div class="form-group">
             {!! Form::label('stone_weight', 'Berat Batu (satuan dalam gram)', array('class' => 'col-sm-12')) !!}
             <div class="col-sm-5">
                 @if($SubmitButtonText == 'View')
@@ -132,6 +121,17 @@
                     {!! Form::text('stone_price', null, array('class' => 'form-control', 'readonly' => 'readonly')) !!}
                 @else
                     {!! Form::text('stone_price', null, array('class' => 'form-control')) !!}
+                @endif
+            </div>
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('change_status_fee', 'Ongkos', array('class' => 'col-sm-12')) !!}
+            <div class="col-sm-5">
+                @if($SubmitButtonText == 'View')
+                    {!! Form::text('change_status_fee', null, array('class' => 'form-control', 'readonly' => 'readonly')) !!}
+                @else
+                    {!! Form::text('change_status_fee', null, array('class' => 'form-control')) !!}
                 @endif
             </div>
         </div>
