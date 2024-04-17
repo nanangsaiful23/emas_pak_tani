@@ -158,22 +158,23 @@ trait GoodLoadingControllerBase
                     $data_good['name'] = $data['names'][$i];
                     $data_good['percentage_id'] = $data['percentage_ids'][$i];
 
-                    $weight = explode('.', $data['weights'][$i]);
-                    $data_good['weight'] = $data['weights'][$i];
-                    if(isset($weight[1]))
-                    {
-                        $sub_weight = $weight[1];
-                        while($sub_weight < 100)
-                        {
-                            $data_good['weight'] .= '0';
-                            $sub_weight = $sub_weight * 10; 
-                        }
-                    }
-                    else
-                    {
-                        $data_good['weight'] .= '.000';
-                    }
+                    // $weight = explode('.', $data['weights'][$i]);
+                    // $data_good['weight'] = $data['weights'][$i];
+                    // if(isset($weight[1]))
+                    // {
+                    //     $sub_weight = $weight[1];
+                    //     while($sub_weight < 100)
+                    //     {
+                    //         $data_good['weight'] .= '0';
+                    //         $sub_weight = $sub_weight * 10; 
+                    //     }
+                    // }
+                    // else
+                    // {
+                    //     $data_good['weight'] .= '.000';
+                    // }
 
+                    $data_good['weight'] = displayGramComa($data['weights'][$i]);
                     $data_good['status'] = $data['statuses'][$i];
                     $data_good['gold_history_number'] = $data['gold_history_numbers'][$i];
                     $data_good['stone_weight'] = $data['stone_weights'][$i];
