@@ -70,7 +70,7 @@
                     @endif
                     <td>{{ displayDate($good_loading->loading_date) }}</td>
                     <td>{{ $good_loading->distributor->name }}</td>
-                    <td style="text-align: right;">{{ $good_loading->getTotalEmas()->total_weight }} gram</td>
+                    <td style="text-align: right;">{{ displayGramComa($good_loading->getTotalEmas()->total_weight) }} gram</td>
                     <td>{{ $good_loading->note }}</td>
                     <td>{{ $good_loading->actor()->name }}</td>
                     <td class="center"><a href="{{ url($role . '/good-loading/' . $good_loading->id . '/detail') }}"><i class="fa fa-hand-o-right tosca" aria-hidden="true"></i></a></td>

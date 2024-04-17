@@ -557,7 +557,7 @@
                         color = '#FFF1CE';
                     }
                     else color = "#FDEFF4";
-                    htmlResult += "<textarea class='col-sm-12 modal-div' style='display:inline-block; color:black; cursor: pointer; min-height:40px; max-height:80px; background-color:" + color + "; padding: 5px;' onclick='searchByKeyword(\"" + name + "\",\"" + r[i].good_unit_id + "\")'>" + r[i].name + "</textarea>";
+                    htmlResult += "<textarea class='col-sm-12 modal-div' style='display:inline-block; color:black; cursor: pointer; min-height:40px; max-height:80px; background-color:" + color + "; padding: 5px;' onclick='searchByKeyword(\"" + name + "\",\"" + r[i].good_unit_id + "\")'>" + r[i].name + " " + r[i].weight + " gram</textarea>";
                   }
                   $("#result_good" + type).html(htmlResult);
                   $('.modal-body').css('height',$( window ).height()*0.5);

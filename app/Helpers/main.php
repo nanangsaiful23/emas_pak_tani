@@ -158,6 +158,31 @@
         else 0;
     }
 
+    function displayGramComa($gram)
+    {
+        $result = explode('.', $gram);
+
+        if(!isset($result[1]))
+        {
+            $barcode = '000';
+        }
+        else
+        {
+            $barcode = $result[1];
+            $id = $result[1];
+            while($id < 100)
+            {
+                $barcode .= '0';
+                $id = $id * 10; 
+            }
+
+            if(strlen($barcode) > 3)
+                $barcode = substr($barcode, 0, 3);
+        }
+
+        return $result[0] . '.' . $barcode;
+    }
+
     function printRupiah($money)
     {
         return number_format(checkNull($money),0,'.',',');

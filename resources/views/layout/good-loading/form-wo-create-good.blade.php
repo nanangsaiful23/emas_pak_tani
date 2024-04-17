@@ -217,7 +217,7 @@
                             <option value="null">Silahkan pilih barang</option>
                             @foreach($goods as $good)
                                 @if($good->getStock() <= 0)
-                                    <option value="{{ $good->id }}">{{ $good->name . ' ' }}</option>
+                                    <option value="{{ $good->id }}">{{ $good->name . ' ' . $good->weight . ' gram'}}</option>
                                 @endif
                             @endforeach
                         </div>

@@ -25,7 +25,7 @@
           <div class="box-body">
             {!! Form::model(old(),array('url' => route($role . '.print-barcode'), 'method' => 'POST', 'id' => 'print-form')) !!}
               <div class="form-group">
-                <select class="form-control select2" data-placeholder="Silahkan pilih barang" style="width: 100%;" onchange="changeDiv()" id="good-list">
+                <select class="form-control select2" multiple="multiple" data-placeholder="Silahkan pilih barang" style="width: 100%;" onchange="changeDiv()" id="good-list">
                   <div>
                     <option value="">Silahkan pilih barang</option>
                     @foreach(getGoodUnits() as $good)
