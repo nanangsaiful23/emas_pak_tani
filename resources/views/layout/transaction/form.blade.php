@@ -70,13 +70,12 @@
                 </div>
             </div>
             <div class="form-group col-sm-7">
-                <div class="col-sm-3 btn btn-warning" onclick="ajaxButton('anting')">Anting-anting</div>
-                <div class="col-sm-3 btn btn-warning" onclick="ajaxButton('cipluk')">Cipluk</div>
-                <div class="col-sm-3 btn btn-warning" onclick="ajaxButton('cincin')">Cincin</div>
-                <div class="col-sm-3 btn btn-warning" onclick="ajaxButton('emas murni')">Emas murni</div>
-                <div class="col-sm-3 btn btn-warning" onclick="ajaxButton('gelang')">Gelang</div>
-                <div class="col-sm-3 btn btn-warning" onclick="ajaxButton('kalung')">Kalung</div>
-                <div class="col-sm-3 btn btn-warning" onclick="ajaxButton('liontin')">Liontin</div>
+                <div class="col-sm-3 btn btn-warning" onclick="ajaxButton('AT')">Anting-anting</div>
+                <div class="col-sm-3 btn btn-warning" onclick="ajaxButton('CC')">Cincin</div>
+                <div class="col-sm-3 btn btn-warning" onclick="ajaxButton('LM')">Emas murni</div>
+                <div class="col-sm-3 btn btn-warning" onclick="ajaxButton('GL')">Gelang</div>
+                <div class="col-sm-3 btn btn-warning" onclick="ajaxButton('KL')">Kalung</div>
+                <div class="col-sm-3 btn btn-warning" onclick="ajaxButton('LT')">Liontin</div>
             </div>
         </div>
         <div class="form-group col-sm-5">

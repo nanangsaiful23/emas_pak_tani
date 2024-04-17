@@ -110,7 +110,7 @@ class GoodLoadingController extends Controller
 
         $good_loading = GoodLoading::find($good_loading_id);
 
-        return view('layout.good-loading.print', compact('role', 'good_loading'));
+        return view('layout.good-loading.print2', compact('role', 'good_loading'));
     }
 
     public function printBarcode($good_loading_id)
