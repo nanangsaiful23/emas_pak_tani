@@ -133,7 +133,7 @@
                             <div class="form-group">
                                 {!! Form::label('price', 'Harga Beli', array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-8">
-                                    <textarea type="number" name="price" class="form-control" id="price" onkeypress="formatNumber('price')"></textarea>
+                                    <textarea type="number" name="price" class="form-control" id="price" onkeyup="formatNumber('price')"></textarea>
                                 </div>
                             </div>
                         @elseif($type == 'loading')
@@ -276,7 +276,7 @@
                         @if($type == 'buy-other' || $type == 'buy')
                             <td>
                                  <textarea type="text" name="prices[]" class="form-control" id="price-{{ $i }}"
-                                    onchange="editPrice('{{ $i }}')" onkeypress="editPrice('{{ $i }}')"></textarea>
+                                    onchange="editPrice('{{ $i }}')" onkeypress="editPrice('{{ $i }}')" onkeyup="formatNumber('price-{{$i}}')"></textarea>
                             </td>
                             <td style="display: none;">
                                 {!! Form::textarea('total_prices[]', null, array('class' => 'form-control', 'readonly' =>
@@ -285,7 +285,7 @@
                         @elseif($type == 'loading')
                             <td style="display: none;">
                                  <textarea type="text" name="prices[]" class="form-control" id="price-{{ $i }}"
-                                    onchange="editPrice('{{ $i }}')" onkeypress="editPrice('{{ $i }}')"></textarea>
+                                    onchange="editPrice('{{ $i }}')" onkeypress="editPrice('{{ $i }}')" onkeyup="formatNumber('price-{{$i}}')"></textarea>
                             </td>
                             <td style="display: none;">
                                 {!! Form::textarea('total_prices[]', null, array('class' => 'form-control', 'readonly' =>

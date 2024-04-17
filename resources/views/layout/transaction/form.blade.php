@@ -129,10 +129,10 @@
                     </td>
                     <td>
                         {!! Form::text('buy_prices[]', null, array('id'=>'buy_price-' . $i, 'style' => 'display:none')) !!}
-                        {!! Form::text('prices[]', null, array('class' => 'form-control', 'id' => 'price-'.$i, 'onchange' => "editPrice('" . $i . "')")) !!}
+                        {!! Form::text('prices[]', null, array('class' => 'form-control', 'id' => 'price-'.$i, 'onchange' => "editPrice('" . $i . "')", 'onkeyup' => "formatNumber('price-" . $i . "')")) !!}
                     </td>
                     <td>
-                        {!! Form::text('stone_prices[]', null, array('class' => 'form-control', 'id' => 'stone_price-'.$i, 'onchange' => "editPrice('" . $i . "')")) !!}
+                        {!! Form::text('stone_prices[]', null, array('class' => 'form-control', 'id' => 'stone_price-'.$i, 'onchange' => "editPrice('" . $i . "')", 'onkeyup' => "formatNumber('stone_price-" . $i . "')")) !!}
                     </td>
                     <td>
                         @if(\Auth::user()->email == 'admin')
@@ -284,7 +284,7 @@
                     var today_gold_buy_price = parseInt('{{ getTodayGoldPrice()->buy_price }}');
                     // var today_gold_selling_price = parseInt('{{ getTodayGoldPrice()->selling_price }}');
 
-                    document.getElementById("gold_price-" + type + items).value = today_gold_selling_price;
+                    document.getElementById("gold_price-" + type + items).value = today_gold_buy_price;
 
                     document.getElementById("buy_price-" + type + items).value = document.getElementById("weight-" + type + items).value * document.getElementById("percentage-" + type + items).value * today_gold_buy_price;
                     document.getElementById("price-" + type + items).value = document.getElementById("weight-" + type + items).value * document.getElementById("percentage-" + type + items).value * today_gold_buy_price;
@@ -584,7 +584,7 @@
                         color = '#FFF1CE';
                     }
                     else color = "#FDEFF4";
-                    htmlResult += "<textarea class='col-sm-12 modal-div' style='display:inline-block; color:black; cursor: pointer; min-height:40px; max-height:80px; background-color:" + color + "; padding: 5px;' onclick='searchByKeyword(\"all_barcode\",\"" + r[i].good_unit_id + "\")'>" + r[i].name + "</textarea>";
+                    htmlResult += "<textarea class='col-sm-12 modal-div' style='display:inline-block; color:black; cursor: pointer; min-height:40px; max-height:80px; background-color:" + color + "; padding: 5px;' onclick='searchByKeyword(\"all_barcode\",\"" + r[i].good_unit_id + "\")'>" + r[i].name + " " + r[i].weight + " gram</textarea>";
                   }
                   $("#result_good").html(htmlResult);
                   $('.modal-body').css('height',$( window ).height()*0.5);
