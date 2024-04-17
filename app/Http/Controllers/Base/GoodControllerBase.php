@@ -351,6 +351,7 @@ trait GoodControllerBase
 
         $data = $request->input();
 
+        $data['weight']  = displayGramComa($data['weight']);
         $data['unit_id'] = 1;
         $data['selling_price'] = 1;
         $data['price'] = unformatNumber($request->price);
