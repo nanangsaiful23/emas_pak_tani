@@ -426,4 +426,25 @@ trait GoodLoadingControllerBase
         
         return $goods;
     }
+
+    public function deleteGoodLoadingBase($good_loading_id)
+    {
+        $good_loading = GoodLoading::find($good_loading_id);
+
+        $account = Account::where('code', '1111')->first();
+
+        $data_journal['type']               = 'good_loading';
+        $data_journal['journal_date']       = $good_loading->loading_date;
+        $data_journal['name']               = 'Hapus loading barang ' . $good_loading->distributor->name . ' tanggal ' . displayDate($good_loading->loading_date);
+        $data_journal['debit']              = unformatNumber($good_loading->total_item_price);
+        $data_journal['debit_account_id']   = $account->id;
+        $data_journal['credit_account_id']  = Account::where('code', '1141')->first()->id;
+        $data_journal['credit']             = unformatNumber($good_loading->total_item_price);
+
+        Journal::create($data_journal);
+
+        $good_loading->delete();
+
+        return true;
+    }
 }

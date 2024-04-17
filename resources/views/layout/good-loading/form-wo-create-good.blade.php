@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="form-group col-sm-12">
-                {!! Form::label('loading_date', 'Tanggal Pembelian', array('class' => 'col-sm-4 control-label')) !!}
+                {!! Form::label('loading_date', 'Tanggal Pembelian Emas', array('class' => 'col-sm-4 control-label')) !!}
                 <div class="col-sm-8">
                     <div class="input-group date">
                         <input type="text" class="form-control pull-right" required="required" name="loading_date" id="loading_date">

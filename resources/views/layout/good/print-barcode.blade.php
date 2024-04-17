@@ -32,10 +32,10 @@
 			color: darkblue;
 		}
 	</style>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Agdasima">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Agdasima&family=Comfortaa">
 	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 
-	<body style="margin-left: 10mm; margin-right: 12mm; font-family: agdasima; margin-top: -0.1mm;">
+	<body style="margin-left: 10mm; margin-right: 12mm; font-family: comfortaa; margin-top: -0.1mm;">
 	<!-- <body> -->
 		<table class="space-top-2">
 			<tbody>	
@@ -45,7 +45,7 @@
 		            	<td style="width: 20mm; height: 10mm;">
 			            	<div style="text-align: center; height: 8mm;">
 				            	<div style="font-size: 5px;">{!! DNS1D::getBarcodeSVG(date('Y') . $goods[$i * 2]['barcode'], 'UPCE', 1.3, 20, 'black', false) !!}</div>
-				            	<div style="font-size: 10px; margin-top: 0.4mm; text-align: center; width: 20mm; text-transform: uppercase;">
+				            	<div style="font-size: 8px; margin-top: 0.4mm; text-align: center; width: 20mm; text-transform: uppercase;">
 				            		<b>{{ $goods[$i * 2]['code'] }}</b>
 				            	</div>
 				            </div>
@@ -65,10 +65,10 @@
 					            		<b>{{ $goods[$i * 2]['old_gold'] . ' ' . $goods[$i * 2]['weight'] }}GR</b>
 					            	</div>
 					            @endif -->
-				            	<div style="font-size: 15px; text-align: center; margin-top: 2mm;">
+				            	<div style="font-size: 12px; text-align: center; margin-top: 2mm;">
 				            		<b>{{ $goods[$i * 2]['old_gold'] . ' ' . $goods[$i * 2]['weight'] }} GR</b>
 				            	</div>
-				            	<div style="font-size: 12px; text-align: center;">
+				            	<div style="font-size: 8px; text-align: center;">
 				            		<b>{{ config('app.store_name') }}</b>
 				            	</div>
 			            	</div>
@@ -81,7 +81,7 @@
 			            	<td style="width: 20mm; height: 10mm;">
 				            	<div style="text-align: center; height: 8mm;">
 					            	<div style="font-size: 5px;">{!! DNS1D::getBarcodeSVG(date('Y') . $goods[$i * 2 + 1]['barcode'], 'UPCE', 1.3, 20, 'black', false) !!}</div>
-					            	<div style="font-size: 10px; margin-top: 0.4mm; text-align: center; width: 20mm; text-transform: uppercase;">
+					            	<div style="font-size: 8px; margin-top: 0.4mm; text-align: center; width: 20mm; text-transform: uppercase;">
 					            		<b>{{ $goods[$i * 2 + 1]['code'] }}</b>
 					            	</div>
 					            </div>
@@ -101,10 +101,10 @@
 						            		<b>{{ $goods[$i * 2 + 1]['old_gold'] . ' ' . $goods[$i * 2 + 1]['weight'] }}GR</b>
 						            	</div>
 						            @endif -->
-					            	<div style="font-size: 15px; text-align: center; margin-top: 2mm;">
+					            	<div style="font-size: 12px; text-align: center; margin-top: 2mm;">
 					            		<b>{{ $goods[$i * 2 + 1]['old_gold'] . ' ' . $goods[$i * 2 + 1]['weight'] }} GR</b>
 					            	</div>
-					            	<div style="font-size: 12px; text-align: center;">
+					            	<div style="font-size: 8px; text-align: center;">
 					            		<b>{{ config('app.store_name') }}</b>
 					            	</div>
 				            	</div>

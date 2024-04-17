@@ -50,15 +50,16 @@
               <thead>
               <tr>
                 @if(\Auth::user()->email == 'admin')
-                  <th>Created at</th>
+                  <th>Tanggal Loading Barang ke Sistem</th>
                 @endif
-                <th>Tanggal</th>
+                <th>Tanggal Kulak Barang</th>
                 <th>Nama distributor</th>
-                <th>Total Loading</th>
+                <th>Total Berat Emas Loading</th>
                 <th>Catatan</th>
                 <th>User</th>
                 <th class="center">Detail</th>
                 <th class="center">Print</th>
+                <th class="center">Hapus</th>
               </tr>
               </thead>
               <tbody id="table-good">
@@ -69,7 +70,7 @@
                     @endif
                     <td>{{ displayDate($good_loading->loading_date) }}</td>
                     <td>{{ $good_loading->distributor->name }}</td>
-                    <td>{{ showRupiah($good_loading->total_item_price) }}</td>
+                    <td style="text-align: right;">{{ $good_loading->getTotalEmas()->total_weight }} gram</td>
                     <td>{{ $good_loading->note }}</td>
                     <td>{{ $good_loading->actor()->name }}</td>
                     <td class="center"><a href="{{ url($role . '/good-loading/' . $good_loading->id . '/detail') }}"><i class="fa fa-hand-o-right tosca" aria-hidden="true"></i></a></td>
@@ -78,6 +79,16 @@
                     @else
                       <td class="center"><a href="{{ url($role . '/good-loading/' . $good_loading->id . '/print') }}" target="_blank()"><i class="fa fa-print tosca" aria-hidden="true"></i></a></td>
                     @endif
+                    <td>
+                      <button type="button" class="no-btn" data-toggle="modal" data-target="#modal-danger-{{$good_loading->id}}"><i class="fa fa-times red" aria-hidden="true"></i></button>
+
+                      @include('layout' . '.delete-modal', ['id' => $good_loading->id, 'data' => $good_loading->created_at . ' ' . $good_loading->distributor->name, 'formName' => 'delete-form-' . $good_loading->id])
+
+                      <form id="delete-form-{{$good_loading->id}}" action="{{ url($role . '/good-loading/' . $good_loading->id . '/delete') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                      </form>
+                    </td>
                   </tr>
                 @endforeach
               </tbody>

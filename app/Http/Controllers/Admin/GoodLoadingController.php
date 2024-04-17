@@ -121,4 +121,13 @@ class GoodLoadingController extends Controller
         
         return view('layout.good.print-barcode', compact('role', 'goods'));
     }
+
+    public function delete($good_loading_id)
+    {
+        $this->deleteGoodLoadingBase($good_loading_id);
+
+        session(['alert' => 'delete', 'data' => 'Loading']);
+
+        return redirect('/admin/good-loading/loading/' . date('Y-m-d') . '/' . date('Y-m-d') . '/all/20');
+    }
 }

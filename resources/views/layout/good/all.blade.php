@@ -60,12 +60,12 @@
                   <th style="width: 9%; text-align: center;">Berat Batu</th>
                   <th style="width: 9%; text-align: center;">Harga Batu</th>
                   <th style="width: 9%; text-align: center;">Status</th>
-                  <th style="width: 12%; text-align: center;">Stock</th>
+                  <th style="width: 10%; text-align: center;">Stock</th>
                   <!-- <th style="width: 15%; text-align: center;">Harga Jual</th> -->
                   @if(\Auth::user()->email == 'admin')
                     <!-- <th style="width: 10%; text-align: center;">Harga Beli</th> -->
                   @endif
-                  <th style="width: 15%; text-align: center;">Action</th>
+                  <th style="width: 17%; text-align: center;">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -106,16 +106,14 @@
                       <a href="{{ url($role . '/good/' . $good->id . '/detail') }}" target="_blank()"><i class="fa fa-hand-o-right tosca" aria-hidden="true"></i> Detail</a><br>
                       @if($role == 'admin')<a href="{{ url($role . '/good/' . $good->id . '/edit') }}" target="_blank()"><i class="fa fa-pencil-square-o orange" aria-hidden="true"></i> Edit</a><br>@endif
                       <a href="{{ url($role . '/good/' . $good->id . '/photo/create') }}" target="_blank()"><i class="fa fa-camera orange" aria-hidden="true"></i> Photo</a><br>
-                      @if($good->getStock() == 0)
-                        <button type="button" class="no-btn" data-toggle="modal" data-target="#modal-danger-{{$good->id}}"><i class="fa fa-times red" aria-hidden="true"></i></button>
+                      <button type="button" class="no-btn" data-toggle="modal" data-target="#modal-danger-{{$good->id}}" style="color: black;"><i class="fa fa-times red" aria-hidden="true"></i> Hapus</button>
 
-                        @include('layout' . '.delete-modal', ['id' => $good->id, 'data' => $good->name, 'formName' => 'delete-form-' . $good->id])
+                      @include('layout' . '.delete-modal', ['id' => $good->id, 'data' => $good->name, 'formName' => 'delete-form-' . $good->id])
 
-                        <form id="delete-form-{{$good->id}}" action="{{ url($role . '/good/' . $good->id . '/delete') }}" method="POST" style="display: none;">
-                          {{ csrf_field() }}
-                          {{ method_field('DELETE') }}
-                        </form>
-                      @endif
+                      <form id="delete-form-{{$good->id}}" action="{{ url($role . '/good/' . $good->id . '/delete') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                      </form>
                     </td>
                   </tr>
                 @endforeach
@@ -151,7 +149,7 @@
         url: "{!! url($role . '/good/searchByKeyword/') !!}/" + $("#search-input").val(),
         success: function(result){
           console.log(result);
-          var htmlResult = "<thead><tr><th style=\"width: 10%; text-align: center;\">Kategori</th><th style=\"width: 10%; text-align: center;\">Kode</th><th style=\"width: 15%; text-align: center;\">Nama</th><th style=\"width: 10%; text-align: center;\">Berat Emas</th><th style=\"width: 9%; text-align: center;\">Persentase</th><th style=\"width: 9%; text-align: center;\">Berat Batu</th><th style=\"width: 9%; text-align: center;\">Harga Batu</th><th style=\"width: 9%; text-align: center;\">Status</th><th style=\"width: 12%; text-align: center;\">Stock</th><th style=\"width: 15%; text-align: center;\">Action</th></tr></thead><tbody>";
+          var htmlResult = "<thead><tr><th style=\"width: 10%; text-align: center;\">Kategori</th><th style=\"width: 10%; text-align: center;\">Kode</th><th style=\"width: 15%; text-align: center;\">Nama</th><th style=\"width: 10%; text-align: center;\">Berat Emas</th><th style=\"width: 9%; text-align: center;\">Persentase</th><th style=\"width: 9%; text-align: center;\">Berat Batu</th><th style=\"width: 9%; text-align: center;\">Harga Batu</th><th style=\"width: 9%; text-align: center;\">Status</th><th style=\"width: 10%; text-align: center;\">Stock</th><th style=\"width: 17%; text-align: center;\">Action</th></tr></thead><tbody>";
           if(result != null)
           {
             var r = result.goods;
@@ -180,9 +178,9 @@
               htmlResult += "<td><a href=\"" + window.location.origin + "/" + '{{ $role }}' + "/good/" + r[i].id + "/detail\" target=\"_blank()\"><i class=\"fa fa-hand-o-right tosca\" aria-hidden=\"true\"></i> Detail</a><br>@if($role == 'admin')<a href=\"" + window.location.origin + "/" + '{{ $role }}' + "/good/" + r[i].id + "/edit\" target=\"_blank()\"><i class=\"fa fa-pencil-square-o orange\"></i> Edit</a><br>@endif<a href=\"" + window.location.origin + "/" + '{{ $role }}' + "/good/" + r[i].id + "/photo/create\" target=\"_blank()\"><i class=\"fa fa-camera orange\"></i> Photo</a><br>";
 
 
-              if(r[i].stock == '0' && username == 'admin')
+              if(username == 'admin')
               {
-                htmlResult += "<a href=\"" + window.location.origin + "/" + '{{ $role }}' + "/good/" + r[i].id + "/delete\" onclick=\"event.preventDefault(); document.getElementById('delete-form-" + r[i].id + "').submit();\"><i class=\"fa fa-times red\"></i></a><form id='delete-form-" + r[i].id + "' action=\"" + window.location.origin + "/" + '{{ $role }}' + "/good/" + r[i].id + "/delete\" method=\"POST\" style=\"display: none;\">" + '{{ csrf_field() }}' + '{{ method_field("DELETE") }}' + "</form>";
+                htmlResult += "<a href=\"" + window.location.origin + "/" + '{{ $role }}' + "/good/" + r[i].id + "/delete\" onclick=\"event.preventDefault(); document.getElementById('delete-form-" + r[i].id + "').submit();\"><i class=\"fa fa-times red\"></i> Hapus</a><form id='delete-form-" + r[i].id + "' action=\"" + window.location.origin + "/" + '{{ $role }}' + "/good/" + r[i].id + "/delete\" method=\"POST\" style=\"display: none;\">" + '{{ csrf_field() }}' + '{{ method_field("DELETE") }}' + "</form>";
               }
               
               htmlResult += "</td></tr>";

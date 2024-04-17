@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 use App\Admin;
 use App\Cashier;
@@ -55,5 +56,16 @@ class GoodLoading extends Model
             return Admin::find($this->role_id);
         else
             return Cashier::find($this->role_id);
+    }
+
+    public function getTotalEmas()
+    {
+        $sum = GoodLoadingDetail::select(DB::raw('SUM(goods.weight) as total_weight'))
+                                ->join('good_units', 'good_units.id', 'good_loading_details.good_unit_id')
+                                ->join('goods', 'goods.id', 'good_units.good_id')
+                                ->where('good_loading_details.good_loading_id', $this->id)
+                                ->get();
+
+        return $sum[0];
     }
 }
