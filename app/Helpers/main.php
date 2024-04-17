@@ -166,7 +166,7 @@
         {
             $barcode = '000';
         }
-        else
+        elseif($result[1] != '000')
         {
             $barcode = $result[1];
             $id = $result[1];
