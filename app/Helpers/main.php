@@ -168,7 +168,6 @@
         }
         elseif($result[1] != '000')
         {
-            $barcode = $result[1];
             $id = $result[1];
             while($id < 100)
             {
@@ -178,6 +177,10 @@
 
             if(strlen($barcode) > 3)
                 $barcode = substr($barcode, 0, 3);
+        }
+        else
+        { 
+            $barcode = $result[1];
         }
 
         return $result[0] . '.' . $barcode;
