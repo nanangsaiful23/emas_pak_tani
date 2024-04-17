@@ -45,10 +45,10 @@
 					</tr>
 					<tr>
 						<td style="text-align: left !important;">
-							{{ $detail->quantity . ' * ' . $detail->good_unit->unit->name . ' @' . printRupiah(checkNull($detail->selling_price)) }}
+							{{ $detail->good_unit->good->weight }}
 						</td>
 						<td style="text-align: right !important;">
-							{{ showRupiah(checkNull($detail->selling_price) * $detail->quantity) }}
+							{{ showRupiah(checkNull($detail->buy_price)) }}
 						</td>
 					</tr>
 				@endforeach
