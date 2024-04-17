@@ -30,7 +30,6 @@
 			<hr class="new2">
 			{{ displayDateTime($good_loading->created_at) }}<br>
 			Kasir: {{ $good_loading->actor()->name }}<br>
-			<!-- Member: {{ $good_loading->member->name }} -->
 			<hr class="new2">
 		</div>
 		<div style="text-align: center;">
