@@ -49,7 +49,7 @@
 				            		<b>{{ $goods[$i * 2]['code'] }}</b>
 				            	</div>
 				            </div>
-				            <div style="text-align: center; height: 7mm;">
+				            <div style="text-align: center; height: 8mm;">
 				            	<!-- @if($goods[$i * 2]['stone_weight'] != '0.00' && $goods[$i * 2]['stone_weight'] != null && $goods[$i * 2]['stone_weight'] != '')
 					            	<div style="font-size: 13px; text-align: center; margin-top: 2mm;">
 					            		<b>{{ $goods[$i * 2]['old_gold'] . ' ' . $goods[$i * 2]['weight'] }}GR</b>
@@ -85,7 +85,7 @@
 					            		<b>{{ $goods[$i * 2 + 1]['code'] }}</b>
 					            	</div>
 					            </div>
-					            <div style="text-align: center; height: 7mm;">
+					            <div style="text-align: center; height: 8mm;">
 					            	<!-- @if($goods[$i * 2 + 1]['stone_weight'] != '0.00' && $goods[$i * 2 + 1]['stone_weight'] != null && $goods[$i * 2 + 1]['stone_weight'] != '')
 						            	<div style="font-size: 13px; text-align: center; margin-top: 2mm;">
 						            		<b>{{ $goods[$i * 2 + 1]['old_gold'] . ' ' . $goods[$i * 2 + 1]['weight'] }}GR</b>
