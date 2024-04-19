@@ -192,7 +192,9 @@
             }
 
             if(strlen($barcode) > 3)
+            {
                 $barcode = substr($barcode, 0, 3);
+            }
         }
         else
         { 
