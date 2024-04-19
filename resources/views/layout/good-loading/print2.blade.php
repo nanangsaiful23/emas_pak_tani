@@ -45,7 +45,7 @@
 					</tr>
 					<tr>
 						<td style="text-align: left !important;">
-							{{ $detail->good_unit->good->weight }}
+							{{ $detail->good_unit->good->weight }} gram
 						</td>
 						<td style="text-align: right !important;">
 							{{ showRupiah(checkNull($detail->buy_price)) }}
