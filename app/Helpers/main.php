@@ -185,6 +185,7 @@
         elseif($result[1] != '000')
         {
             $id = $result[1];
+            $barcode = $result[1];
             while($id < 100)
             {
                 $barcode .= '0';
