@@ -210,6 +210,7 @@
         $(document).ready (function (){
             $('.select2').select2();
             $("#all_barcode").focus();
+            $("#row-data-" + total_item).hide();
             document.getElementById("total_discount_price").value = 0;
 
             $("#search_good").keyup( function(e){
@@ -264,6 +265,7 @@
 
                 if(bool == false)
                 {
+                    $("#row-data-" + total_item).show();
                     document.getElementById("name-" + type + items).value = good.id;
                     document.getElementById("name_temp-" + type + items).value = good.name;
                     document.getElementById("barcode-" + type + items).value = good.getPcsSellingPrice.id;
@@ -525,6 +527,7 @@
             {
                 total_item += 1;
                 $("#table-transaction").prepend(htmlResult);
+                $("#row-data-" + total_item).hide();
             }
 
             document.getElementById("all_barcode").value = '';
