@@ -158,22 +158,6 @@ trait GoodLoadingControllerBase
                     $data_good['name'] = $data['names'][$i];
                     $data_good['percentage_id'] = $data['percentage_ids'][$i];
 
-                    // $weight = explode('.', $data['weights'][$i]);
-                    // $data_good['weight'] = $data['weights'][$i];
-                    // if(isset($weight[1]))
-                    // {
-                    //     $sub_weight = $weight[1];
-                    //     while($sub_weight < 100)
-                    //     {
-                    //         $data_good['weight'] .= '0';
-                    //         $sub_weight = $sub_weight * 10; 
-                    //     }
-                    // }
-                    // else
-                    // {
-                    //     $data_good['weight'] .= '.000';
-                    // }
-
                     $data_good['weight'] = displayGramComa($data['weights'][$i]);
                     $data_good['status'] = $data['statuses'][$i];
                     $data_good['gold_history_number'] = $data['gold_history_numbers'][$i];
@@ -184,22 +168,35 @@ trait GoodLoadingControllerBase
 
                     $category = Category::find($data_good['category_id']);
 
-                    $barcode = '';
-                    $id = $good->id;
-                    while($id < 1000)
+                    $is_code_exist = true;
+                    $last_id = $good->getLastCategoryId();
+
+                    while($is_code_exist)
                     {
-                        $barcode .= '0';
-                        $id = $id * 10; 
+                        $barcode = '';
+                        $id = $last_id;
+                        while($id < 1000)
+                        {
+                            $barcode .= '0';
+                            $id = $id * 10; 
+                        }
+                        $barcode .= $last_id;
+
+                        $data_code['code'] = $category->code . ' ' . date('y') . ' ' . $barcode . ' ' . date('m') . ' ' . $good->gold_history_number;
+
+                        $is_exist = Good::where('code', $data_code['code'])->first();
+
+                        if($is_exist == null)
+                        {
+                            $good->update($data_code);
+                            $is_code_exist = false;
+                        }
+                        else
+                        {
+                            $last_id += 1;
+                        } 
                     }
-                    $barcode .= $good->id;
-
-                    $data_code['code'] = $category->code . ' ' . date('y') . ' ' . $barcode . ' ' . date('m') . ' ' . $good->gold_history_number;
-                    $good->update($data_code);
                 }
-                // $good = Good::where('name', $data['names'][$i])->first();
-
-                // if($good == null)
-                // {
                     
                 $data_unit['good_id']       = $good->id;
                 $data_unit['unit_id']       = 1;
@@ -216,7 +213,6 @@ trait GoodLoadingControllerBase
                 $data_price['reason']       = 'Harga pertama';
 
                 GoodPrice::create($data_price);
-                // }
 
                 $data['selling_prices'][$i] = 1;
                 

@@ -120,18 +120,24 @@ class Good extends Model
     {
         $barcode = '0' . $this->category->id;
         if($this->category->id < 10) $barcode = '0' . $barcode;
-
-        $id = $this->id;
-        while($id < 1000)
-        {
-            $barcode .= '0';
-            $id = $id * 10; 
-        }
-        $barcode .= $this->id;
-        // dd($barcode);die;
+        
+        $code = explode(' ', $this->code);
+        $barcode .= $code[2];
 
         return $barcode;
     }
 
-    // public function getCode()
+    public function getLastCategoryId()
+    {
+        $last_good = Good::where('category_id', $this->category_id)->where('code', '!=', null)->orderBy('id', 'desc')->first();
+
+        if($last_good == null)
+            return '1';
+        else
+        {
+            $code = explode(' ', $last_good->code);
+            // dd(intval($code[2]) + 1);die;
+            return intval($code[2]) + 1;
+        }
+    }
 }
