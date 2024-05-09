@@ -73,6 +73,19 @@
           </div>
         </div>
         <div class="col-xs-12 col-sm-4">
+          <div class="small-box" style="background-color: #C3E2C2">
+            <div class="inner">
+              <h3>{{ getGram('all', 'Siap dijual')->sum('weight') }} gram</h3>
+
+              <p>Total seluruh asset</p>
+            </div>
+            <div class="icon">
+              <span><img src="{{asset('assets/icon/jewelry.png')}}" style="width: 80px"></span>
+            </div>
+            <a href="{{ url('/admin/gold-price/create') }}" class="small-box-footer" target="_blank()"></a>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
           <div class="small-box" style="background-color: #FFE6E6">
             <div class="inner">
               <h3>{{ getGram('AT', 'Siap dijual')->sum('weight') }} gram</h3>

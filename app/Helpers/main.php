@@ -291,10 +291,18 @@
 
     function getGram($category, $status)
     {
-        $golds = Good::join('categories', 'categories.id', 'goods.category_id')
-                     ->where('categories.code', $category)
-                     ->where('goods.status', $status)
-                     ->get();
+        if($category == 'all')
+        {
+            $golds = Good::where('goods.status', $status)
+                         ->get();  
+        }
+        else
+        {
+            $golds = Good::join('categories', 'categories.id', 'goods.category_id')
+                         ->where('categories.code', $category)
+                         ->where('goods.status', $status)
+                         ->get();  
+        }
 
         return $golds;
     }
@@ -353,7 +361,14 @@
 
     function getGoldHistoryNumber()
     {
-        $types = ['0' => 'Kulak pertama', '1' => 'Buyback pertama', '2' => 'Buyback kedua'];
+        $types = ['0' => 'Kulak pertama', '1' => 'Buyback pertama'];
+
+        for($i = 2; $i < 11; $i++)
+        {
+            $entry = [$i => 'Buyback ke-' . $i];
+            $types = array_merge($types, $entry);
+            // array_push($types, $entry);
+        }
 
         return $types;
     }
