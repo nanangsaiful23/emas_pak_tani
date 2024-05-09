@@ -137,6 +137,11 @@ class Good extends Model
         {
             $code = explode(' ', $last_good->code);
             // dd(intval($code[2]) + 1);die;
+
+            if(intval($code[2]) == 9999)
+            {
+                return '1';
+            }
             return intval($code[2]) + 1;
         }
     }
