@@ -177,7 +177,10 @@ trait GoodControllerBase
     {
         $good = Good::where('code', $barcode)->first();
 
-        if($good == null) $good = Good::find(convertGoodBarcode($barcode));
+        $result = convertGoodBarcode($barcode);
+        // dd($result);die;
+        if($good == null) $good = Good::whereRaw('category_id = ' . $result[0] . ' AND SUBSTRING(code, 7, 4) = '. $result[1])
+                                      ->first();
 
         $good->getPcsSellingPrice = $good->getPcsSellingPrice();
         $good->stock = $good->getStock();

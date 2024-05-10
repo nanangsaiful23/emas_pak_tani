@@ -26,7 +26,7 @@
   <section class="sidebar">
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MENU UTAMA</li>
-      <li class="{{ Request::segment(1) == 'search' ? 'active' : ''  }}"><a href="{{ url('/search/all') }}" target="_blank()"><i class="fa fa-search"></i> CARI BARANG</a></li>
+      <li class="{{ Request::segment(1) == 'search' ? 'active' : ''  }}"><a href="{{ url('/search/gl') }}" target="_blank()"><i class="fa fa-search"></i> CARI BARANG</a></li>
       <li class="treeview {{ (Request::segment(2) == 'good' ) ? 'active' : ''  }}">
         <a href="#">
             <i class="fa fa-cubes"></i><span> Kelola Barang</span>

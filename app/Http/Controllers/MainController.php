@@ -24,8 +24,10 @@ class MainController extends Controller
         }
         else
         {
+            $barcode = convertGoodBarcode($query);
             $goods = Good::where('name', 'like', '%' . $query . '%')
                          ->orWhere('code', 'like', '%' . $query . '%')
+                         ->orWhere('code', 'like', '%' . $barcode[1] . '%')
                          ->orderBy('name', 'asc')
                          ->get();
         }

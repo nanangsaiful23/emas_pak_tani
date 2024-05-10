@@ -222,9 +222,10 @@
 
     function convertGoodBarcode($code)
     {
-        $result = substr($code, 3, -1);
+        $category = substr($code, 1, 2);
+        $id = substr($code, 3, -1);
 
-        return intval($result);
+        return [intval($category), $id];
     }
 
     function calculateProfit($buy_price, $sell_price)

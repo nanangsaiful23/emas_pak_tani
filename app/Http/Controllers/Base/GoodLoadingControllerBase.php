@@ -404,20 +404,23 @@ trait GoodLoadingControllerBase
             {
                 $good_unit = GoodUnit::find($detail->good_unit_id);
 
-                // for($j = 0; $j < $request->quantities[$i]; $j++)
-                // {
-                    $data['barcode'] = $good_unit->good->getBarcode();
-                    $data['name'] = $good_unit->good->name;
-                    $data['code'] = $good_unit->good->code;
-                    $data['weight'] = $good_unit->good->weight;
-                    $data['old_gold'] = '';
-                    if($good_unit->good->is_old_gold == 1)
-                        $data['old_gold'] = 'MT';
-                    $data['stone_weight'] = $good_unit->good->stone_weight;
-                    $data['stone_price'] = showRupiah($good_unit->good->stone_price);
+                if($good_unit->good != null)
+                {
+                    if($good_unit->good->status == 'Siap dijual')
+                    {
+                        $data['barcode'] = $good_unit->good->getBarcode();
+                        $data['name'] = $good_unit->good->name;
+                        $data['code'] = $good_unit->good->code;
+                        $data['weight'] = $good_unit->good->weight;
+                        $data['old_gold'] = '';
+                        if($good_unit->good->is_old_gold == 1)
+                            $data['old_gold'] = 'MT';
+                        $data['stone_weight'] = $good_unit->good->stone_weight;
+                        $data['stone_price'] = showRupiah($good_unit->good->stone_price);
 
-                    array_push($goods, $data);
-                // }
+                        array_push($goods, $data);
+                    }  
+                }
             }
         }
         
