@@ -105,6 +105,8 @@ Route::group(['prefix' => 'good-loading'], function () {
     Route::post('/storeExcel', 'GoodLoadingController@storeExcel')->name('good-loading.storeExcel');
 	Route::get('/{type}/{start_date}/{end_date}/{distributor_id}/{pagination}', 'GoodLoadingController@index');
     Route::get('/{good_loading_id}/detail', 'GoodLoadingController@detail');
+    Route::get('/{good_loading_id}/edit', 'GoodLoadingController@edit');
+    Route::put('/{good_loading_id}/edit', 'GoodLoadingController@update')->name('good-loading.update');
     Route::get('/{good_loading_id}/print', 'GoodLoadingController@print');
 	Route::get('/{good_loading_id}/printBarcode', 'GoodLoadingController@printBarcode');
     Route::delete('/{good_loading_id}/delete', 'GoodLoadingController@delete')->name('good-loading.delete');

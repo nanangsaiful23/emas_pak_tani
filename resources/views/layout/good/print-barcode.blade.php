@@ -50,26 +50,24 @@
 				            	</div>
 				            </div>
 				            <div style="text-align: center; height: 7mm;">
-				            	<!-- @if($goods[$i * 2]['stone_weight'] != '0.00' && $goods[$i * 2]['stone_weight'] != null && $goods[$i * 2]['stone_weight'] != '')
-					            	<div style="font-size: 13px; text-align: center; margin-top: 2mm;">
+				            	@if($goods[$i * 2]['stone_weight'] != '0.00' && $goods[$i * 2]['stone_weight'] != null && $goods[$i * 2]['stone_weight'] != '')
+					            	<div style="font-size: 12px; text-align: center; margin-top: 2mm;">
 					            		<b>{{ $goods[$i * 2]['old_gold'] . ' ' . $goods[$i * 2]['weight'] }}GR</b>
 					            	</div>
-					            	<div style="font-size: 10px; text-align: center;">
+					            	<div style="font-size: 6px; text-align: center;">
 					            		<b>{{ 'BATU ' . $goods[$i * 2]['stone_weight'] }}GR</b>
 					            	</div>
-					            	<div style="font-size: 10px; text-align: center;">
-					            		<b>{{ 'ONGKOS ' . $goods[$i * 2]['stone_price'] }}</b>
+					            	<div style="font-size: 6px; text-align: center;">
+					            		<b>{{ $goods[$i * 2]['stone_price'] }}</b>
 					            	</div>
 					            @else
-					            	<div style="font-size: 18px; text-align: center; margin-top: 2mm;">
-					            		<b>{{ $goods[$i * 2]['old_gold'] . ' ' . $goods[$i * 2]['weight'] }}GR</b>
+					            	<div style="font-size: 12px; text-align: center; margin-top: 3mm;">
+					            		<b>{{ $goods[$i * 2]['old_gold'] . ' ' . $goods[$i * 2]['weight'] }} GR</b>
 					            	</div>
-					            @endif -->
-				            	<div style="font-size: 12px; text-align: center; margin-top: 3mm;">
-				            		<b>{{ $goods[$i * 2]['old_gold'] . ' ' . $goods[$i * 2]['weight'] }} GR</b>
-				            	</div>
+					            @endif
 				            	<div style="font-size: 8px; text-align: center;">
-				            		<b>{{ config('app.store_name') }}</b>
+				            		<b>{{ $goods[$i * 2]['name'] }}</b>
+				            		<!-- <b>{{ config('app.store_name') }}</b> -->
 				            	</div>
 			            	</div>
 			            </td>
@@ -86,26 +84,20 @@
 					            	</div>
 					            </div>
 					            <div style="text-align: center; height: 7mm;">
-					            	<!-- @if($goods[$i * 2 + 1]['stone_weight'] != '0.00' && $goods[$i * 2 + 1]['stone_weight'] != null && $goods[$i * 2 + 1]['stone_weight'] != '')
-						            	<div style="font-size: 13px; text-align: center; margin-top: 2mm;">
+					            	@if($goods[$i * 2 + 1]['stone_weight'] != '0.00' && $goods[$i * 2 + 1]['stone_weight'] != null && $goods[$i * 2 + 1]['stone_weight'] != '')
+						            	<div style="font-size: 12px; text-align: center; margin-top: 2mm;">
 						            		<b>{{ $goods[$i * 2 + 1]['old_gold'] . ' ' . $goods[$i * 2 + 1]['weight'] }}GR</b>
 						            	</div>
-						            	<div style="font-size: 10px; text-align: center;">
-						            		<b>{{ 'BATU ' . $goods[$i * 2 + 1]['stone_weight'] }}GR</b>
-						            	</div>
-						            	<div style="font-size: 10px; text-align: center;">
-						            		<b>{{ 'ONGKOS ' . $goods[$i * 2 + 1]['stone_price'] }}</b>
+						            	<div style="font-size: 6px; text-align: center;">
+						            		<b>{{ 'BATU ' . $goods[$i * 2 + 1]['stone_weight'] }}GR {{ $goods[$i * 2 + 1]['stone_price'] }}</b>
 						            	</div>
 						            @else
-						            	<div style="font-size: 18px; text-align: center; margin-top: 2mm;">
-						            		<b>{{ $goods[$i * 2 + 1]['old_gold'] . ' ' . $goods[$i * 2 + 1]['weight'] }}GR</b>
+						            	<div style="font-size: 12px; text-align: center; margin-top: 3mm;">
+						            		<b>{{ $goods[$i * 2 + 1]['old_gold'] . ' ' . $goods[$i * 2 + 1]['weight'] }} GR</b>
 						            	</div>
-						            @endif -->
-					            	<div style="font-size: 12px; text-align: center; margin-top: 3mm;">
-					            		<b>{{ $goods[$i * 2 + 1]['old_gold'] . ' ' . $goods[$i * 2 + 1]['weight'] }} GR</b>
-					            	</div>
+							        @endif
 					            	<div style="font-size: 8px; text-align: center;">
-					            		<b>{{ config('app.store_name') }}</b>
+				            			<b>{{ $goods[$i * 2 + 1]['name'] }}</b>
 					            	</div>
 				            	</div>
 				            </td>

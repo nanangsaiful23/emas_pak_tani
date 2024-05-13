@@ -346,6 +346,95 @@ trait GoodLoadingControllerBase
         return $good_loading;
     }
 
+    public function updateGoodLoadingBase($role, $role_id, $good_loading_id, Request $request)
+    {
+        $data = $request->input();
+        // dd($data);die;
+
+        if($data['distributor_name'] != null)
+        {
+            $distributor = Distributor::where('name', $data['distributor_name'])->first();
+
+            if($distributor == null)
+            {
+                $data_distributor['name'] = $data['distributor_name'];
+
+                $distributor = Distributor::create($data_distributor);
+            }
+            $data['distributor_id'] = $distributor->id;
+        }
+
+        $data_loading['role']         = $role;
+        $data_loading['role_id']      = $role_id;
+        $data_loading['checker']      = $data['checker'];
+        $data_loading['loading_date'] = $data['loading_date'];
+        $data_loading['distributor_id']   = $data['distributor_id'];
+        $data_loading['total_item_price'] = unformatNumber($request->total_item_price);
+        $data_loading['note']             = $data['note'];
+        $data_loading['payment']          = '1111';
+        $data_loading['type']             = $data['type'];
+
+        $good_loading = GoodLoading::find($good_loading_id);
+        
+        #tabel journal reverse
+        $account = Account::where('code', '1111')->first();
+
+        $data_journal['type']               = 'good_loading';
+        $data_journal['journal_date']       = $good_loading->loading_date;
+        $data_journal['name']               = 'Reverse loading barang ' . $good_loading->distributor->name . ' tanggal ' . displayDate($good_loading->loading_date);
+        $data_journal['debit_account_id']  = $account->id;
+        $data_journal['debit']             = unformatNumber($good_loading->total_item_price);
+        $data_journal['credit_account_id'] = Account::where('code', '1141')->first()->id;
+        $data_journal['credit']            = unformatNumber($good_loading->total_item_price);
+
+        Journal::create($data_journal);
+
+        $good_loading->update($data_loading);
+        
+        #tabel journal 
+        $account = Account::where('code', '1111')->first();
+
+        $data_journal['type']               = 'good_loading';
+        $data_journal['journal_date']       = $good_loading->loading_date;
+        $data_journal['name']               = 'Edit loading barang ' . $good_loading->distributor->name . ' tanggal ' . displayDate($good_loading->loading_date);
+        $data_journal['debit_account_id']   = Account::where('code', '1141')->first()->id;
+        $data_journal['debit']              = unformatNumber($good_loading->total_item_price);
+        $data_journal['credit_account_id']  = $account->id;
+        $data_journal['credit']             = unformatNumber($good_loading->total_item_price);
+
+        Journal::create($data_journal);
+
+        for($i = 0; $i < sizeof($data['ids']); $i++) 
+        { 
+            if($data['ids'][$i] != null)
+            {
+                $data['prices'][$i] = unformatNumber($data['prices'][$i]);
+                $data['stone_prices'][$i] = unformatNumber($data['stone_prices'][$i]);
+
+                $data_good['category_id'] = $data['category_ids'][$i];
+                $data_good['is_old_gold'] = $data['is_old_golds'][$i];
+                $data_good['name'] = $data['names'][$i];
+                $data_good['percentage_id'] = $data['percentage_ids'][$i];
+
+                $data_good['weight'] = displayGramComa($data['weights'][$i]);
+                $data_good['status'] = $data['statuses'][$i];
+                $data_good['gold_history_number'] = $data['gold_history_numbers'][$i];
+                $data_good['stone_weight'] = $data['stone_weights'][$i];
+                $data_good['stone_price'] = $data['stone_prices'][$i];
+
+                $good = Good::find($data['good_ids'][$i]);
+                $good->update($data_good);
+
+                $data_detail['price'] = $data['prices'][$i];
+
+                $good_loading_detail = GoodLoadingDetail::find($data['ids'][$i]);
+                $good_loading_detail->update($data_detail);
+            }
+        }
+
+        return $good_loading;
+    }
+
     public function storeExcelGoodLoadingBase($role, $role_id, Request $request)
     {
         // $data = $request

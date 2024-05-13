@@ -99,7 +99,7 @@
         $("#weight-" + total_item).html("<h3>MT " + good[3] + "GR</h3>");
       else
         $("#weight-" + total_item).html("<h3>" + good[3] + "GR</h3>");
-      $("#stone_weight-" + total_item).html("{{ config('app.store_name') }}");
+      $("#stone_weight-" + total_item).html(good[2]);
       // if(good[6] != '0.00' && good[6] != '' && good[6] != null && good[6] != '0')
       // {
       //   $("#stone_weight-" + total_item).html("<h5>BATU " + good[6] + "GR</h5>");

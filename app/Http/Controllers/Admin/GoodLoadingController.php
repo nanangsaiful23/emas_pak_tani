@@ -84,6 +84,37 @@ class GoodLoadingController extends Controller
         return view('admin.layout.page', compact('default', 'good_loading'));
     }
 
+    public function edit($good_loading_id)
+    {
+        [$default['type'], $default['color'], $default['data']] = alert();
+
+        $good_loading = GoodLoading::find($good_loading_id);
+        $type = $good_loading->type;
+
+        if($type == 'buy')
+            $default['page_name'] = 'Ubah Data Pembelian Emas dengan Surat';
+        elseif($type == 'buy-other')
+            $default['page_name'] = 'Ubah Data Pembelian Emas tanpa Surat';
+        else
+            $default['page_name'] = 'Ubah Data Kulak Emas';
+        $default['page'] = 'good-loading';
+        $default['section'] = 'edit';
+
+        return view('admin.layout.page', compact('default', 'type', 'good_loading'));
+    }
+
+    public function update($good_loading_id, Request $request)
+    {
+        $good_loading = $this->updateGoodLoadingBase('admin', \Auth::user()->id, $good_loading_id, $request);
+
+        session(['alert' => 'edit', 'data' => 'loading barang']);
+
+        if($request->type == 'loading')
+            return redirect('/admin/good-loading/' . $good_loading->id . '/printBarcode');
+        else
+            return redirect('/admin/good-loading/' . $good_loading->id . '/print');
+    }
+
     public function excel()
     {
         [$default['type'], $default['color'], $default['data']] = alert();

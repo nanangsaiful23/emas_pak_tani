@@ -176,6 +176,7 @@
 
     function displayGramComa($gram)
     {
+        $gram = str_replace(',', '', $gram);
         $result = explode('.', $gram);
 
         if(!isset($result[1]))
@@ -424,7 +425,7 @@
 
     function getPercentages()
     {
-        $percentages = [null => 'Pilih persentase'];
+        $percentages = [];
         foreach (Percentage::orderBy('name', 'asc')->get() as $data) {
             $percentages = array_add($percentages, $data->id, $data->name);
         }

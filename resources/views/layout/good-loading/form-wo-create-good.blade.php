@@ -111,7 +111,7 @@
                         <div class="form-group">
                             {!! Form::label('weight', 'Berat Emas', array('class' => 'col-sm-4 control-label')) !!}
                             <div class="col-sm-8">
-                                {!! Form::input('number', 'weight', null, array('class' => 'form-control', 'required'=>'required', 'id' => 'weight', 'placeholder' => '0.00')) !!}<br>Koma menggunakan simbol .
+                                {!! Form::input('text', 'weight', null, array('class' => 'form-control', 'required'=>'required', 'id' => 'weight', 'placeholder' => '0.00')) !!}<br><b>Koma menggunakan simbol . (titik)</b>
                             </div>
                         </div>
 
@@ -164,7 +164,7 @@
                         <div class="form-group">
                             {!! Form::label('stone_weight', 'Berat Batu', array('class' => 'col-sm-4 control-label')) !!}
                             <div class="col-sm-8">
-                                {!! Form::input('number', 'stone_weight', null, array('class' => 'form-control', 'id' => 'stone_weight', 'placeholder' => '0.00')) !!}<br>Koma menggunakan simbol .
+                                {!! Form::input('text', 'stone_weight', null, array('class' => 'form-control', 'id' => 'stone_weight', 'placeholder' => '0.00')) !!}<br><b>Koma menggunakan simbol . (titik)</b>
                             </div>
                         </div>
 
