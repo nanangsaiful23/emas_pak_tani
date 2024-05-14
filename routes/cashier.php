@@ -14,6 +14,8 @@ Route::group(['prefix' => 'good'], function () {
 	});
 	
     Route::post('/store', 'GoodController@store')->name('good.store');
+    Route::get('/changeStatus', 'GoodController@changeStatus');
+    Route::post('/updateChangeStatus', 'GoodController@updateChangeStatus')->name('good.update-status');
     Route::get('/searchByBarcode/{barcode}', 'GoodController@searchByBarcode');
     Route::get('/searchById/{good_id}', 'GoodController@searchById');
     Route::get('/searchByGoodUnit/{good_unit_id}', 'GoodController@searchByGoodUnit');

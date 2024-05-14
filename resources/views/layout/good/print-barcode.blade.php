@@ -115,7 +115,7 @@
         }); 
 
 	    window.setTimeout(function(){
-      		window.location = window.location.origin + '/{{ $role }}/good/printBarcode';
+      		window.location = window.location.origin + '/{{ $role }}/good/all/all/all/20';
 	    }, 5000);
 	</script>
 </html>

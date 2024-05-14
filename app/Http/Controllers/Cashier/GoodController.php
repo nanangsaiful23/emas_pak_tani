@@ -157,4 +157,28 @@ class GoodController extends Controller
 
         return redirect('/cashier/good/' . $good->id . '/detail');
     }
+
+    public function changeStatus()
+    {
+        [$default['type'], $default['color'], $default['data']] = alert();
+
+        $default['page_name'] = 'Ubah Status Barang';
+        $default['page'] = 'good';
+        $default['section'] = 'change-status';
+
+        $goods = Good::where('status', 'Service')
+                     ->orWhere('status', 'Cuci')
+                     ->get();
+
+        return view('cashier.layout.page', compact('default', 'goods'));
+    }
+
+    public function updateChangeStatus(Request $request)
+    {
+        $role = 'cashier';
+        
+        $goods = $this->changeStatusGoodBase($request);
+        
+        return view('layout.good.print-barcode', compact('role', 'goods'));
+    }
 }
