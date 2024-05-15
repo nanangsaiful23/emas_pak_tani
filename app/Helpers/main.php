@@ -153,16 +153,17 @@
 
     function showShortName($string)
     {
-        if(strlen($string) > 30){
-            $textLength = strlen($string);
-            $maxChars = 20;
+        // if(strlen($string) > 20){
+        //     $textLength = strlen($string);
+        //     $maxChars = 10;
 
-            $string = substr_replace($string, '...', $maxChars/2, $textLength-$maxChars);
-        }
-        return $string;
+        //     $string = substr_replace($string, '...', $maxChars/2, $textLength-$maxChars);
+        // }
 
         // if(strlen($string) > 30)
         //     $string = substr($string, 0, 30);
+
+        $string = substr($string, 0, 15);
 
         return $string;
     }

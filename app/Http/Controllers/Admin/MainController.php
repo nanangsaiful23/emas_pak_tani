@@ -12,6 +12,7 @@ use App\Models\GoodLoadingDetail;
 use App\Models\GoodPrice;
 use App\Models\GoldPrice;
 use App\Models\Journal;
+use App\Models\Percentage;
 use App\Models\ReturItem;
 use App\Models\Transaction;
 
@@ -73,7 +74,9 @@ class MainController extends Controller
 
         $gold_price = GoldPrice::orderBy('created_at', 'desc')->first();
 
-        return view('admin.index', compact('default', 'transactions', 'other_transactions', 'good_prices', 'gold_price'));
+        $percentages = Percentage::where('nominal', null)->orWhere('profit', null)->get();
+
+        return view('admin.index', compact('default', 'transactions', 'other_transactions', 'good_prices', 'gold_price', 'percentages'));
     }
 
     public function profit()

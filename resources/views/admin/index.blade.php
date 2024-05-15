@@ -23,6 +23,12 @@
     </section>
     <section class="content">
       <div class="row">
+        @if(sizeof($percentages) > 0)
+          <div class="alert alert-danger alert-dismissible" id="message">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              <h4><i class="icon fa fa-warning"></i> Silahkan lengkapi data persentase guna menentukan harga beli emas pada saat transaksi</h4>
+          </div>
+        @endif
         <div class="col-xs-12 col-sm-4">
           <div class="small-box" style="background-color: #DFF5FF">
             <div class="inner">

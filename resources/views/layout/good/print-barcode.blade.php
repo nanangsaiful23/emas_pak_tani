@@ -66,7 +66,7 @@
 					            	</div>
 					            @endif
 				            	<div style="font-size: 8px; text-align: center;">
-				            		<b>{{ $goods[$i * 2]['name'] }}</b>
+				            		<b>{{ showShortName($goods[$i * 2]['name']) }}</b>
 				            		<!-- <b>{{ config('app.store_name') }}</b> -->
 				            	</div>
 			            	</div>
@@ -97,7 +97,7 @@
 						            	</div>
 							        @endif
 					            	<div style="font-size: 8px; text-align: center;">
-				            			<b>{{ $goods[$i * 2 + 1]['name'] }}</b>
+				            			<b>{{ showShortName($goods[$i * 2 + 1]['name']) }}</b>
 					            	</div>
 				            	</div>
 				            </td>
