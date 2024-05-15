@@ -42,9 +42,9 @@
                     <td>{{ displayDate($history->created_at) }}</td>
                     <td>{{ $history->type }}</td>
                     @if($history->type == 'loading')
-                      <td class="center"><a href="{{ url($role . '/good-loading/' . $history->id . '/detail') }}"><i class="fa fa-hand-o-right tosca" aria-hidden="true"></i></a></td>
+                      <td class="center"><a href="{{ url($role . '/good-loading/' . $history->gid . '/detail') }}"><i class="fa fa-hand-o-right tosca" aria-hidden="true"></i></a></td>
                     @else
-                      <td class="center"><a href="{{ url($role . '/transaction/' . $history->id . '/detail') }}"><i class="fa fa-hand-o-right tosca" aria-hidden="true"></i></a></td>
+                      <td class="center"><a href="{{ url($role . '/transaction/' . $history->gid . '/detail') }}"><i class="fa fa-hand-o-right tosca" aria-hidden="true"></i></a></td>
                     @endif
                   </tr>
                 @endforeach

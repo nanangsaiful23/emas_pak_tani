@@ -312,11 +312,12 @@ class GoodController extends Controller
     {
         [$default['type'], $default['color'], $default['data']] = alert();
 
-        $default['page_name'] = 'Riwayat Barang';
+        $good = Good::find($good_id);
+
+        $default['page_name'] = 'Riwayat Barang ' . $good->name;
         $default['page'] = 'good';
         $default['section'] = 'history';
 
-        $good = Good::find($good_id);
         $histories = $this->historyGoodBase($good_id, $start_date, $end_date, $pagination);
 
         return view('admin.layout.page', compact('default', 'good', 'start_date', 'end_date', 'pagination', 'histories'));
