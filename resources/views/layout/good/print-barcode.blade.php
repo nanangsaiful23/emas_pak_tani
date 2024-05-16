@@ -61,7 +61,7 @@
 					            		<b>{{ $goods[$i * 2]['stone_price'] }}</b>
 					            	</div>
 					            @else
-					            	<div style="font-size: 12px; text-align: center; margin-top: 3mm;">
+					            	<div style="font-size: 8px; text-align: center; margin-top: 3mm;">
 					            		<b>{{ $goods[$i * 2]['old_gold'] . ' ' . $goods[$i * 2]['weight'] }} GR</b>
 					            	</div>
 					            @endif
@@ -92,7 +92,7 @@
 						            		<b>{{ 'BATU ' . $goods[$i * 2 + 1]['stone_weight'] }}GR {{ $goods[$i * 2 + 1]['stone_price'] }}</b>
 						            	</div>
 						            @else
-						            	<div style="font-size: 12px; text-align: center; margin-top: 3mm;">
+						            	<div style="font-size: 8px; text-align: center; margin-top: 3mm;">
 						            		<b>{{ $goods[$i * 2 + 1]['old_gold'] . ' ' . $goods[$i * 2 + 1]['weight'] }} GR</b>
 						            	</div>
 							        @endif
