@@ -60,15 +60,19 @@
 					            	<div style="font-size: 6px; text-align: center;">
 					            		<b>{{ $goods[$i * 2]['stone_price'] }}</b>
 					            	</div>
+					            	<div style="font-size: 8px; text-align: center;">
+					            		<b>{{ showShortName($goods[$i * 2]['name']) }}</b>
+					            		<!-- <b>{{ config('app.store_name') }}</b> -->
+					            	</div>
 					            @else
 					            	<div style="font-size: 10px; text-align: center; margin-top: 3mm;">
 					            		<b>{{ $goods[$i * 2]['old_gold'] . ' ' . $goods[$i * 2]['weight'] }} GR</b>
 					            	</div>
+					            	<div style="font-size: 8px; text-align: center;">
+					            		<b>{{ $goods[$i * 2]['name'] }}</b>
+					            		<!-- <b>{{ config('app.store_name') }}</b> -->
+					            	</div>
 					            @endif
-				            	<div style="font-size: 8px; text-align: center;">
-				            		<b>{{ showShortName($goods[$i * 2]['name']) }}</b>
-				            		<!-- <b>{{ config('app.store_name') }}</b> -->
-				            	</div>
 			            	</div>
 			            </td>
 						@if(isset($goods[$i * 2 + 1]))
@@ -91,14 +95,17 @@
 						            	<div style="font-size: 6px; text-align: center;">
 						            		<b>{{ 'BATU ' . $goods[$i * 2 + 1]['stone_weight'] }}GR {{ $goods[$i * 2 + 1]['stone_price'] }}</b>
 						            	</div>
+						            	<div style="font-size: 8px; text-align: center;">
+					            			<b>{{ showShortName($goods[$i * 2 + 1]['name']) }}</b>
+						            	</div>
 						            @else
 						            	<div style="font-size: 10px; text-align: center; margin-top: 3mm;">
 						            		<b>{{ $goods[$i * 2 + 1]['old_gold'] . ' ' . $goods[$i * 2 + 1]['weight'] }} GR</b>
 						            	</div>
+						            	<div style="font-size: 8px; text-align: center;">
+					            			<b>{{ $goods[$i * 2 + 1]['name'] }}</b>
+						            	</div>
 							        @endif
-					            	<div style="font-size: 8px; text-align: center;">
-				            			<b>{{ showShortName($goods[$i * 2 + 1]['name']) }}</b>
-					            	</div>
 				            	</div>
 				            </td>
 			            @endif
