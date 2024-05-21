@@ -13,6 +13,7 @@ use App\Models\Good;
 use App\Models\GoodLoadingDetail;
 use App\Models\GoodPhoto;
 use App\Models\GoodPrice;
+use App\Models\GoodStatusHistory;
 use App\Models\GoodUnit;
 use App\Models\TransactionDetail;
 use App\Models\Unit;
@@ -859,12 +860,21 @@ trait GoodControllerBase
         $results = [];
         for($i = 0; $i < sizeof($request->ids); $i++)
         {
-            if($request->ids[$i] != null && $request->statuses[$i] == 'Siap dijual')
+            if($request->ids[$i] != null)
             {
                 $good = Good::find($request->ids[$i]);
 
                 $data['status'] = $request->statuses[$i];
                 $data['change_status_fee'] = unformatNumber($request->fees[$i]);
+                $data['weight'] = displayGramComa($request->new_weights[$i]);
+
+                $data_history['good_id'] = $good->id;
+                $data_history['old_status'] = $good->status;
+                $data_history['new_status'] = $data['status'];
+                $data_history['old_weight'] = $good->weight;
+                $data_history['new_weight'] = $data['weight'];
+
+                GoodStatusHistory::create($data_history);
 
                 $good->update($data);
 
@@ -872,7 +882,6 @@ trait GoodControllerBase
             }
         }
 
-// dd($results);die;
         return $results;
     }
 
@@ -895,6 +904,13 @@ trait GoodControllerBase
                                              ->whereDate('transaction_details.created_at', '<=', $end_date)
                                              ->orderBy('transaction_details.created_at', 'asc')
                                              ->get();
+
+            $statuses = GoodStatusHistory::select('good_status_histories.id', 'good_status_histories.created_at', 'good_status_histories.old_status', 'good_status_histories.new_status')
+                                             ->where('good_status_histories.good_id', $good_id)
+                                             ->whereDate('good_status_histories.created_at', '>=', $start_date)
+                                             ->whereDate('good_status_histories.created_at', '<=', $end_date)
+                                             ->orderBy('good_status_histories.created_at', 'asc')
+                                             ->get();
         }
         else
         {     
@@ -913,51 +929,33 @@ trait GoodControllerBase
                                              ->whereDate('transaction_details.created_at', '<=', $end_date)
                                              ->orderBy('transaction_details.created_at', 'asc')
                                              ->paginate($pagination);
-        }
 
+            $statuses = GoodStatusHistory::select('good_status_histories.id as gid', 'good_status_histories.created_at', 'good_status_histories.old_status', 'good_status_histories.new_status')
+                                             ->where('good_status_histories.good_id', $good_id)
+                                             ->whereDate('good_status_histories.created_at', '>=', $start_date)
+                                             ->whereDate('good_status_histories.created_at', '<=', $end_date)
+                                             ->orderBy('good_status_histories.created_at', 'asc')
+                                             ->paginate($pagination);
+        }
         $histories = [];
-        $i = 0;
-        $j = 0;
 
-        if(sizeof($loadings) > sizeof($transactions)) 
+        foreach($transactions as $transaction)
         {
-            $total = sizeof($loadings);
+            $transaction->type = 'transaction';
+            array_push($histories, $transaction);
         }
-        else
+        foreach($statuses as $status)
         {
-            $total = sizeof($transactions);
+            $status->type = 'ubah status';
+            array_push($histories, $status);
+        }
+        foreach($loadings as $loading)
+        {
+            $loading->type = 'loading';
+            array_push($histories, $loading);
         }
 
-        for($k = 0; $k < $total; $k++)
-        {
-            if(isset($loadings[$i]) && isset($transactions[$j]))
-            {
-                if($loadings[$i]->created_at < $transactions[$j]->created_at)
-                {
-                    $loadings[$i]->type = 'loading';
-                    array_push($histories, $loadings[$i]);
-                    $i++;
-                }
-                else
-                {
-                    $transactions[$j]->type = 'transaction';
-                    array_push($histories, $transactions[$j]);
-                    $j++;
-                }
-            }
-            elseif(isset($loadings[$i]))
-            {
-                $loadings[$i]->type = 'loading';
-                array_push($histories, $loadings[$i]);
-                $i++;
-            }
-            else
-            {
-                $transactions[$j]->type = 'transaction';
-                array_push($histories, $transactions[$j]);
-                $j++;
-            }
-        }
+        usort($histories, fn($a, $b) => strcmp($a->created_at, $b->created_at));
 
         return $histories;
     }

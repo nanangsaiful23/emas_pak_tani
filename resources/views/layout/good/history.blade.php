@@ -31,8 +31,8 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>Tanggal</th>
-                <th>Jenis</th>
+                <th width="10%">Tanggal</th>
+                <th width="10%">Jenis</th>
                 <th class="center">Detail</th>
               </tr>
               </thead>
@@ -43,8 +43,10 @@
                     <td>{{ $history->type }}</td>
                     @if($history->type == 'loading')
                       <td class="center"><a href="{{ url($role . '/good-loading/' . $history->gid . '/detail') }}"><i class="fa fa-hand-o-right tosca" aria-hidden="true"></i></a></td>
-                    @else
+                    @elseif($history->type == 'transaction')
                       <td class="center"><a href="{{ url($role . '/transaction/' . $history->gid . '/detail') }}"><i class="fa fa-hand-o-right tosca" aria-hidden="true"></i></a></td>
+                    @else
+                      <td class="center">{{ $history->old_status . ' => ' . $history->new_status }}</td>
                     @endif
                   </tr>
                 @endforeach

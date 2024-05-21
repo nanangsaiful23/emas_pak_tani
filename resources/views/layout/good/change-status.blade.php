@@ -51,6 +51,7 @@
                             <th>Kadar</th>
                             <th>Barang</th>
                             <th>Status</th>
+                            <th>Berat Baru</th>
                             <th>Ongkos</th>
                         </thead>
                         <tbody id="table-transaction">
@@ -71,6 +72,9 @@
                                 </td>
                                 <td>
                                     {!! Form::select('statuses[]', getStatusOtherWoAll(), null, ['class' => 'form-control select2','required'=>'required', 'style'=>'width:100%', 'id' => 'status-' . $i]) !!}
+                                </td>
+                                <td width="10%">
+                                    {!! Form::text('new_weights[]', null, array('class' => 'form-control', 'id' => 'new_weight-' . $i)) !!}
                                 </td>
                                 <td width="10%">
                                     {!! Form::text('fees[]', null, array('class' => 'form-control', 'id' => 'fee-' . $i, 'onkeyup' => 'formatNumber("fee-' . $i . '")')) !!}
@@ -127,6 +131,7 @@
                           $("#percentage-" + total_item).val(good[3]);
                           $("#name-" + total_item).val(good[4]);
                           $("#status-" + total_item).val(good[5]).change();
+                          $("#new_weight-" + total_item).val(good[2]);
                           
                           addElement(total_item);
                           total_item += 1;
@@ -142,6 +147,7 @@
                       htmlResult += '<td width="10%"><textarea type="text" name="percentages[]" class="form-control" id="percentage-' + index +'" readonly="readonly"></textarea></td>';
                       htmlResult += '<td width="30%"><textarea type="text" name="names[]" class="form-control" id="name-' + index +'" readonly="readonly" style="height: 70px"></textarea></td>';
                       htmlResult += '<td><select class="form-control select2" id="status-' + index + '" name="statuses[]" required="required" style="width: 100%">@foreach(getStatusOtherWoAll() as $x => $y)<option value="{{ $x }}">{{ $y }}</option> @endforeach </select></td>';    
+                      htmlResult += '<td width="10%"><textarea type="text" name="new_weights[]" class="form-control" id="new_weight-' + index +'"></textarea></td>';
                       htmlResult += '<td width="10%"><textarea type="text" name="fees[]" class="form-control" id="fee-' + index +'" style="height: 70px" onkeyup="formatNumber(\'fee-' + index + '\')"></textarea></td>'; 
                       htmlResult += '<td><i class="fa fa-times red" id="delete-' + index + '" onclick="deleteItem(\'' + index + '\')"></i></td>';
                       htmlResult += '</tr>';
