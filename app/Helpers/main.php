@@ -310,6 +310,24 @@
         return $golds;
     }
 
+    function getTotalItems($category, $status)
+    {
+        if($category == 'all')
+        {
+            $golds = Good::where('goods.status', $status)
+                         ->count();  
+        }
+        else
+        {
+            $golds = Good::join('categories', 'categories.id', 'goods.category_id')
+                         ->where('categories.code', $category)
+                         ->where('goods.status', $status)
+                         ->count();  
+        }
+
+        return $golds;
+    }
+
     function getColors()
     {
         $colors = [null => 'Pilih warna'];

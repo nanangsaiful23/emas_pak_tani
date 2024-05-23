@@ -78,110 +78,32 @@
             <a href="{{ url('/admin/transaction/all/all/' . date('Y-m-d') . '/' . date('Y-m-d') . '/20') }}" class="small-box-footer" target="_blank()">Daftar Transaksi <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-4">
-          <div class="small-box" style="background-color: #C3E2C2">
-            <div class="inner">
-              <h3>{{ getGram('all', 'Siap dijual')->sum('weight') }} gram</h3>
-
-              <p>Total seluruh emas</p>
-            </div>
-            <div class="icon">
-              <span><img src="{{asset('assets/icon/earrings.png')}}" style="width: 80px"></span>
-            </div>
-            <a href="{{ url('/admin/gold-price/create') }}" class="small-box-footer" target="_blank()"></a>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-4">
-          <div class="small-box" style="background-color: #C3E2C2">
-            <div class="inner">
-              <h3>{{ getGram('all', 'Siap dijual')->sum('stone_weight') }} gram</h3>
-
-              <p>Total seluruh batu</p>
-            </div>
-            <div class="icon">
-              <span><img src="{{asset('assets/icon/diamond.png')}}" style="width: 80px"></span>
-            </div>
-            <a href="{{ url('/admin/gold-price/create') }}" class="small-box-footer" target="_blank()"></a>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-4">
-          <div class="small-box" style="background-color: #C3E2C2">
-            <div class="inner">
-              <h3>{{ getGram('all', 'Siap dijual')->sum('weight') + getGram('all', 'Siap dijual')->sum('stone_weight') }} gram</h3>
-
-              <p>Total keseluruhan asset</p>
-            </div>
-            <div class="icon">
-              <span><img src="{{asset('assets/icon/jewelry.png')}}" style="width: 80px"></span>
-            </div>
-            <a href="{{ url('/admin/gold-price/create') }}" class="small-box-footer" target="_blank()"></a>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-4">
-          <div class="small-box" style="background-color: #FFE6E6">
-            <div class="inner">
-              <h3>{{ getGram('AT', 'Siap dijual')->sum('weight') }} gram</h3>
-
-              <p>Total asset anting/cuplik</p>
-            </div>
-            <div class="icon">
-              <span><img src="{{asset('assets/icon/earings.png')}}" style="width: 80px"></span>
-            </div>
-            <a href="{{ url('/admin/gold-price/create') }}" class="small-box-footer" target="_blank()"></a>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-4">
-          <div class="small-box" style="background-color: #FFE6E6">
-            <div class="inner">
-              <h3>{{ getGram('CC', 'Siap dijual')->sum('weight') }} gram</h3>
-
-              <p>Total asset cincin</p>
-            </div>
-            <div class="icon">
-              <span><img src="{{asset('assets/icon/diamond-ring.png')}}" style="width: 80px"></span>
-            </div>
-            <a href="{{ url('/admin/gold-price/create') }}" class="small-box-footer" target="_blank()"></a>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-4">
-          <div class="small-box" style="background-color: #FFE6E6">
-            <div class="inner">
-              <h3>{{ getGram('GL', 'Siap dijual')->sum('weight') }} gram</h3>
-
-              <p>Total asset gelang</p>
-            </div>
-            <div class="icon">
-              <span><img src="{{asset('assets/icon/bracelet.png')}}" style="width: 80px"></span>
-            </div>
-            <a href="{{ url('/admin/gold-price/create') }}" class="small-box-footer" target="_blank()"></a>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-4">
-          <div class="small-box" style="background-color: #FFE6E6">
-            <div class="inner">
-              <h3>{{ getGram('KL', 'Siap dijual')->sum('weight') }} gram</h3>
-
-              <p>Total asset kalung</p>
-            </div>
-            <div class="icon">
-              <span><img src="{{asset('assets/icon/necklace.png')}}" style="width: 80px"></span>
-            </div>
-            <a href="{{ url('/admin/gold-price/create') }}" class="small-box-footer" target="_blank()"></a>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-4">
-          <div class="small-box" style="background-color: #FFE6E6">
-            <div class="inner">
-              <h3>{{ getGram('LT', 'Siap dijual')->sum('weight') }} gram</h3>
-
-              <p>Total asset liontin</p>
-            </div>
-            <div class="icon">
-              <span><img src="{{asset('assets/icon/pendant.png')}}" style="width: 80px"></span>
-            </div>
-            <a href="{{ url('/admin/gold-price/create') }}" class="small-box-footer" target="_blank()"></a>
-          </div>
-        </div>
+      </div>
+      <div class="row">
+        @foreach(getStatusOtherWoAll() as $status)
+          <section class="content-header">
+            <h3>Rekap Emas {{ $status }}</h3>
+          </section>
+          <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>Jenis</th>
+              <th>Total Item</th>
+              <th>Total Barang</th>
+            </tr>
+            </thead>
+            <tbody id="table-good">
+              @foreach(getCategoryObjects() as $category)
+                <tr>
+                  <td>{{ $category->name }}</td>
+                  <td>{{ getGram($category->code, $status)->sum('weight') }} gram</td>
+                  <td>{{ getTotalItems($category->code, $status) }} pcs</td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+          <hr>
+        @endforeach
       </div>
     </section>
   </div>

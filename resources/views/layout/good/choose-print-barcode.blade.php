@@ -29,7 +29,7 @@
                   <div>
                     <option value="">Silahkan pilih barang</option>
                     @foreach(getGoodUnits() as $good)
-                      <option value="{{ $good->id . ';;;' . date('Y') . $good->good->getBarcode() . ';;;<b>' . $good->good->name . '</b>;;;' . $good->good->weight . ';;;<b>' . $good->good->code . '</b>;;;' . $good->good->is_old_gold . ';;;' . $good->good->stone_weight . ';;;' . $good->good->stone_price }}">@if($good->is_barcode_printed == '1') [v] @endif {{ $good->good->name . ' (' . $good->good->code . ')' }}</option>
+                      <option value="{{ $good->good_unit_id . ';;;' . date('Y') . $good->good->getBarcode() . ';;;<b>' . $good->good->name . '</b>;;;' . $good->good->weight . ';;;<b>' . $good->good->code . '</b>;;;' . $good->good->is_old_gold . ';;;' . $good->good->stone_weight . ';;;' . $good->good->stone_price }}">@if($good->is_barcode_printed == '1') [v] @endif {{ $good->good->name . ' (' . $good->good->code . ')' }}</option>
                     @endforeach
                   </div>
                 </select>
