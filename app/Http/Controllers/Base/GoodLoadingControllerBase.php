@@ -182,12 +182,14 @@ trait GoodLoadingControllerBase
                         }
                         $barcode .= $last_id;
 
-                        $data_code['code'] = $category->code . ' ' . date('y') . ' ' . $barcode . ' ' . date('m') . ' ' . $good->gold_history_number;
+                        $data_code['code'] = $category->code . ' ' . date('y') . ' ' . $barcode . ' ' . date('m');
 
-                        $is_exist = Good::where('code', $data_code['code'])->first();
+                        $is_exist = Good::where('code', 'like', $data_code['code'] . '%')->withTrashed()->first();
 
                         if($is_exist == null)
                         {
+                            $data_code['code'] = $category->code . ' ' . date('y') . ' ' . $barcode . ' ' . date('m') . ' ' . $good->gold_history_number;
+
                             $good->update($data_code);
                             $is_code_exist = false;
                         }

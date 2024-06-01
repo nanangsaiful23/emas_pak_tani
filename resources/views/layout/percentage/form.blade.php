@@ -17,8 +17,8 @@
                 @if($SubmitButtonText == 'View')
                     {!! Form::text('nominal', null, array('class' => 'form-control', 'readonly' => 'readonly')) !!}
                 @else
-                    {!! Form::input('number', 'nominal', null, array('class' => 'form-control')) !!}
-                    Contoh pengisian: 0.6 (separator dengan koma)
+                    {!! Form::text('nominal', null, array('class' => 'form-control')) !!}
+                    Contoh pengisian: 0.6 (separator dengan titik)
                 @endif
             </div>
         </div>
@@ -29,8 +29,8 @@
                 @if($SubmitButtonText == 'View')
                     {!! Form::text('profit', null, array('class' => 'form-control', 'readonly' => 'readonly')) !!}
                 @else
-                    {!! Form::input('number', 'profit', null, array('class' => 'form-control')) !!}
-                    Contoh pengisian: 10 (tulis angka saja)
+                    {!! Form::text('profit', null, array('class' => 'form-control')) !!}
+                    Contoh pengisian: 10 (tulis angka saja, angka desimal menggunakan separator titik)
                 @endif
             </div>
         </div>

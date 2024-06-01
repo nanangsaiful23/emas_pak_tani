@@ -55,11 +55,11 @@ class PercentageController extends Controller
     {
         [$default['type'], $default['color'], $default['data']] = alert();
 
-        $default['page_name'] = 'Ubah Persentase';
+        $percentage = Percentage::find($percentage_id);
+
+        $default['page_name'] = 'Ubah Persentase ' . $percentage->name;
         $default['page'] = 'percentage';
         $default['section'] = 'edit';
-
-        $percentage = Percentage::find($percentage_id);
 
         return view('admin.layout.page', compact('default', 'percentage'));
     }
