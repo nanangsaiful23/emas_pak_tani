@@ -20,27 +20,32 @@
               @include('layout.search-form')
             </div>
             <div class="form-group col-sm-12" style="margin-top: 10px;">
-
-              {!! Form::label('show', 'Show', array('class' => 'col-sm-1 control-label')) !!}
-              <div class="col-sm-1">
-                {!! Form::select('show', getPaginations(), $pagination, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'show', 'onchange' => 'advanceSearch()']) !!}
-              </div>
-              {!! Form::label('category', 'Kategori', array('class' => 'col-sm-1 control-label')) !!}
-              <div class="col-sm-2">
-                {!! Form::select('category', getCategories(), $category_id, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'category', 'onchange' => 'advanceSearch()']) !!}
-              </div>
-              {!! Form::label('status', 'Status Barang', array('class' => 'col-sm-1 control-label')) !!}
-              <div class="col-sm-2">
-                {!! Form::select('status', getStatusOther(), $status, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'status', 'onchange' => 'advanceSearch()']) !!}
-              </div>
-              @if(\Auth::user()->email == 'admin')
-                <!-- <div class="form-group col-sm-12" style="margin-top: 10px;"> -->
-                  {!! Form::label('distributor', 'Distributor', array('class' => 'col-sm-1 control-label')) !!}
-                  <div class="col-sm-3">
-                    {!! Form::select('distributor', getDistributorLists(), $distributor_id, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'distributor', 'onchange' => 'advanceSearch()']) !!}
-                  </div>
-                <!-- </div> -->
-              @endif
+              {!! Form::model(old(),array('url' => route($role . '.good.export'), 'enctype'=>'multipart/form-data', 'method' => 'POST', 'class' => 'form-horizontal', 'id' => 'export-form')) !!}
+                {!! Form::label('show', 'Show', array('class' => 'col-sm-1 control-label')) !!}
+                <div class="col-sm-1">
+                  {!! Form::select('show', getPaginations(), $pagination, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'show', 'onchange' => 'advanceSearch()']) !!}
+                </div>
+                {!! Form::label('category', 'Kategori', array('class' => 'col-sm-1 control-label')) !!}
+                <div class="col-sm-2">
+                  {!! Form::select('category', getCategories(), $category_id, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'category', 'onchange' => 'advanceSearch()']) !!}
+                </div>
+                {!! Form::label('status', 'Status Barang', array('class' => 'col-sm-1 control-label')) !!}
+                <div class="col-sm-2">
+                  {!! Form::select('status', getStatusOther(), $status, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'status', 'onchange' => 'advanceSearch()']) !!}
+                </div>
+                @if(\Auth::user()->email == 'admin')
+                  <!-- <div class="form-group col-sm-12" style="margin-top: 10px;"> -->
+                    {!! Form::label('distributor', 'Distributor', array('class' => 'col-sm-1 control-label')) !!}
+                    <div class="col-sm-3">
+                      {!! Form::select('distributor', getDistributorLists(), $distributor_id, ['class' => 'form-control select2', 'style'=>'width: 100%', 'id' => 'distributor', 'onchange' => 'advanceSearch()']) !!}
+                    </div>
+                  <!-- </div> -->
+                @endif
+                {{ csrf_field() }}
+                <div class="form-group col-sm-12" style="margin-top: 10px;">
+                  <div onclick="event.preventDefault(); exportData()" class='btn btn-success btn-flat btn-block form-control' data-dismiss="modal">Export Data Barang Sesuai Kategori & Status yang dipilih</div>
+                </div>
+              {!! Form::close() !!}
             </div>
           </div>
           <div class="box-body" style="overflow-x:scroll">
@@ -200,6 +205,11 @@
     function advanceSearch()
     {
       window.location = window.location.origin + '/{{ $role }}/good/' + $('#category').val() + '/' + $('#distributor').val() + '/' + $('#status').val() + '/' + $('#show').val();
+    }
+
+    function exportData()
+    {
+      document.getElementById('export-form').submit();
     }
   </script>
 @endsection

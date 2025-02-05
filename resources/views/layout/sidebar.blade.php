@@ -195,25 +195,21 @@
               <li class="{{ Request::segment(2) == 'percentage' && Request::segment(3) != 'create' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/percentage/15') }}"><i class="fa fa-circle-o"></i> Daftar Persentase</a></li>
           </ul>
         </li>
-      @endif
-      <!-- @if(\Auth::user()->email == 'admin')
-        <li class="header">LAPORAN KEUANGAN</li>
-        <li class="treeview {{ (Request::segment(2) == 'account' ) ? 'active' : ''  }}">
+        <li class="treeview {{ (Request::segment(2) == 'server-payment' ) ? 'active' : ''  }}">
           <a href="#">
-              <i class="fa fa-book"></i><span> Kelola Akun</span>
+              <i class="fa fa-wifi"></i><span> Pembayaran Server</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-              <li class="{{ Request::segment(2) == 'account' && Request::segment(3) == 'create' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/account/create') }}"><i class="fa fa-circle-o"></i> Tambah Akun</a></li>
-              <li class="{{ Request::segment(2) == 'account' && Request::segment(3) != 'create' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/account/15') }}"><i class="fa fa-circle-o"></i> Daftar Akun</a></li>
+            @if(\Auth::user()->email == 'super_admin')
+              <li class="{{ Request::segment(2) == 'server-payment' && Request::segment(3) == 'create' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/server-payment/create') }}"><i class="fa fa-circle-o"></i> Tambah Tagihan</a></li>
+            @endif
+            <li class="{{ Request::segment(2) == 'server-payment' && Request::segment(3) != 'create' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/server-payment/'. date('Y-m-d', strtotime(date('Y-m-d', strtotime(date('Y-m-d'))) . '-12 month')) . '/' . date('Y-m-d') . '/15') }}"><i class="fa fa-circle-o"></i> Riwayat Pembayaran</a></li>
           </ul>
         </li>
-        <li class="{{ Request::segment(2) == 'journal' && Request::segment(3) != 'create' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/journal/all/' . date('Y-m-d') . '/' . date('Y-m-d') . '/15') }}"><i class="fa fa-calculator"></i> Jurnal</a></li>
-        <li class="{{ Request::segment(2) == 'profit' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/profit') }}"><i class="fa fa-arrow-circle-up"></i> Laba Rugi</a></li>
-        <li class="{{ Request::segment(2) == 'scale' ? 'active' : ''  }}"><a href="{{ url('/' . $role . '/scale') }}"><i class="fa fa-balance-scale"></i> Neraca</a></li>
-      @endif -->
+      @endif
     </ul>
   </section>
 </aside>

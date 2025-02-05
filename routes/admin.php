@@ -82,6 +82,7 @@ Route::group(['prefix' => 'good'], function () {
 	Route::get('/zeroStock/{category_id}/{location}/{distributor_id}/{stock}', 'GoodController@zeroStock');
 	Route::post('/zeroStock/export', 'GoodController@stockExport')->name('zeroStock.export');
 	Route::get('/exp', 'GoodController@exp');
+	Route::post('/export', 'GoodController@goodExport')->name('good.export');
     Route::post('/store', 'GoodController@store')->name('good.store');
 	Route::get('/{good_id}/status/{type}', 'GoodController@changeStatus');
     Route::get('/{good_id}/loading/{start_date}/{end_date}/{pagination}', 'GoodController@loading');
@@ -185,6 +186,17 @@ Route::group(['prefix' => 'percentage'], function () {
     Route::put('/{percentage_id}/edit', 'PercentageController@update')->name('percentage.update');
 	Route::delete('/{percentage_id}/delete', 'PercentageController@delete')->name('percentage.delete');
 	Route::get('/{pagination}', 'PercentageController@index');
+});
+
+Route::group(['prefix' => 'server-payment'], function () {
+	Route::get('/create', 'ServerPaymentController@create');
+	Route::post('/store', 'ServerPaymentController@store')->name('server-payment.store');
+	Route::get('/{server_payment_id}/detail', 'ServerPaymentController@detail');
+	Route::get('/{server_payment_id}/good', 'ServerPaymentController@good');
+	Route::get('/{server_payment_id}/edit', 'ServerPaymentController@edit');
+	Route::put('/{server_payment_id}/edit', 'ServerPaymentController@update')->name('server-payment.update');
+	Route::delete('/{server_payment_id}/delete', 'ServerPaymentController@delete')->name('server-payment.delete');
+	Route::get('/{start_date}/{end_date}/{pagination}', 'ServerPaymentController@index');
 });
 
 Route::group(['prefix' => 'transaction'], function () {

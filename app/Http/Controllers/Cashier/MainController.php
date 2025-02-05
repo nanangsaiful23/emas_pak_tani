@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\GoodPrice;
 use App\Models\Journal;
+use App\Models\ServerPayment;
 use App\Models\Transaction;
 
 class MainController extends Controller
@@ -57,6 +58,8 @@ class MainController extends Controller
                                     ->whereDate('journals.journal_date', '=', date('Y-m-d')) 
                                     ->get();
 
-        return view('cashier.index', compact('default', 'transactions', 'other_transactions'));
+        $server_payment = ServerPayment::where('month_pay', null)->get();
+
+        return view('cashier.index', compact('default', 'transactions', 'other_transactions', 'server_payment'));
     }
 }

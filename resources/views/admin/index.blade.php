@@ -14,6 +14,12 @@
     }
   </style>
   <div class="content-wrapper">
+    @if(sizeof($server_payment) > 0)
+      <div class="alert alert-danger alert-dismissible" id="message">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <h4><i class="icon fa fa-warning"></i> Guna pelayanan yang maksimal, harap melakukan pembayaran tagihan server maksimal tanggal 20 pada setiap bulannya.<br>Status pembayaran saat ini adalah: tertunda {{ $server_payment->count() }} bulan sejak {{ $server_payment[0]->month_due }}</h4>
+      </div>
+    @endif
     <section class="content-header">
       <h1>
         Hi, {{ \Auth::user()->name }}<br>

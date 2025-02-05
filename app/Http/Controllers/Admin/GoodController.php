@@ -322,4 +322,30 @@ class GoodController extends Controller
 
         return view('admin.layout.page', compact('default', 'good', 'start_date', 'end_date', 'pagination', 'histories'));
     }
+
+    public function goodExport(Request $request)
+    {
+        $order = 'asc';
+        $sort = 'goods.name';
+
+        $result = [['Kategori', 'Kode', 'Nama', 'Kadar', 'Berat Emas', 'Status']];
+
+        
+        if($request->category == 'all' && $request->status == 'all')
+            $goods = Good::orderBy($sort, $order)->get();
+        elseif($request->status == 'all')
+            $goods = Good::where('category_id', $request->category)->orderBy($sort, $order)->get();
+        elseif($request->category == 'all')
+            $goods = Good::where('status', $request->status)->orderBy($sort, $order)->get();
+        else
+            $goods = Good::where('status', $request->status)->where('category_id', $request->category)->orderBy($sort, $order)->get();
+
+        foreach($goods as $good)
+        {
+            if($good->getStock() > 0)
+                array_push($result, [$good->category->name, $good->code, $good->name, $good->percentage->name, $good->weight, $good->status]);
+        }
+
+        return Excel::download(new ZeroStockExport($result), 'Data Barang ' . date('Y-m-d') . '.xlsx');
+    }
 }
