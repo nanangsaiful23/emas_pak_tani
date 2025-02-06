@@ -113,7 +113,7 @@ class Good extends Model
 
         $total = $loadings - $transactions;
 
-        return $total / $this->getPcsSellingPrice()->unit->quantity;
+        return $total;
     }
 
     public function getBarcode()
