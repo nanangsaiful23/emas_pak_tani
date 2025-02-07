@@ -37,22 +37,22 @@ trait GoodControllerBase
                     $goods = Good::join('good_units', 'good_units.good_id', 'goods.id')
                                  ->join('good_loading_details', 'good_loading_details.good_unit_id', 'good_units.id')
                                  ->join('good_loadings', 'good_loadings.id', 'good_loading_details.good_loading_id')
-                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->where('good_loadings.distributor_id', $distributor_id)
                                  ->where('goods.status', '!=', 'Proses lebur cokim')
                                  ->where('goods.status', '!=', 'Done lebur cokim')
                                  ->orderBy('goods.id', 'desc')
-                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->get();
                 else
                     $goods = Good::join('good_units', 'good_units.good_id', 'goods.id')
                                  ->join('good_loading_details', 'good_loading_details.good_unit_id', 'good_units.id')
                                  ->join('good_loadings', 'good_loadings.id', 'good_loading_details.good_loading_id')
-                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->where('good_loadings.distributor_id', $distributor_id)
                                  ->where('goods.status', $status)
                                  ->orderBy('goods.id', 'desc')
-                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->get();
             }
             elseif($distributor_id == 'all')
@@ -75,24 +75,24 @@ trait GoodControllerBase
                     $goods = Good::join('good_units', 'good_units.good_id', 'goods.id')
                                  ->join('good_loading_details', 'good_loading_details.good_unit_id', 'good_units.id')
                                  ->join('good_loadings', 'good_loadings.id', 'good_loading_details.good_loading_id')
-                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->where('good_loadings.distributor_id', $distributor_id)
                                  ->where('goods.category_id', $category_id)
                                  ->where('goods.status', '!=', 'Proses lebur cokim')
                                  ->where('goods.status', '!=', 'Done lebur cokim')
                                  ->orderBy('goods.id', 'desc')
-                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->get();
                 else
                     $goods = Good::join('good_units', 'good_units.good_id', 'goods.id')
                                  ->join('good_loading_details', 'good_loading_details.good_unit_id', 'good_units.id')
                                  ->join('good_loadings', 'good_loadings.id', 'good_loading_details.good_loading_id')
-                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->where('good_loadings.distributor_id', $distributor_id)
                                  ->where('goods.category_id', $category_id)
                                  ->where('goods.status', $status)
                                  ->orderBy('goods.id', 'desc')
-                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->get();
             }
         }
@@ -111,22 +111,22 @@ trait GoodControllerBase
                     $goods = Good::join('good_units', 'good_units.good_id', 'goods.id')
                                  ->join('good_loading_details', 'good_loading_details.good_unit_id', 'good_units.id')
                                  ->join('good_loadings', 'good_loadings.id', 'good_loading_details.good_loading_id')
-                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->where('good_loadings.distributor_id', $distributor_id)
                                  ->where('goods.status', '!=', 'Proses lebur cokim')
                                  ->where('goods.status', '!=', 'Done lebur cokim')
                                  ->orderBy('goods.id', 'desc')
-                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->paginate($pagination);
                 else
                     $goods = Good::join('good_units', 'good_units.good_id', 'goods.id')
                                  ->join('good_loading_details', 'good_loading_details.good_unit_id', 'good_units.id')
                                  ->join('good_loadings', 'good_loadings.id', 'good_loading_details.good_loading_id')
-                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->where('good_loadings.distributor_id', $distributor_id)
                                  ->where('goods.status', $status)
                                  ->orderBy('goods.id', 'desc')
-                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->paginate($pagination);
             }
             elseif($distributor_id == 'all')
@@ -149,24 +149,24 @@ trait GoodControllerBase
                     $goods = Good::join('good_units', 'good_units.good_id', 'goods.id')
                                  ->join('good_loading_details', 'good_loading_details.good_unit_id', 'good_units.id')
                                  ->join('good_loadings', 'good_loadings.id', 'good_loading_details.good_loading_id')
-                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->where('good_loadings.distributor_id', $distributor_id)
                                  ->where('goods.category_id', $category_id)
                                  ->where('goods.status', '!=', 'Proses lebur cokim')
                                  ->where('goods.status', '!=', 'Done lebur cokim')
                                  ->orderBy('goods.id', 'desc')
-                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->paginate($pagination);
                 else
                     $goods = Good::join('good_units', 'good_units.good_id', 'goods.id')
                                  ->join('good_loading_details', 'good_loading_details.good_unit_id', 'good_units.id')
                                  ->join('good_loadings', 'good_loadings.id', 'good_loading_details.good_loading_id')
-                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->select('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->where('good_loadings.distributor_id', $distributor_id)
                                  ->where('goods.category_id', $category_id)
                                  ->where('goods.status', $status)
                                  ->orderBy('goods.id', 'desc')
-                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage', 'goods.status')
+                                 ->groupBy('goods.id', 'goods.name', 'goods.code', 'goods.category_id', 'goods.weight', 'goods.percentage_id', 'goods.status')
                                  ->paginate($pagination);
             }
         }
