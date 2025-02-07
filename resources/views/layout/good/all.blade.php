@@ -204,7 +204,7 @@
 
     function advanceSearch()
     {
-      window.location = window.location.origin + '/{{ $role }}/good/' + $('#category').val() + '/' + $('#distributor').val() + '/' + $('#status').val() + '/' + $('#show').val();
+      window.location = window.location.origin + '/{{ $role }}/good/' + $('#category').val() + '/all/' + $('#status').val() + '/' + $('#show').val();
     }
 
     function exportData()
