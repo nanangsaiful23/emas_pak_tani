@@ -17,12 +17,12 @@
                 <div class="col-sm-9">
                     <select class="form-control select2" style="width: 100%;" name="items" id="all_name"
                         onchange="fillItem()">
-                        <div>
+                        <!-- <div> -->
                             <option value="null">Silahkan pilih barang</option>
                             @foreach($goods as $good)
                                 <option value="{{ $good->id . ';;' . $good->code . ';;' . $good->weight . ';;' . $good->percentage->name . ';;' . $good->name . ';;' . $good->status }}">{{ $good->name . ' ' . $good->weight . ' gram'}}</option>
                             @endforeach
-                        </div>
+                        <!-- </div> -->
                     </select>
                 </div>
             </div>
