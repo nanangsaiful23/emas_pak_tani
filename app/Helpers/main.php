@@ -411,7 +411,7 @@
 
         }
 
-        return $golds;
+        return sizeof($golds);
     }
 
     function getColors()
