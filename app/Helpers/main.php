@@ -296,15 +296,77 @@
     {
         if($category == 'all')
         {
-            $golds = Good::where('goods.status', $status)
-                         ->get();  
+            if($status == 'all')
+            {
+                $golds = Good::leftjoin('good_units', 'good_units.good_id', 'goods.id')
+                             ->leftjoin('good_loading_details', 'good_loading_details.good_unit_id', 'good_units.id')
+                             ->leftjoin('good_loadings', 'good_loadings.id', 'good_loading_details.good_loading_id')
+                             ->leftjoin('transaction_details', 'transaction_details.good_unit_id', 'good_units.id')
+                             ->leftjoin('transactions', 'transactions.id', 'transaction_details.transaction_id')
+                             ->select('goods.id', 'goods.weight', DB::raw("COUNT(DISTINCT good_loading_details.id) as gid, COUNT(DISTINCT transaction_details.id) as tid"))
+                             ->where('good_units.deleted_at', null)
+                             ->where('good_loadings.deleted_at', null)
+                             ->where('transactions.deleted_at', null)
+                             ->havingRaw('gid > tid')
+                             ->groupBy('goods.id', 'goods.weight')
+                             ->get();  
+            }
+            else
+            {
+                $golds = Good::leftjoin('good_units', 'good_units.good_id', 'goods.id')
+                             ->leftjoin('good_loading_details', 'good_loading_details.good_unit_id', 'good_units.id')
+                             ->leftjoin('good_loadings', 'good_loadings.id', 'good_loading_details.good_loading_id')
+                             ->leftjoin('transaction_details', 'transaction_details.good_unit_id', 'good_units.id')
+                             ->leftjoin('transactions', 'transactions.id', 'transaction_details.transaction_id')
+                             ->select('goods.id', 'goods.weight', DB::raw("COUNT(DISTINCT good_loading_details.id) as gid, COUNT(DISTINCT transaction_details.id) as tid"))
+                             ->where('goods.status', $status)
+                             ->where('good_units.deleted_at', null)
+                             ->where('good_loadings.deleted_at', null)
+                             ->where('transactions.deleted_at', null)
+                             ->havingRaw('gid > tid')
+                             ->groupBy('goods.id', 'goods.weight')
+                             ->get(); 
+            }
         }
         else
         {
-            $golds = Good::join('categories', 'categories.id', 'goods.category_id')
-                         ->where('categories.code', $category)
-                         ->where('goods.status', $status)
-                         ->get();  
+            if($status == 'all')
+            {
+                $golds = Good::leftjoin('categories', 'categories.id', 'goods.category_id')
+                             ->leftjoin('good_units', 'good_units.good_id', 'goods.id')
+                             ->leftjoin('good_loading_details', 'good_loading_details.good_unit_id', 'good_units.id')
+                             ->leftjoin('good_loadings', 'good_loadings.id', 'good_loading_details.good_loading_id')
+                             ->leftjoin('transaction_details', 'transaction_details.good_unit_id', 'good_units.id')
+                             ->leftjoin('transactions', 'transactions.id', 'transaction_details.transaction_id')
+                             ->select('goods.id', 'goods.weight', DB::raw("COUNT(DISTINCT good_loading_details.id) as gid, COUNT(DISTINCT transaction_details.id) as tid"))
+                             ->where('categories.code', $category)
+                             ->where('categories.deleted_at', null)
+                             ->where('good_units.deleted_at', null)
+                             ->where('good_loadings.deleted_at', null)
+                             ->where('transactions.deleted_at', null)
+                             ->havingRaw('gid > tid')
+                             ->groupBy('goods.id', 'goods.weight')
+                             ->get();  
+            }
+            else
+            {
+                $golds = Good::leftjoin('categories', 'categories.id', 'goods.category_id')
+                             ->leftjoin('good_units', 'good_units.good_id', 'goods.id')
+                             ->leftjoin('good_loading_details', 'good_loading_details.good_unit_id', 'good_units.id')
+                             ->leftjoin('good_loadings', 'good_loadings.id', 'good_loading_details.good_loading_id')
+                             ->leftjoin('transaction_details', 'transaction_details.good_unit_id', 'good_units.id')
+                             ->leftjoin('transactions', 'transactions.id', 'transaction_details.transaction_id')
+                             ->select('goods.id', 'goods.weight', DB::raw("COUNT(DISTINCT good_loading_details.id) as gid, COUNT(DISTINCT transaction_details.id) as tid"))
+                             ->where('goods.status', $status)
+                             ->where('categories.code', $category)
+                             ->where('categories.deleted_at', null)
+                             ->where('good_units.deleted_at', null)
+                             ->where('good_loadings.deleted_at', null)
+                             ->where('transactions.deleted_at', null)
+                             ->havingRaw('gid > tid')
+                             ->groupBy('goods.id', 'goods.weight')
+                             ->get(); 
+            }
         }
 
         return $golds;
