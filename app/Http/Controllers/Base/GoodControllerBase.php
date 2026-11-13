@@ -810,35 +810,36 @@ trait GoodControllerBase
     public function printBarcodeGoodBase(Request $request)
     {
         $goods = [];
-        for($i = 0; $i < sizeof($request->ids); $i++)
+        $ids = array_values(array_filter((array) $request->ids));
+
+        $good_units = GoodUnit::with('good.category')->whereIn('id', $ids)->get()->keyBy('id');
+
+        foreach((array) $request->ids as $i => $id)
         {
-            if($request->ids[$i] != null)
-            {
-                $good_unit = GoodUnit::find($request->ids[$i]);
+            if($id == null || !isset($good_units[$id])) continue;
 
-                for($j = 0; $j < $request->quantities[$i]; $j++)
-                {
-                    if($good_unit->good != null)
-                    {
-                        $data['barcode'] = $good_unit->good->getBarcode();
-                        $data['name'] = $good_unit->good->name;
-                        $data['code'] = $good_unit->good->code;
-                        $data['weight'] = $good_unit->good->weight;
-                        $data['old_gold'] = '';
-                        if($good_unit->good->is_old_gold == 1)
-                            $data['old_gold'] = 'MT';
-                        $data['stone_weight'] = $good_unit->good->stone_weight;
-                        $data['stone_price'] = formatNumber($good_unit->good->stone_price);
+            $good_unit = $good_units[$id];
+            $good = $good_unit->good;
+            if($good == null) continue;
 
-                        array_push($goods, $data);
-                    }
-                }
+            $data = [
+                'barcode' => $good->getBarcode(),
+                'name' => $good->name,
+                'code' => $good->code,
+                'weight' => $good->weight,
+                'old_gold' => $good->is_old_gold == 1 ? 'MT' : '',
+                'stone_weight' => $good->stone_weight,
+                'stone_price' => formatNumber($good->stone_price),
+            ];
 
-                $data_good_unit['is_barcode_printed'] = 1;
-                $good_unit->update($data_good_unit);
-            }
+            $quantity = (int) ($request->quantities[$i] ?? 0);
+            for($j = 0; $j < $quantity; $j++)
+                array_push($goods, $data);
         }
-        
+
+        if(sizeof($ids) > 0)
+            GoodUnit::whereIn('id', $ids)->update(['is_barcode_printed' => 1]);
+
         return $goods;
     }
 

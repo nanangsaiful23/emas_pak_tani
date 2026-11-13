@@ -25,37 +25,21 @@
           <div class="box-body">
             {!! Form::model(old(),array('url' => route($role . '.print-barcode'), 'method' => 'POST', 'id' => 'print-form')) !!}
               <div class="form-group">
-                <select class="form-control select2" data-placeholder="Silahkan pilih barang" style="width: 100%;" onchange="changeDiv()" id="good-list">
-                  <!-- <div> -->
-                    <option value="">Silahkan pilih barang</option>
-                    @foreach(getGoodUnits() as $good)
-                      <option value="{{ $good->good_unit_id . ';;;' . date('Y') . $good->good->getBarcode() . ';;;<b>' . $good->good->name . '</b>;;;' . $good->good->weight . ';;;<b>' . $good->good->code . '</b>;;;' . $good->good->is_old_gold . ';;;' . $good->good->stone_weight . ';;;' . $good->good->stone_price }}">@if($good->is_barcode_printed == '1') [v] @endif {{ $good->good->name . ' (' . $good->good->code . ')' }}</option>
-                    @endforeach
-                  <!-- </div> -->
-                </select>
+                <select class="form-control" style="width: 100%;" id="good-list"></select>
               </div>
-              <?php $i = 1; ?>
-              <div id="div-result"></div>
-              <div id="row-data-{{ $i }}" style="display: none;">
-                <div class="col-sm-6" style="border: solid 1px">
-                  <svg class="col-sm-12" id="barcode-{{ $i }}"></svg><br>
-                  <div class="form-group col-sm-12" style="text-align: center;" id="code-{{ $i }}" name="codes[]" ></div>
-                  <div class="form-group col-sm-12" style="text-align: center; margin-top: -30px" id="weight-{{ $i }}" name="weights[]" ></div>
-                  <div class="form-group col-sm-12" style="text-align: center; margin-top: -30px" id="stone_weight-{{ $i }}" name="stone_weights[]" ></div>
-                  <div class="form-group col-sm-12" style="text-align: center; margin-top: -30px" id="stone_price-{{ $i }}" name="stone_prices[]" ></div>
-                  <div class="form-group col-sm-2">
-                    <input type="text" id="id-{{ $i }}" name="ids[]" class="form-control" placeholder="id" readonly style="display: none;">
-                  </div>
-                  <div class="form-group col-sm-3">
-                    <input type="text" id="quantity-{{ $i }}" name="quantities[]" class="form-control" onchange="addElement('{{ $i }}')" placeholder="jumlah" style="display: none">
-                  </div>
-                  <div class="form-group col-sm-3 btn" onclick="deleteItem({{ $i }})" >
-                    <i class="fa fa-times" style="color: red"></i> Batal
-                  </div>
-                </div>
-              </div>
+              <table class="table table-bordered table-condensed" id="selected-table" style="display: none;">
+                <thead>
+                  <tr>
+                    <th>Barang</th>
+                    <th style="width: 100px;">Berat</th>
+                    <th style="width: 110px;">Jumlah</th>
+                    <th style="width: 60px;"></th>
+                  </tr>
+                </thead>
+                <tbody id="selected-body"></tbody>
+              </table>
             {!! Form::close() !!}
-          </div> 
+          </div>
           <div onclick="event.preventDefault(); submitForm(this);" class= 'btn btn-success btn-flat btn-block form-control' style="height: 80px; font-size: 40px;">Print</div>
         </div>
       </div>
@@ -64,79 +48,85 @@
 </div>
 
 @section('js-addon')
-  <script src="{{asset('assets/bower_components/JsBarcode.code39.min.js')}}"></script>
-  <script src="{{asset('assets/bower_components/JsBarcode.ean-upc.min.js')}}"></script>
   <script type="text/javascript">
-    var total_item = 1;
-    var real_item = 1;
+    var searchUrl = "{{ route($role . '.print-barcode.search') }}";
+
+    function escapeHtml(text)
+    {
+      return $('<div>').text(text == null ? '' : text).html();
+    }
+
+    function updateTotal()
+    {
+      var rows = $('#selected-body tr').length;
+      var total = 0;
+      $('#selected-body input.qty').each(function(){ total += parseInt($(this).val()) || 0; });
+      $('#selected-table').toggle(rows > 0);
+      $('#total').text(rows > 0 ? rows + ' barang, ' + total + ' label' : '');
+    }
 
     $(document).ready(function(){
-      $('.select2').select2();
+      $('#good-list').select2({
+        placeholder: 'Ketik nama / kode barang',
+        minimumInputLength: 2,
+        ajax: {
+          url: searchUrl,
+          dataType: 'json',
+          delay: 300,
+          data: function(params){ return { q: params.term }; },
+          processResults: function(data){ return data; }
+        }
+      }).on('select2:select', function(e){
+        addItem(e.params.data);
+        $(this).val(null).trigger('change');
+      });
 
+      $('#selected-body').on('input change', 'input.qty', updateTotal);
+      $('#selected-body').on('click', '.btn-remove', function(){
+        $(this).closest('tr').remove();
+        updateTotal();
+      });
     });
 
-    function changeDiv()
+    function addItem(item)
     {
-      $('#row-data-' + total_item).show();
-      var good = $("#good-list").val().split(";;;");
-      if(good != null)
+      var existing = $('#selected-body tr[data-id="' + item.id + '"] input.qty');
+      if(existing.length)
       {
-        var code = good[1];
-        JsBarcode("#barcode-" + total_item, code, {
-          format: "UPC",
-          // lineColor: "#0aa",
-          width: 3,
-          height: 60,
-          displayValue: false
-        });
+        existing.val((parseInt(existing.val()) || 0) + 1);
       }
-      $("#id-" + total_item).val(good[0]);
-      $("#barcode-" + total_item).val(good[1]);
-      $("#name-" + total_item).html(good[2]);
-      $("#code-" + total_item).html(good[4]);
-      $("#quantity-" + total_item).val(1);
-      if(good[5] == '1')
-        $("#weight-" + total_item).html("<h3>MT " + good[3] + "GR</h3>");
       else
-        $("#weight-" + total_item).html("<h3>" + good[3] + "GR</h3>");
-      $("#stone_weight-" + total_item).html(good[2]);
-      // if(good[6] != '0.00' && good[6] != '' && good[6] != null && good[6] != '0')
-      // {
-      //   $("#stone_weight-" + total_item).html("<h5>BATU " + good[6] + "GR</h5>");
-      //   $("#stone_price-" + total_item).html("<h5>ONGKOS " + good[7] + "</h5>");
-      // }
-      
-      addElement(total_item);
-      total_item += 1;
-      real_item += 1;
-    }
-
-    function addElement(index)
-    {
-      index = parseInt(index) + 1;
-      index = index.toString();
-      htmlResult = '<div id="row-data-' + index + '" style="display:none;"><div class="col-sm-6" style="border: solid 1px"><svg class="col-sm-12" id="barcode-' + index + '"></svg><div class="form-group col-sm-12" id="code-' + index + '" style="text-align: center;" name="codes[]"></div><div class="form-group col-sm-12" id="weight-' + index + '" style="text-align: center; margin-top: -30px" name="weights[]"></div><div class="form-group col-sm-12" id="stone_weight-' + index + '" style="text-align: center; margin-top: -30px" name="stone_weights[]"></div><div class="form-group col-sm-12" id="stone_price-' + index + '" style="text-align: center; margin-top: -30px" name="stone_prices[]"></div><div class="form-group col-sm-2"><input type="text" id="id-' + index + '" name="ids[]" class="form-control" placeholder="id" readonly style="display: none;"></div><div class="form-group col-sm-3"><input type="text" id="quantity-' + index + '" name="quantities[]" class="form-control" style="display: none"></div><div onclick="deleteItem(\'' + index + '\')" class="form-group col-sm-3 btn"><i class="fa fa-times" style="color: red"></i> Batal</div></div>';
-
-      $("#div-result").prepend(htmlResult);
-    }
-
-    function deleteItem(index)
-    {
-      $("#row-data-" + index).remove();
-      real_item -= 1;
+      {
+        var weight = (item.old_gold ? 'MT ' : '') + escapeHtml(item.weight) + ' GR';
+        $('#selected-body').append(
+          '<tr data-id="' + item.id + '">' +
+            '<td>' + escapeHtml(item.name) + ' <small class="text-muted">(' + escapeHtml(item.code) + ')</small>' +
+              '<input type="hidden" name="ids[]" value="' + item.id + '"></td>' +
+            '<td>' + weight + '</td>' +
+            '<td><input type="number" min="1" name="quantities[]" class="form-control input-sm qty" value="1"></td>' +
+            '<td class="text-center"><a class="btn btn-xs btn-danger btn-remove"><i class="fa fa-times"></i></a></td>' +
+          '</tr>'
+        );
+      }
+      updateTotal();
     }
 
     function submitForm(btn)
     {
-        if(real_item % 2 == 1)
-        {
-          btn.disabled = true;
-          document.getElementById('print-form').submit();
-        }
-        else
-        {
-            alert('Silahkan pilih jumlah barang kelipatan 2');
-        }
+      var total = 0;
+      $('#selected-body input.qty').each(function(){ total += parseInt($(this).val()) || 0; });
+
+      if(total < 1)
+      {
+        alert('Silahkan pilih barang terlebih dahulu');
+        return;
+      }
+
+      if(total % 2 == 1 && !confirm('Jumlah label ganjil (' + total + '), baris terakhir akan kosong sebelah. Lanjut print?'))
+        return;
+
+      btn.disabled = true;
+      document.getElementById('print-form').submit();
     }
   </script>
 @endsection

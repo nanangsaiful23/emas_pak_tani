@@ -262,6 +262,44 @@ class GoodController extends Controller
         return view('admin.layout.page', compact('default'));
     }
 
+    public function searchPrintBarcode(Request $request)
+    {
+        $keyword = trim((string) $request->q);
+
+        $good_units = \App\Models\GoodUnit::join('goods', 'goods.id', 'good_units.good_id')
+                        ->with('good.category')
+                        ->select('good_units.*')
+                        ->where('goods.status', 'Siap dijual')
+                        ->whereNull('goods.deleted_at')
+                        ->when($keyword !== '', function ($query) use ($keyword) {
+                            $query->where(function ($q) use ($keyword) {
+                                $q->where('goods.name', 'like', '%' . $keyword . '%')
+                                  ->orWhere('goods.code', 'like', '%' . $keyword . '%');
+                            });
+                        })
+                        ->orderBy('goods.name', 'asc')
+                        ->limit(30)
+                        ->get();
+
+        $results = [];
+        foreach($good_units as $unit)
+        {
+            $good = $unit->good;
+            if($good == null) continue;
+
+            $results[] = [
+                'id' => $unit->id,
+                'text' => ($unit->is_barcode_printed == '1' ? '[v] ' : '') . $good->name . ' (' . $good->code . ')',
+                'name' => $good->name,
+                'code' => $good->code,
+                'weight' => $good->weight,
+                'old_gold' => $good->is_old_gold == 1,
+            ];
+        }
+
+        return response()->json(['results' => $results]);
+    }
+
     public function printBarcode(Request $request)
     {
         $role = 'admin';

@@ -78,6 +78,7 @@ Route::group(['prefix' => 'good'], function () {
 	Route::get('/searchByKeyword/{query}', 'GoodController@searchByKeyword');
 	Route::get('/searchByKeywordGoodUnit/{query}', 'GoodController@searchByKeywordGoodUnit');
 	Route::get('/printBarcode', 'GoodController@choosePrintBarcode');
+	Route::get('/printBarcode/search', 'GoodController@searchPrintBarcode')->name('print-barcode.search');
 	Route::post('/printBarcode', 'GoodController@printBarcode')->name('print-barcode');
 	Route::get('/zeroStock/{category_id}/{location}/{distributor_id}/{stock}', 'GoodController@zeroStock');
 	Route::post('/zeroStock/export', 'GoodController@stockExport')->name('zeroStock.export');

@@ -2,20 +2,22 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testBasicTest()
+    public function test_halaman_login_admin_dapat_dibuka(): void
     {
-        $response = $this->get('/');
+        $this->get('/admin/login')->assertOk();
+    }
 
-        $response->assertStatus(200);
+    public function test_halaman_login_kasir_dapat_dibuka(): void
+    {
+        $this->get('/cashier/login')->assertOk();
+    }
+
+    public function test_halaman_admin_butuh_login(): void
+    {
+        $this->get('/admin')->assertRedirect();
     }
 }
