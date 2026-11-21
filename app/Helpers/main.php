@@ -16,6 +16,7 @@
     use App\Models\Member;
     use App\Models\Unit;
 
+    use Illuminate\Support\Arr;
     use Illuminate\Support\Facades\DB;
 
     function alert()
@@ -256,7 +257,7 @@
     {
         $brands = [null => 'Pilih merek'];
         foreach (Brand::orderBy('name', 'asc')->get() as $data) {
-            $brands = array_add($brands, $data->id, $data->name);
+            $brands = Arr::add($brands, $data->id, $data->name);
         }
         return $brands;
     }
@@ -270,7 +271,7 @@
     {
         $categories = [null => 'Pilih kategori', 'all' => 'Seluruh kategori'];
         foreach (Category::orderBy('name', 'asc')->get() as $data) {
-            $categories = array_add($categories, $data->id, $data->name . ' (' . $data->eng_name . ')');
+            $categories = Arr::add($categories, $data->id, $data->name . ' (' . $data->eng_name . ')');
         }
         return $categories;
     }
@@ -279,7 +280,7 @@
     {
         $categories = [];
         foreach (Category::orderBy('name', 'asc')->get() as $data) {
-            $categories = array_add($categories, $data->id, $data->name);
+            $categories = Arr::add($categories, $data->id, $data->name);
         }
         return $categories;
     }
@@ -418,7 +419,7 @@
     {
         $colors = [null => 'Pilih warna'];
         foreach (Color::orderBy('name', 'asc')->get() as $data) {
-            $colors = array_add($colors, $data->id, $data->name . ' (' . $data->code . ')');
+            $colors = Arr::add($colors, $data->id, $data->name . ' (' . $data->code . ')');
         }
         return $colors;
     }
@@ -439,7 +440,7 @@
     {
         $distributors = [null => 'Pilih distributor', 'all' => 'Seluruh distributor'];
         foreach (Distributor::orderBy('name', 'asc')->get() as $data) {
-            $distributors = array_add($distributors, $data->id, $data->name);
+            $distributors = Arr::add($distributors, $data->id, $data->name);
         }
         return $distributors;
     }
@@ -450,7 +451,7 @@
         if($start_date != null)
         {
             foreach (DB::select("SELECT DISTINCT good_loadings.distributor_id as distributor_id, distributors.name FROM good_loadings join distributors on good_loadings.distributor_id = distributors.id WHERE good_loadings.created_at >= '" . $start_date . "' AND good_loadings.created_at <= '" . $end_date . "' ORDER BY distributors.name") as $data) {
-                $search = array_add($search, $data->distributor_id, $data->name);
+                $search = Arr::add($search, $data->distributor_id, $data->name);
             }
         }
         return $search;
@@ -460,7 +461,7 @@
     {
         $locations = ['all' => 'Semua'];
         foreach (DB::select("SELECT DISTINCT distributors.location FROM distributors ORDER BY distributors.location ASC") as $data) {
-            $locations = array_add($locations, $data->location, $data->location);
+            $locations = Arr::add($locations, $data->location, $data->location);
         }
 
         return $locations;
@@ -523,7 +524,7 @@
     {
         $payments = [null => 'Pilih biaya'];
         foreach (Account::where('name', 'like', 'Biaya %')->orderBy('name', 'asc')->get() as $data) {
-            $payments = array_add($payments, $data->id, $data->name . ' (' . $data->code . ')');
+            $payments = Arr::add($payments, $data->id, $data->name . ' (' . $data->code . ')');
         }
         return $payments;
     }
@@ -532,7 +533,7 @@
     {
         $percentages = [];
         foreach (Percentage::orderBy('name', 'asc')->get() as $data) {
-            $percentages = array_add($percentages, $data->id, $data->name);
+            $percentages = Arr::add($percentages, $data->id, $data->name);
         }
         return $percentages;
     }
@@ -555,13 +556,13 @@
         if($start_date != null)
         {
             foreach (DB::select("SELECT DISTINCT " . $type . " as name FROM good_loadings WHERE loading_date >= '" . $start_date . "' AND loading_date <= '" . $end_date . "' ORDER BY " . $type) as $data) {
-                $search = array_add($search, $data->name, $data->name);
+                $search = Arr::add($search, $data->name, $data->name);
             }
         }
         else
         {
             foreach (DB::select("SELECT DISTINCT " . $type . " as name FROM good_loadings ORDER BY " . $type) as $data) {
-                $search = array_add($search, $data->name, $data->name);
+                $search = Arr::add($search, $data->name, $data->name);
             }
         }
         return $search;
@@ -599,7 +600,7 @@
     {
         $units = [null => 'Pilih satuan'];
         foreach (Unit::orderBy('name', 'asc')->get() as $data) {
-            $units = array_add($units, $data->id, $data->name . ' (' . $data->code . ')');
+            $units = Arr::add($units, $data->id, $data->name . ' (' . $data->code . ')');
         }
         return $units;
     }
@@ -613,10 +614,10 @@
     {
         $users = ['all/all' => 'Semua user'];
         foreach (Admin::where('is_active', 1)->orderBy('name', 'asc')->get() as $data) {
-            $users = array_add($users, 'admin/' . $data->id, $data->name . ' (admin)');
+            $users = Arr::add($users, 'admin/' . $data->id, $data->name . ' (admin)');
         }
         foreach (Cashier::where('is_active', 1)->orderBy('name', 'asc')->get() as $data) {
-            $users = array_add($users, 'cashier/' . $data->id, $data->name . ' (kasir)');
+            $users = Arr::add($users, 'cashier/' . $data->id, $data->name . ' (kasir)');
         }
 
         return $users;
